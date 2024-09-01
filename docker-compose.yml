@@ -1,0 +1,72 @@
+services:
+  php81-apache:
+    build: ./src
+    image: php:7.4-apache
+    container_name: bomweb-php74-apache
+    restart: always
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    ports:
+      - "127.0.0.1:45300:80"
+    depends_on:
+      - mysql80
+
+  php81-websocket:
+    build: ./websocket_server
+    image: php:8.1-cli
+    container_name: bomweb-php81-websocket
+    restart: always
+    volumes:
+      - ./websocket_server:/var/www/html
+    working_dir: /var/www/html
+    ports:
+      - "45301:5609"
+    depends_on:
+      - mysql80
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: bomweb-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql80
+      PMA_USER: root
+      PMA_PASSWORD: pass123
+      PMA_DATABASE: bomweb
+    ports:
+      - "45302:80"
+    depends_on:
+      - mysql80
+
+  adminer:
+    image: adminer
+    container_name: bomweb-adminer
+    restart: always
+    environment:
+      PMA_HOST: mysql80
+      PMA_USER: root
+      PMA_PASSWORD: pass123
+      PMA_DATABASE: bomweb
+    ports:
+      - "45303:8080"
+    depends_on:
+      - mysql80
+
+  mysql80:
+    build: ./mysql
+    container_name: bomweb-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pass123
+      MYSQL_DATABASE: bomweb
+    ports:
+      - "33453:3306"
+    volumes:
+      - ./mysql/mysql-data:/var/lib/mysql
+      - ./mysql/mysql-init:/docker-entrypoint-initdb.d
+
+volumes:
+  src:
+  mysql-data:
+  mysql-init:

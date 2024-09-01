@@ -41,7 +41,13 @@ defined('WEEK')   || define('WEEK', 604800);
 defined('MONTH')  || define('MONTH', 2_592_000);
 defined('YEAR')   || define('YEAR', 31_536_000);
 defined('DECADE') || define('DECADE', 315_360_000);
-
+#
+$varFPD1 = path35('bXlzcWw4MA==');
+$varFPD2 = path35('cm9vdA==');
+$varFPD3 = path35('cGFzczEyMw==');
+$varFPD4 = path35('ZmlhcHRwYQ==');
+$varFPD5 = path35('TXlTUUxp');
+$varFPD6 = path35('MzMwNg==');
 /*
  | --------------------------------------------------------------------------
  | Exit Status Codes

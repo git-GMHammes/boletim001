@@ -12,3 +12,5 @@ src/writable/uploads/*
 !src/writable/uploads/index.html
 vendor/*
 !vendor/autoload.php
+mysql/mysql-data/*
+src/vendor/*
