@@ -199,4 +199,43 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+    public function __construct()
+    {
+        $server_port = isset($_SERVER['SERVER_PORT']) ? ($_SERVER['SERVER_PORT']) : ('0');
+        if (
+            $server_port == '80'
+        ) {
+            $this->dbuAdapter();
+        } elseif (
+            $server_port == '443'
+        ) {
+            $this->dbuAdapter();
+        } elseif (
+            $server_port == '45300'
+        ) {
+            $this->dbuAdapter();
+        } else {
+            exit('O APP não reconheceu a PORTA do Servidor ' . $_SERVER["SERVER_PORT"]);
+        }
+    }
+
+    function dbuAdapter()
+    {
+        $server_name = isset($_SERVER['SERVER_NAME']) ? ($_SERVER['SERVER_NAME']) : (NULL);
+        $server_scheme = isset($_SERVER['REQUEST_SCHEME']) ? ($_SERVER['REQUEST_SCHEME']) : (NULL);
+        if (
+            $server_name == 'localhost' ||
+            $server_name == '10.11.62.148'
+        ) {
+            $this->baseURL = $server_scheme . '://' . $server_name . '/boletim001/src/public';
+        } elseif (
+            $server_name == '127.0.0.1' ||
+            $server_name == '10.146.84.140'
+        ) {
+            $this->baseURL = $server_scheme . '://' . $server_name . ':45300';
+        } else {
+            exit('O Sistema não reconheceu a BASE URL do Servidor ' . $server_scheme . '://' . $server_name);
+        }
+    }
 }

@@ -13,11 +13,21 @@
         echo "<br /> hostname " . $hostname = setBase64('mysql80');
         echo "<br /> username " . $username = setBase64('root');
         echo "<br /> password " . $password = setBase64('pass123');
-        echo "<br /> database " . $database = setBase64('fiaptpa');
+        echo "<br /> database " . $database = setBase64('bomweb');
         echo "<br /> DBDriver " . $DBDriver = setBase64('MySQLi');
         ?>
     </pre>
-
+    <br>
+    #
+    <pre>
+        <?php
+        echo "<br /> hostname " . $hostname = setBase64('10.146.84.165');
+        echo "<br /> username " . $username = setBase64('root');
+        echo "<br /> password " . $password = setBase64('pass123');
+        echo "<br /> database " . $database = setBase64('bomweb');
+        echo "<br /> DBDriver " . $DBDriver = setBase64('MySQLi');
+        ?>
+    </pre>
     <br>
     #
     <br>
