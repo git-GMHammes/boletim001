@@ -1,0 +1,12 @@
+java -version
+mvn --version
+
+jar tf vraptor002-1.0-SNAPSHOT.war
+mvn clean install
+
+docker exec -it vraptor002-vraptor-1 /bin/bash
+
+docker-compose up --build -d 
+docker-compose logs -f
+
+

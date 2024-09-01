@@ -1,0 +1,14 @@
+Doc/*
+!Doc/Comandos.txt
+src/spark
+src/system/*
+src/writable/cache/*
+!src/writable/cache/index.html
+src/writable/logs/*
+!src/writable/logs/index.html
+src/writable/session/*
+!src/writable/session/index.html
+src/writable/uploads/*
+!src/writable/uploads/index.html
+vendor/*
+!vendor/autoload.php
