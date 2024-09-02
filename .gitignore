@@ -10,6 +10,8 @@ src/writable/session/*
 !src/writable/session/index.html
 src/writable/uploads/*
 !src/writable/uploads/index.html
+src/writable/debugbar/*
+!src/writable/debugbar/index.html
 vendor/*
 !vendor/autoload.php
 mysql/mysql-data/*
