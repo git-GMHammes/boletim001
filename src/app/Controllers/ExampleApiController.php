@@ -105,8 +105,6 @@ class ExampleApiController extends ResourceController
             return $response;
         }
     }
-    # cod 1
-    # cod 2
 
     # route POST /# www/fia/ptpa/adolescente/api/filtrar/(:any)
     # route GET /# www/fia/ptpa/adolescente/api/filtrar/(:any)
