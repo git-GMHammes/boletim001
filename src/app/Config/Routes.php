@@ -32,12 +32,12 @@ $routes->group('exemple', function ($routes) {
             $routes->get('bom_main/(:any)', 'ExampleEndpointController::bomMain/$1');
             $routes->post('bom_main', 'ExampleEndpointController::bomMain');
             $routes->post('bom_main/(:any)', 'ExampleEndpointController::bomMain/$1');
-            # www/exemple/group/endpoint/bom_empresa_filtro/(:any)
-            $routes->get('bom_empresa_filtro', 'ExampleEndpointController::bomEmpresaFiltro');
-            $routes->get('bom_empresa_filtro/(:segment)', 'ExampleEndpointController::bomEmpresaFiltro/$1');
-            $routes->get('bom_empresa_filtro/(:any)', 'ExampleEndpointController::bomEmpresaFiltro/$1');
-            $routes->post('bom_empresa_filtro', 'ExampleEndpointController::bomEmpresaFiltro');
-            $routes->post('bom_empresa_filtro/(:any)', 'ExampleEndpointController::bomEmpresaFiltro/$1');
+            # www/exemple/group/endpoint/bom_empresa_filtrar/(:any)
+            $routes->get('bom_empresa_filtrar', 'ExampleEndpointController::bomEmpresaFiltro');
+            $routes->get('bom_empresa_filtrar/(:segment)', 'ExampleEndpointController::bomEmpresaFiltro/$1');
+            $routes->get('bom_empresa_filtrar/(:any)', 'ExampleEndpointController::bomEmpresaFiltro/$1');
+            $routes->post('bom_empresa_filtrar', 'ExampleEndpointController::bomEmpresaFiltro');
+            $routes->post('bom_empresa_filtrar/(:any)', 'ExampleEndpointController::bomEmpresaFiltro/$1');
             # www/exemple/group/endpoint/bom_empresa_cadasrtar/(:any)
             $routes->get('bom_empresa_cadasrtar', 'ExampleEndpointController::bomEmpresaCadastrar');
             $routes->get('bom_empresa_cadasrtar/(:segment)', 'ExampleEndpointController::bomEmpresaCadastrar/$1');

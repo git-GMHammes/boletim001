@@ -3,7 +3,7 @@
 	<head>
 		<title>BomWeb</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=8" >
-        <?php
+		<?php
 			include_once (__DIR__ . '/../head.php');
 		?>
 
@@ -31,9 +31,9 @@
 		<div class="separador"></div>
 		<div id="menu">
 			<ul>
-                <?php
-					include_once (__DIR__ . '/../menu.php');
-				?>			
+			<?php
+				include_once (__DIR__ . '/../menu.php');
+			?>
 			</ul>
 		</div>
 		
@@ -42,28 +42,28 @@
 	  	</div>
 		<div id="result">
 			
-		<strong class="titulo azul">Lista </strong><img src="<?= base_url(); ?>assets/bomweb/images/bomweb_setas.gif" /><strong class="titulo verde">
-	Tipo de Veículo
+		<strong class="titulo azul">Lista </strong><img src="/images/bomweb_setas.gif" /><strong class="titulo verde">
+	Tipo de Linha
 	</strong>
 		
 		<a href="#" class="accordion">[ Ocultar Filtro ]</a>
 		
 		<div id="filtro">
 		
-			<img src="<?= base_url(); ?>assets/bomweb/images/bomweb_filtros_box_up.jpg" />
+			<img src="/images/bomweb_filtros_box_up.jpg" />
 		
 			<form id="formPesquisa" action="
-		/tipodeveiculo
+		/tipodelinha
 	/list" method="post">
 			
 				<fieldset>
 					
 		<p>
-			<label for="codigo">Código:</label>
-			<input id="codigo" name="entityForSearch.codigo" value="" size="3" maxlength="3"/>
+			<label for="sigla">Sigla:</label>
+			<input id="sigla" name="entityForSearch.sigla" value="" size="3" maxlength="3"/>
 		</p>
 		<p>
-			<label for="descricao">Tipo:</label>
+			<label for="descricao">Descrição:</label>
 			<input id="descricao" name="entityForSearch.descricao" value="" />
 		</p>
 	
@@ -73,20 +73,23 @@
 		    
 			</form>
 			
-			<img src="<?= base_url(); ?>assets/bomweb/images/bomweb_filtros_box_dn.jpg" />
+			<img src="/images/bomweb_filtros_box_dn.jpg" />
 			
 		</div>
 		<br />
 		
-			<a id="insert" href="<?= base_url(); ?>exemple/group/endpoint/bom_veiculo_cadasrtar" class="buttom_azul">Novo Tipo de Veículo</a>
 		
+			<a id="insert" href="/tipodelinha/insert" class="buttom_azul">Novo Tipo de Linha</a>
+		
+	
 		<div id="tab_relatorio" style="width: 100%; overflow: auto;">
 			<table id="tb_list" class="tablesorter">
 				<thead>
 					<tr>
 						
-		<th>Código do Tipo de Veículo</th>
-		<th>Nome do Tipo de Veículo</th>
+		<th>Sigla</th>
+		<th>Descrição</th>
+		<th>Tipos de Veículos Previstos</th>
 		<th>Ações</th>
 	
 					</tr>
@@ -106,7 +109,7 @@
 		</div>
 	</div>
 	<div class="separador"></div>
-	<img src="<?= base_url(); ?>assets/bomweb/images/bomweb_footer_space.gif" />
+	<img src="/images/bomweb_footer_space.gif" />
 	<div id="footer">
 		<div id="version_control">v1.16.0.6</div>
 	</div>

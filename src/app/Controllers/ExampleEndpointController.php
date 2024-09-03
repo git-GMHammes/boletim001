@@ -202,8 +202,8 @@ class ExampleEndpointController extends ResourceController
     }
 
     // Consumo de API
-    // route GET /www/exemple/group/endpoint/bom_empresa_filtro/(:any)
-    // route POST /www/exemple/group/endpoint/bom_empresa_filtro/(:any)
+    // route GET /www/exemple/group/endpoint/bom_empresa_filtrar/(:any)
+    // route POST /www/exemple/group/endpoint/bom_empresa_filtrar/(:any)
     // Informação sobre o controller
     // retorno do controller [VIEW]
     public function bomEmpresaFiltro($parameter = NULL)
@@ -278,7 +278,7 @@ class ExampleEndpointController extends ResourceController
         } else {
             // return $apiRespond;
             // return view($this->template, $apiRespond);
-            return view('Exemplo/bom_clone/002_empresa/001_filtro', $apiRespond);
+            return view('Exemplo/bom_clone/002_empresa/001_filtrar', $apiRespond);
         }
     }
 
@@ -364,8 +364,8 @@ class ExampleEndpointController extends ResourceController
     }
 
     // Consumo de API
-    // route GET /www/exemple/group/endpoint/bom_linha_filtro/(:any)
-    // route POST /www/exemple/group/endpoint/bom_linha_filtro/(:any)
+    // route GET /www/exemple/group/endpoint/bom_linha_filtrar/(:any)
+    // route POST /www/exemple/group/endpoint/bom_linha_filtrar/(:any)
     // Informação sobre o controller
     // retorno do controller [VIEW]
     public function bomLinhaFiltro($parameter = NULL)
@@ -440,7 +440,7 @@ class ExampleEndpointController extends ResourceController
         } else {
             // return $apiRespond;
             // return view($this->template, $apiRespond);
-            return view('Exemplo/bom_clone/003_linha/001_filtro', $apiRespond);
+            return view('Exemplo/bom_clone/003_linha/001_filtrar', $apiRespond);
         }
     }
 
@@ -526,8 +526,8 @@ class ExampleEndpointController extends ResourceController
     }
 
     // Consumo de API
-    // route GET /www/exemple/group/endpoint/bom_veiculo_filtro/(:any)
-    // route POST /www/exemple/group/endpoint/bom_veiculo_filtro/(:any)
+    // route GET /www/exemple/group/endpoint/bom_veiculo_filtrar/(:any)
+    // route POST /www/exemple/group/endpoint/bom_veiculo_filtrar/(:any)
     // Informação sobre o controller
     // retorno do controller [VIEW]
     public function bomVeiculoFiltro($parameter = NULL)
@@ -602,7 +602,7 @@ class ExampleEndpointController extends ResourceController
         } else {
             // return $apiRespond;
             // return view($this->template, $apiRespond);
-            return view('Exemplo/bom_clone/004_veiculo/001_filtro', $apiRespond);
+            return view('Exemplo/bom_clone/004_veiculo/001_filtrar', $apiRespond);
         }
     }
 
