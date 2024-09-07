@@ -526,7 +526,7 @@
 						
 						</select> * 
 						<label id="errorLinha" class="error" for="selectLinhaFormRelatorio" style="display: none;">Este campo é obrigatório.</label>
-						<img class="loading" alt="Carregando" src="/images/carregando.gif">
+						<img class="loading" alt="Carregando" src="<?= base_url(); ?>assets/bomweb/images/carregando.gif">
 					</p>
 					<p>
 						<label for="tipoVeiculos">Tipo de Veículo:</label>
@@ -562,7 +562,7 @@
 						
 						</select> *
 						<label id="errorTipoDeVeiculo" class="error" for="selectTipoDeVeiculoFormRelatorio" style="display: none;">Este campo é obrigatório.</label>
-						<img class="loading" alt="Carregando" src="/images/carregando.gif">
+						<img class="loading" alt="Carregando" src="<?= base_url(); ?>assets/bomweb/images/carregando.gif">
 					</p>
 					<p>
 						<label for="datepicker">Mês/Ano Inicial:</label>

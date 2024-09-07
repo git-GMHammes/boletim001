@@ -12,8 +12,8 @@
 		</script>
 		
 		
-		<script type="text/javascript" src="/jscript/bomweb.js?3"></script>
-		<script type="text/javascript" src="/jscript/bom.js?3"></script>	
+		<script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/bomweb.js?3"></script>
+		<script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/bom.js?3"></script>	
 	</head>
 <body onunload="javascript: bomweb.hideLoading();">
 <div id="page">
@@ -42,7 +42,7 @@
 	  	</div>
 		<div id="result">
 			
-		<strong class="titulo azul">Lista </strong><img src="/images/bomweb_setas.gif" /><strong class="titulo verde">
+		<strong class="titulo azul">Lista </strong><img src="<?= base_url(); ?>assets/bomweb/images/bomweb_setas.gif" /><strong class="titulo verde">
 	Tipo de Linha
 	</strong>
 		
@@ -50,7 +50,7 @@
 		
 		<div id="filtro">
 		
-			<img src="/images/bomweb_filtros_box_up.jpg" />
+			<img src="<?= base_url(); ?>assets/bomweb/images/bomweb_filtros_box_up.jpg" />
 		
 			<form id="formPesquisa" action="
 		/tipodelinha
@@ -73,7 +73,7 @@
 		    
 			</form>
 			
-			<img src="/images/bomweb_filtros_box_dn.jpg" />
+			<img src="<?= base_url(); ?>assets/bomweb/images/bomweb_filtros_box_dn.jpg" />
 			
 		</div>
 		<br />
@@ -109,7 +109,7 @@
 		</div>
 	</div>
 	<div class="separador"></div>
-	<img src="/images/bomweb_footer_space.gif" />
+	<img src="<?= base_url(); ?>assets/bomweb/images/bomweb_footer_space.gif" />
 	<div id="footer">
 		<div id="version_control">v1.16.0.6</div>
 	</div>

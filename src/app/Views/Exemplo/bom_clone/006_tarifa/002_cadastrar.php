@@ -3,50 +3,49 @@
   <head>
     <title>BomWeb</title>
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
-    <link rel="stylesheet" type="text/css" href="/css/estilos.css" />
-    <link rel="stylesheet" type="text/css" href="/css/jquery.ui.all.css" />
-    <link rel="stylesheet" type="text/css" href="/css/jquery.simplemodal.css" />
-    <link rel="stylesheet" type="text/css" href="/css/jquery.treeview.css" />
-    <script type="text/javascript" src="/jscript/jquery-1.5.min.js"></script>
-    <script type="text/javascript" src="/jscript/jquery.ui.1.8.min.js"></script>
+		<?php
+			include_once (__DIR__ . '/../head.php');
+		?>
+    <script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/jquery-1.5.min.js"></script>
+    <script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/jquery.ui.1.8.min.js"></script>
     <script
       type="text/javascript"
-      src="/jscript/jquery.simplemodal.js"
+      src="<?= base_url(); ?>assets/bomweb/jscript/jquery.simplemodal.js"
     ></script>
     <script
       type="text/javascript"
-      src="/jscript/jquery.maskedinput-1.3.min.js"
+      src="<?= base_url(); ?>assets/bomweb/jscript/jquery.maskedinput-1.3.min.js"
     ></script>
     <script
       type="text/javascript"
-      src="/jscript/jquery.validate.min.js"
+      src="<?= base_url(); ?>assets/bomweb/jscript/jquery.validate.min.js"
     ></script>
     <script
       type="text/javascript"
-      src="/jscript/jquery.tablesorter.min.js"
+      src="<?= base_url(); ?>assets/bomweb/jscript/jquery.tablesorter.min.js"
     ></script>
     <script
       type="text/javascript"
-      src="/jscript/jquery.multiselect.js"
+      src="<?= base_url(); ?>assets/bomweb/jscript/jquery.multiselect.js"
     ></script>
-    <script type="text/javascript" src="/jscript/jquery.treeview.js"></script>
-    <script type="text/javascript" src="/jscript/jquery.maskMoney.js"></script>
+    <script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/jquery.treeview.js"></script>
+    <script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/jquery.maskMoney.js"></script>
     <script
       type="text/javascript"
-      src="/jscript/jquery.loading.min.js"
+      src="<?= base_url(); ?>assets/bomweb/jscript/jquery.loading.min.js"
     ></script>
-    <script type="text/javascript" src="/jscript/jshashtable-2.1.js"></script>
+    <script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/jshashtable-2.1.js"></script>
     <script
       type="text/javascript"
-      src="/jscript/jquery.numberformatter-1.2.2.min.js"
+      src="<?= base_url(); ?>assets/bomweb/jscript/jquery.numberformatter-1.2.2.min.js"
     ></script>
 
     <script type="text/javascript">
       var pathName = "";
     </script>
 
-    <script type="text/javascript" src="/jscript/bomweb.js?3"></script>
-    <script type="text/javascript" src="/jscript/bom.js?3"></script>
+    <script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/bomweb.js?3"></script>
+    <script type="text/javascript" src="<?= base_url(); ?>assets/bomweb/jscript/bom.js?3"></script>
   </head>
   <body onunload="javascript: bomweb.hideLoading();">
     <div id="page">
@@ -64,43 +63,9 @@
         <div class="separador"></div>
         <div id="menu">
           <ul>
-            <li><a tabindex="-1" href="/empresa/list">Empresa</a></li>
-
-            <li><a tabindex="-1" href="/linha/list">Linha</a></li>
-
-            <li>
-              <a tabindex="-1" href="/tipodeveiculo/list">Tipo de Veículo</a>
-            </li>
-
-            <li><a tabindex="-1" href="/tipodelinha/list">Tipo de Linha</a></li>
-
-            <li><a tabindex="-1" href="/tarifa/list">Tarifa</a></li>
-
-            <li><a tabindex="-1" href="/usuario/list">Usuário</a></li>
-
-            <li><a tabindex="-1" href="/bom/list">BOM</a></li>
-
-            <li><a tabindex="-1" href="/relatorio/list">Relatório</a></li>
-
-            <li><a tabindex="-1" href="/log/list">Log</a></li>
-
-            <li>
-              <a tabindex="-1" href="/configuracao/list">Configurações</a>
-            </li>
-
-            <li>
-              <a tabindex="-1" href="/tarifaRetroativa/formUpload"
-                >Tarifa Retroativa</a
-              >
-            </li>
-
-            <li>
-              <a tabindex="-1" href="/importaLinha/formUpload"
-                >Importar Linhas</a
-              >
-            </li>
-
-            <li><a tabindex="-1" href="/manual/download">Manual</a></li>
+          <?php
+				include_once (__DIR__ . '/../menu.php');
+			?>
           </ul>
         </div>
 
@@ -108,17 +73,17 @@
         <div id="result">
           <span
             ><strong class="titulo azul">Cadastro </strong
-            ><img src="/images/bomweb_setas.gif" /><strong class="titulo verde">
+            ><img src="<?= base_url(); ?>assets/bomweb/images/bomweb_setas.gif" /><strong class="titulo verde">
               <script
                 type="text/javascript"
-                src="/jscript/formTarifa.js"
+                src="<?= base_url(); ?>assets/bomweb/jscript/formTarifa.js"
               ></script>
 
               Tarifa
             </strong></span
           >
           <div id="inclusao">
-            <img src="/images/bomweb_filtros_box_up.jpg" />
+            <img src="<?= base_url(); ?>assets/bomweb/images/bomweb_filtros_box_up.jpg" />
 
             <form
               id="form"
@@ -172,7 +137,7 @@
                   <img
                     class="loading"
                     alt="Carregando"
-                    src="/images/carregando.gif"
+                    src="<?= base_url(); ?>assets/bomweb/images/carregando.gif"
                   />
                 </p>
                 <p>
@@ -189,7 +154,7 @@
                   <img
                     class="loading"
                     alt="Carregando"
-                    src="/images/carregando.gif"
+                    src="<?= base_url(); ?>assets/bomweb/images/carregando.gif"
                   />
                 </p>
 
@@ -267,12 +232,12 @@
                 </div>
               </fieldset>
             </form>
-            <img src="/images/bomweb_filtros_box_dn.jpg" />
+            <img src="<?= base_url(); ?>assets/bomweb/images/bomweb_filtros_box_dn.jpg" />
           </div>
         </div>
       </div>
       <div class="separador"></div>
-      <img src="/images/bomweb_footer_space.gif" />
+      <img src="<?= base_url(); ?>assets/bomweb/images/bomweb_footer_space.gif" />
       <div id="footer">
         <div id="version_control">v1.16.0.6</div>
       </div>
