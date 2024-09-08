@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./websocket_server:/var/www/html
-    working_dir: /var/www/html
+    working_dir: /var/www/htmlo
     ports:
       - "45301:5609"
     depends_on:
