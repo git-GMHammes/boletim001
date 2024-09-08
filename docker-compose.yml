@@ -3,7 +3,7 @@ services:
     build: ./src
     image: php:8.1-apache
     container_name: bomweb-php81-apache
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./src:/var/www/html
     working_dir: /var/www/html
@@ -16,7 +16,7 @@ services:
     build: ./websocket_server
     image: php:8.1-cli
     container_name: bomweb-php81-websocket
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./websocket_server:/var/www/html
     working_dir: /var/www/html
@@ -28,7 +28,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: bomweb-phpmyadmin
-    restart: always
+    restart: unless-stopped
     environment:
       PMA_HOST: mysql80
       PMA_USER: root
@@ -42,7 +42,7 @@ services:
   adminer:
     image: adminer
     container_name: bomweb-adminer
-    restart: always
+    restart: unless-stopped
     environment:
       PMA_HOST: mysql80
       PMA_USER: root
@@ -56,7 +56,7 @@ services:
   mysql80:
     build: ./mysql
     container_name: bomweb-mysql80
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: pass123
       MYSQL_DATABASE: bomweb
