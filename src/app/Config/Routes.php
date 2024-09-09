@@ -124,12 +124,18 @@ $routes->group('exemple', function ($routes) {
             $routes->get('bom_relatorio_filtrar/(:any)', 'ExampleEndpointController::bomRelatorioFiltrar/$1');
             $routes->post('bom_relatorio_filtrar', 'ExampleEndpointController::bomRelatorioFiltrar');
             $routes->post('bom_relatorio_filtrar/(:any)', 'ExampleEndpointController::bomRelatorioFiltrar/$1');
-            # www/exemple/group/endpoint/bom_relatorio_cadasrtar/(:any)
-            $routes->get('bom_relatorio_cadasrtar', 'ExampleEndpointController::bomRelatorioCadastrar');
-            $routes->get('bom_relatorio_cadasrtar/(:segment)', 'ExampleEndpointController::bomRelatorioCadastrar/$1');
-            $routes->get('bom_relatorio_cadasrtar/(:any)', 'ExampleEndpointController::bomRelatorioCadastrar/$1');
-            $routes->post('bom_relatorio_cadasrtar', 'ExampleEndpointController::bomRelatorioCadastrar');
-            $routes->post('bom_relatorio_cadasrtar/(:any)', 'ExampleEndpointController::bomRelatorioCadastrar/$1');
+            # www/exemple/group/endpoint/bom_relatorio_pendente/(:any)
+            $routes->get('bom_relatorio_pendente', 'ExampleEndpointController::bomRelatorioPendente');
+            $routes->get('bom_relatorio_pendente/(:segment)', 'ExampleEndpointController::bomRelatorioPendente/$1');
+            $routes->get('bom_relatorio_pendente/(:any)', 'ExampleEndpointController::bomRelatorioPendente/$1');
+            $routes->post('bom_relatorio_pendente', 'ExampleEndpointController::bomRelatorioPendente');
+            $routes->post('bom_relatorio_pendente/(:any)', 'ExampleEndpointController::bomRelatorioPendente/$1');
+            # www/exemple/group/endpoint/bom_relatorio_cadastrar/(:any)
+            $routes->get('bom_relatorio_cadastrar', 'ExampleEndpointController::bomRelatorioCadastrar');
+            $routes->get('bom_relatorio_cadastrar/(:segment)', 'ExampleEndpointController::bomRelatorioCadastrar/$1');
+            $routes->get('bom_relatorio_cadastrar/(:any)', 'ExampleEndpointController::bomRelatorioCadastrar/$1');
+            $routes->post('bom_relatorio_cadastrar', 'ExampleEndpointController::bomRelatorioCadastrar');
+            $routes->post('bom_relatorio_cadastrar/(:any)', 'ExampleEndpointController::bomRelatorioCadastrar/$1');
             # www/exemple/group/endpoint/bom_log_filtrar/(:any)
             $routes->get('bom_log_filtrar', 'ExampleEndpointController::bomLogFiltrar');
             $routes->get('bom_log_filtrar/(:segment)', 'ExampleEndpointController::bomLogFiltrar/$1');

@@ -1658,6 +1658,86 @@ class ExampleEndpointController extends ResourceController
             return view('Exemplo/bom_clone/011_relatorio/001_relario', $apiRespond);
         }
     }
+    // Consumo de API
+    // route GET /www/exemple/group/endpoint/bom_relatorio_pendente/(:any)
+    // route POST /www/exemple/group/endpoint/bom_relatorio_pendente/(:any)
+    // Informação sobre o controller
+    // retorno do controller [VIEW]
+    public function bomRelatorioPendente($parameter = NULL)
+    {
+        // $this->token_csrf();
+        $request = service('request');
+        $getMethod = $request->getMethod();
+        $getVar_page = $request->getVar('page');
+        $processRequest = (array) $request->getVar();
+        $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
+        // myPrint('TESTE', 'src\app\Controllers\ExampleEndpointController.php');
+        //
+        $loadView = array(
+            $this->head,
+            $this->menu,
+            $this->message,
+            $this->footer
+        );
+        try {
+            // URI da API
+            $endPoint['objeto'] = myEndPoint('index.php/projeto/endereco/api/verbo', '123');
+            $requestJSONform['objeto'] = isset($endPoint['objeto']['result']) ? $endPoint['objeto']['result'] : array();
+            $requestJSONform = array();
+            $apiRespond = [
+                'status' => 'success',
+                'message' => 'API loading data (dados para carregamento da API)',
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Description',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                // 'method' => '__METHOD__',
+                // 'function' => '__FUNCTION__',
+                'result' => $processRequest,
+                'loadView' => $loadView,
+                'metadata' => [
+                    'page_title' => 'Application title',
+                    'getURI' => $this->uri->getSegments(),
+                    // Você pode adicionar campos comentados anteriormente se forem relevantes
+                    // 'method' => '__METHOD__',
+                    // 'function' => '__FUNCTION__',
+                ]
+            ];
+            if ($json == 1) {
+                $response = $this->response->setJSON($apiRespond, 201);
+            }
+        } catch (\Exception $e) {
+            $apiRespond = [
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Criar Method',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                'metadata' => [
+                    'page_title' => 'ERRO - API Method',
+                    'getURI' => $this->uri->getSegments(),
+                ]
+            ];
+            if ($json == 1) {
+                $response = $this->response->setJSON($apiRespond, 500);
+            }
+        }
+        if ($json == 1) {
+            return $apiRespond;
+        } else {
+            // return $apiRespond;
+            // return view($this->template, $apiRespond);
+            return view('Exemplo/bom_clone/008_bom/003_pendentes', $apiRespond);
+        }
+    }
 
     // Consumo de API
     // route GET /www/exemple/group/endpoint/bom_veiculo/(:any)
@@ -1979,7 +2059,7 @@ class ExampleEndpointController extends ResourceController
         } else {
             // return $apiRespond;
             // return view($this->template, $apiRespond);
-            return view('Exemplo/bom_clone/012_importar_linhas/001_filtrar', $apiRespond);
+            return view('Exemplo/bom_clone/012_importar_linhas/001_importar', $apiRespond);
         }
     }
 
@@ -2064,7 +2144,7 @@ class ExampleEndpointController extends ResourceController
         }
     }
 
-    
+
     // Consumo de API
     // route GET /www/exemple/group/endpoint/bom_veiculo_filtrar/(:any)
     // route POST /www/exemple/group/endpoint/bom_veiculo_filtrar/(:any)

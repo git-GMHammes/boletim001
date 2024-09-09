@@ -49,13 +49,13 @@
 			<ul>
 				
 					<p>
-						<li><a href="/configuracao/bom" id="insert" class="">BOM</a></li>
+						<li><a href="<?= base_url(); ?>exemple/group/endpoint/bom_configuracoes_bom" id="insert" class="">BOM</a></li>
 					</p>
 				
 				
 					<p>
 						<li>
-							<a href="/configuracao/permissao/list" id="insert" class="">Permissões</a>
+							<a href="<?= base_url(); ?>exemple/group/endpoint/bom_configuracoes_permissoes" id="insert" class="">Permissões</a>
 						</li>
 					</p>
 				
