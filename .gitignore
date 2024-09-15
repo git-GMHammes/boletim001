@@ -17,3 +17,4 @@ vendor/*
 mysql/mysql-data/*
 src/vendor/*
 src/public/seguranca/*
+src/composer.lock
