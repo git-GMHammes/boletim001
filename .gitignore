@@ -1,3 +1,4 @@
+*.sql
 Doc/*
 !Doc/Comandos.txt
 src/spark

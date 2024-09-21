@@ -9,8 +9,50 @@ use CodeIgniter\Router\RouteCollection;
 $routes->addRedirect('/', 'exemple/group/endpoint/bom_login');
 $routes->addRedirect('/main', 'exemple/group/endpoint/bom_main');
 
-$routes->group('bomweb', function ($routes) {
+$routes->group('analise', function ($routes) {
+    # Empresa
+    $routes->group('modelo', function ($routes) {
+        # www/bomweb/empresa/api/(:any)
+        $routes->group('api', function ($routes) {
+            # www/bomweb/modelo/api/exe01/(:any)
+            $routes->get('exe01', 'ModeloApiController::dbMethod');
+            $routes->get('exe01/(:segment)', 'ModeloApiController::dbMethod/$1');
+            $routes->get('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
+            $routes->post('exe01', 'ModeloApiController::dbMethod');
+            $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
+            $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
+        });
+        # www/bomweb/modelo/endpoint/(:any)
+        $routes->group('endpoint', function ($routes) {
+            # www/bomweb/modelo/endpoint/principal/(:any)
+            $routes->get('principal', 'ModeloEndPointController::main01');
+            $routes->get('principal/(:segment)', 'ModeloEndPointController::main01/$1');
+            $routes->get('principal/(:any)', 'ModeloEndPointController::main01/$1');
+            $routes->post('principal', 'ModeloEndPointController::main01');
+            $routes->post('principal/(:any)', 'ModeloEndPointController::main01/$1');
+            # www/bomweb/modelo/endpoint/exe01/(:any)
+            $routes->get('exe01', 'ModeloEndPointController::sub01');
+            $routes->get('exe01/(:segment)', 'ModeloEndPointController::sub01/$1');
+            $routes->get('exe01/(:any)', 'ModeloEndPointController::sub01/$1');
+            $routes->post('exe01', 'ModeloEndPointController::sub01');
+            $routes->post('exe01/(:any)', 'ModeloEndPointController::sub01/$1');
+            # www/bomweb/modelo/endpoint/exe02/(:any)
+            $routes->get('exe02', 'ModeloEndPointController::sub02');
+            $routes->get('exe02/(:segment)', 'ModeloEndPointController::sub02/$1');
+            $routes->get('exe02/(:any)', 'ModeloEndPointController::sub02/$1');
+            $routes->post('exe02', 'ModeloEndPointController::sub02');
+            $routes->post('exe02/(:any)', 'ModeloEndPointController::sub02/$1');
+            # www/bomweb/modelo/endpoint/exe03/(:any)
+            $routes->get('exe03', 'ModeloEndPointController::sub03');
+            $routes->get('exe03/(:segment)', 'ModeloEndPointController::sub03/$1');
+            $routes->get('exe03/(:any)', 'ModeloEndPointController::sub03/$1');
+            $routes->post('exe03', 'ModeloEndPointController::sub03');
+            $routes->post('exe03/(:any)', 'ModeloEndPointController::sub03/$1');
+        });
+    });
+});
 
+$routes->group('bomweb', function ($routes) {
     # Empresa
     $routes->group('empresa', function ($routes) {
         # www/bomweb/empresa/api/(:any)
