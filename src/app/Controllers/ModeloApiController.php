@@ -11,7 +11,7 @@ use App\Controllers\ExempleDbController;
 
 use Exception;
 
-class ExampleApiController extends ResourceController
+class ModeloApiController extends ResourceController
 {
     use ResponseTrait;
     private $ModelResponse;

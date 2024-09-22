@@ -7,15 +7,15 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
 
-class ModeloEndpointController extends ResourceController
+class UsuarioEndpointController extends ResourceController
 {
     use ResponseTrait;
 
-    private $template = 'analise/templates/main';
-    private $message = 'analise/message';
-    private $footer = 'analise/footer';
-    private $head = 'analise/head';
-    private $menu = 'analise/menu';
+    private $template = 'bw/templates/main';
+    private $message = 'bw/message';
+    private $footer = 'bw/footer';
+    private $head = 'bw/head';
+    private $menu = 'bw/menu';
     private $tokenCsrf;
     private $ModelResponse;
     private $uri;
@@ -39,13 +39,12 @@ class ModeloEndpointController extends ResourceController
         exit('403 Forbidden - Directory access is forbidden.');
     }
 
-
     # Consumo de API
-    # route GET /www/analise/modelo/endpoint/principal/(:any)
-    # route POST /www/analise/modelo/endpoint/principal/(:any)
+    # route GET /www/bw/usuario/endpoint/login/(:any)
+    # route POST /www/bw/usuario/endpoint/login/(:any)
     # Informação sobre o controller
     # retorno do controller [VIEW]
-    public function main01($parameter = NULL)
+    public function loginWeb($parameter = NULL)
     {
         $request = service('request');
         $getMethod = $request->getMethod();
@@ -53,13 +52,12 @@ class ModeloEndpointController extends ResourceController
         $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
-        // myEndPoint($processRequest, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
         #
         $loadView = array(
             $this->head,
             $this->menu,
             $this->message,
-            'analise/modelos/principal',
+
             $this->footer,
         );
         try {

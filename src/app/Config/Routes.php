@@ -10,11 +10,11 @@ $routes->addRedirect('/', 'exemple/group/endpoint/bom_login');
 $routes->addRedirect('/main', 'exemple/group/endpoint/bom_main');
 
 $routes->group('analise', function ($routes) {
-    # Empresa
+    # Modelo
     $routes->group('modelo', function ($routes) {
-        # www/bomweb/empresa/api/(:any)
+        # www/analise/modelo/api/(:any)
         $routes->group('api', function ($routes) {
-            # www/bomweb/modelo/api/exe01/(:any)
+            # www/analise/modelo/api/exe01/(:any)
             $routes->get('exe01', 'ModeloApiController::dbMethod');
             $routes->get('exe01/(:segment)', 'ModeloApiController::dbMethod/$1');
             $routes->get('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
@@ -22,32 +22,57 @@ $routes->group('analise', function ($routes) {
             $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
             $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
         });
-        # www/bomweb/modelo/endpoint/(:any)
+        # www/analise/modelo/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {
-            # www/bomweb/modelo/endpoint/principal/(:any)
-            $routes->get('principal', 'ModeloEndPointController::main01');
-            $routes->get('principal/(:segment)', 'ModeloEndPointController::main01/$1');
-            $routes->get('principal/(:any)', 'ModeloEndPointController::main01/$1');
-            $routes->post('principal', 'ModeloEndPointController::main01');
-            $routes->post('principal/(:any)', 'ModeloEndPointController::main01/$1');
-            # www/bomweb/modelo/endpoint/exe01/(:any)
-            $routes->get('exe01', 'ModeloEndPointController::sub01');
-            $routes->get('exe01/(:segment)', 'ModeloEndPointController::sub01/$1');
-            $routes->get('exe01/(:any)', 'ModeloEndPointController::sub01/$1');
-            $routes->post('exe01', 'ModeloEndPointController::sub01');
-            $routes->post('exe01/(:any)', 'ModeloEndPointController::sub01/$1');
-            # www/bomweb/modelo/endpoint/exe02/(:any)
-            $routes->get('exe02', 'ModeloEndPointController::sub02');
-            $routes->get('exe02/(:segment)', 'ModeloEndPointController::sub02/$1');
-            $routes->get('exe02/(:any)', 'ModeloEndPointController::sub02/$1');
-            $routes->post('exe02', 'ModeloEndPointController::sub02');
-            $routes->post('exe02/(:any)', 'ModeloEndPointController::sub02/$1');
-            # www/bomweb/modelo/endpoint/exe03/(:any)
-            $routes->get('exe03', 'ModeloEndPointController::sub03');
-            $routes->get('exe03/(:segment)', 'ModeloEndPointController::sub03/$1');
-            $routes->get('exe03/(:any)', 'ModeloEndPointController::sub03/$1');
-            $routes->post('exe03', 'ModeloEndPointController::sub03');
-            $routes->post('exe03/(:any)', 'ModeloEndPointController::sub03/$1');
+            # www/analise/modelo/endpoint/principal/(:any)
+            $routes->get('principal', 'ModeloEndpointController::main01');
+            $routes->get('principal/(:segment)', 'ModeloEndpointController::main01/$1');
+            $routes->get('principal/(:any)', 'ModeloEndpointController::main01/$1');
+            $routes->post('principal', 'ModeloEndpointController::main01');
+            $routes->post('principal/(:any)', 'ModeloEndpointController::main01/$1');
+            # www/analise/modelo/endpoint/exe01/(:any)
+            $routes->get('exe01', 'ModeloEndpointController::sub01');
+            $routes->get('exe01/(:segment)', 'ModeloEndpointController::sub01/$1');
+            $routes->get('exe01/(:any)', 'ModeloEndpointController::sub01/$1');
+            $routes->post('exe01', 'ModeloEndpointController::sub01');
+            $routes->post('exe01/(:any)', 'ModeloEndpointController::sub01/$1');
+            # www/analise/modelo/endpoint/exe02/(:any)
+            $routes->get('exe02', 'ModeloEndpointController::sub02');
+            $routes->get('exe02/(:segment)', 'ModeloEndpointController::sub02/$1');
+            $routes->get('exe02/(:any)', 'ModeloEndpointController::sub02/$1');
+            $routes->post('exe02', 'ModeloEndpointController::sub02');
+            $routes->post('exe02/(:any)', 'ModeloEndpointController::sub02/$1');
+            # www/analise/modelo/endpoint/exe03/(:any)
+            $routes->get('exe03', 'ModeloEndpointController::sub03');
+            $routes->get('exe03/(:segment)', 'ModeloEndpointController::sub03/$1');
+            $routes->get('exe03/(:any)', 'ModeloEndpointController::sub03/$1');
+            $routes->post('exe03', 'ModeloEndpointController::sub03');
+            $routes->post('exe03/(:any)', 'ModeloEndpointController::sub03/$1');
+        });
+    });
+});
+
+$routes->group('bw', function ($routes) {
+    # Usuário
+    $routes->group('usuario', function ($routes) {
+        # www/bw/usuario/api/(:any)
+        $routes->group('api', function ($routes) {
+            # www/bw/usuario/api/exe01/(:any)
+            $routes->get('exe01', 'ModeloApiController::dbMethod');
+            $routes->get('exe01/(:segment)', 'ModeloApiController::dbMethod/$1');
+            $routes->get('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
+            $routes->post('exe01', 'ModeloApiController::dbMethod');
+            $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
+            $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
+        });
+        # www/bw/usuario/endpoint/(:any)
+        $routes->group('endpoint', function ($routes) {
+            # www/bw/usuario/endpoint/login/(:any)
+            $routes->get('login', 'UsuarioEndpointController::loginWeb');
+            $routes->get('login/(:segment)', 'UsuarioEndpointController::loginWeb/$1');
+            $routes->get('login/(:any)', 'UsuarioEndpointController::loginWeb/$1');
+            $routes->post('login', 'UsuarioEndpointController::loginWeb');
+            $routes->post('login/(:any)', 'UsuarioEndpointController::loginWeb/$1');
         });
     });
 });

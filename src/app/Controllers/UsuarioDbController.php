@@ -9,7 +9,7 @@ use App\Models\CadastrosModels;
 use App\Models\VCadastroAdolescentesModels;
 use Exception;
 
-class ModeloDbController extends BaseController
+class ExempleDbController extends BaseController
 {
     // private $ModelUpload;
     private $ModelVCadastroAdolescentes;
