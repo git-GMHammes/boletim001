@@ -86,22 +86,19 @@ $parametros_backend = array(
           <div className="col-12 col-sm-3" style={navyBlueDark}>
             <div className="d-flex justify-content-around align-items-center flex-wrap m-5">
               <div style={circleWithRadialGradient}>
-                <i className="bi bi-twitch"></i>
+                <i class="bi bi-instagram"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i className="bi bi-twitch"></i>
+                <i class="bi bi-facebook"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i className="bi bi-twitch"></i>
+                <i class="bi bi-twitter-x"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i className="bi bi-twitch"></i>
+                <i class="bi bi-tiktok"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i className="bi bi-twitch"></i>
-              </div>
-              <div style={circleWithRadialGradient}>
-                <i className="bi bi-twitch"></i>
+                <i class="bi bi-whatsapp"></i>
               </div>
             </div>
           </div>
@@ -133,5 +130,3 @@ $parametros_backend = array(
 <?php
 $parametros_backend = array();
 ?>
-&nbsp;
-&emsp;

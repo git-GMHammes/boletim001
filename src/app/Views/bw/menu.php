@@ -23,25 +23,159 @@ $parametros_backend = array(
         const server_port = parametros.server_port;
         const base_url = parametros.base_url;
 
-        const [isCollapsed, setIsCollapsed] = React.useState(false);
+        // Style
+        const navyBlueDark = {
+            backgroundColor: "#000080",
+        };
 
-        const toggleCollapse = () => {
-            setIsCollapsed(!isCollapsed);
-        };
-        const linkStyle = {
-            color: '#53D7DC',
-            fontFamily: '"Roboto", sans-serif',
-            fontWeight: 700,
-            fontStyle: 'normal'
-        };
-        const headerTextStyle = {
-            backgroundImage: 'linear-gradient(to right, #330033, #14007A)',
-            color: 'white',
-            textDecoration: 'none',
-            padding: '10px'
-        };
         return (
-            <div>MENU</div>
+            <div>
+                <nav className="navbar navbar-expand-lg" style={navyBlueDark}>
+                    <div className="container-fluid">
+                        <button
+                            className="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarTogglerDemo01"
+                            aria-controls="navbarTogglerDemo01"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span className="navbar-toggler-icon" style={{ filter: "invert(1)" }}></span>
+                        </button>
+                        <div className="collapse navbar-collapse justify-content-center mt-1" id="navbarTogglerDemo01">
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Empresa
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Ação 1</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 2</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Linha
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Tipo de Linha</a></li>
+                                    <li><a className="dropdown-item" href="#">Importar Linhas</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Tipo de Veículo
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Ação 1</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 2</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Tarifa
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Tarifa Retroativa</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 2</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Usuário
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Log</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 2</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    BOM
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Ação 1</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 2</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Relatório
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Ação 1</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 2</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                            <div className="btn-group m-1">
+                                <button
+                                    className="btn btn-secondary btn-sm dropdown-toggle"
+                                    style={navyBlueDark}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Configurações
+                                </button>
+                                <ul className="dropdown-menu p-2">
+                                    <li><a className="dropdown-item" href="#">Ação 1</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 2</a></li>
+                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                </ul>
+                            </div>
+                        </div> &nbsp;
+                    </div>
+                </nav>
+            </div>
         );
     };
     ReactDOM.render(<AppMenuReact />, document.querySelector('.App_menu_react'));
