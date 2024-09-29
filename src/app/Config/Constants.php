@@ -35,19 +35,25 @@ defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . 'vendor/autoload.
  */
 defined('SECOND') || define('SECOND', 1);
 defined('MINUTE') || define('MINUTE', 60);
-defined('HOUR')   || define('HOUR', 3600);
-defined('DAY')    || define('DAY', 86400);
-defined('WEEK')   || define('WEEK', 604800);
-defined('MONTH')  || define('MONTH', 2_592_000);
-defined('YEAR')   || define('YEAR', 31_536_000);
+defined('HOUR') || define('HOUR', 3600);
+defined('DAY') || define('DAY', 86400);
+defined('WEEK') || define('WEEK', 604800);
+defined('MONTH') || define('MONTH', 2_592_000);
+defined('YEAR') || define('YEAR', 31_536_000);
 defined('DECADE') || define('DECADE', 315_360_000);
 #
-$varGRASD1 = linux11('bXlzcWw4MA==');
+$varGRASD1 = linux11('Ym9td2ViLW15c3FsODA=');
 $varGRASD2 = linux11('cm9vdA==');
 $varGRASD3 = linux11('cGFzczEyMw==');
 $varGRASD4 = linux11('Ym9td2Vi');
 $varGRASD5 = linux11('TXlTUUxp');
 $varGRASD6 = linux11('');
+// echo "<br>" . $varGRASD1 = linux11('Ym9td2ViLW15c3FsODA=');
+// echo "<br>" . $varGRASD2 = linux11('cm9vdA==');
+// echo "<br>" . $varGRASD3 = linux11('cGFzczEyMw==');
+// echo "<br>" . $varGRASD4 = linux11('Ym9td2Vi');
+// echo "<br>" . $varGRASD5 = linux11('TXlTUUxp');
+// echo "<br>" . $varGRASD6 = linux11('');
 #
 $varGRASQ1 = linux11('MTAuMTQ2Ljg0LjE2NQ==');
 $varGRASQ2 = linux11('cm9vdA==');
@@ -55,6 +61,14 @@ $varGRASQ3 = linux11('cGFzczEyMw==');
 $varGRASQ4 = linux11('Ym9td2Vi');
 $varGRASQ5 = linux11('TXlTUUxp');
 $varGRASQ6 = linux11('');
+#
+$varBWH1 = linux11('bXlzcWwwMi1mYXJtMS5raW5naG9zdC5uZXQ=');
+$varBWH2 = linux11('aGFiaWxpZGExMF9hZGQ0');
+$varBWH3 = linux11('TWk1dEVyaTA=');
+$varBWH4 = linux11('aGFiaWxpZGFkZTEw');
+$varBWH5 = linux11('TXlTUUxp ');
+$varBWH6 = linux11('');
+// exit('src\app\Config\Constants.php');
 /*
  | --------------------------------------------------------------------------
  | Exit Status Codes
@@ -80,16 +94,16 @@ $varGRASQ6 = linux11('');
  |       http://tldp.org/LDP/abs/html/exitcodes.html
  |
  */
-defined('EXIT_SUCCESS')        || define('EXIT_SUCCESS', 0);        // no errors
-defined('EXIT_ERROR')          || define('EXIT_ERROR', 1);          // generic error
-defined('EXIT_CONFIG')         || define('EXIT_CONFIG', 3);         // configuration error
-defined('EXIT_UNKNOWN_FILE')   || define('EXIT_UNKNOWN_FILE', 4);   // file not found
-defined('EXIT_UNKNOWN_CLASS')  || define('EXIT_UNKNOWN_CLASS', 5);  // unknown class
+defined('EXIT_SUCCESS') || define('EXIT_SUCCESS', 0);        // no errors
+defined('EXIT_ERROR') || define('EXIT_ERROR', 1);          // generic error
+defined('EXIT_CONFIG') || define('EXIT_CONFIG', 3);         // configuration error
+defined('EXIT_UNKNOWN_FILE') || define('EXIT_UNKNOWN_FILE', 4);   // file not found
+defined('EXIT_UNKNOWN_CLASS') || define('EXIT_UNKNOWN_CLASS', 5);  // unknown class
 defined('EXIT_UNKNOWN_METHOD') || define('EXIT_UNKNOWN_METHOD', 6); // unknown class member
-defined('EXIT_USER_INPUT')     || define('EXIT_USER_INPUT', 7);     // invalid user input
-defined('EXIT_DATABASE')       || define('EXIT_DATABASE', 8);       // database error
-defined('EXIT__AUTO_MIN')      || define('EXIT__AUTO_MIN', 9);      // lowest automatically-assigned error code
-defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125);    // highest automatically-assigned error code
+defined('EXIT_USER_INPUT') || define('EXIT_USER_INPUT', 7);     // invalid user input
+defined('EXIT_DATABASE') || define('EXIT_DATABASE', 8);       // database error
+defined('EXIT__AUTO_MIN') || define('EXIT__AUTO_MIN', 9);      // lowest automatically-assigned error code
+defined('EXIT__AUTO_MAX') || define('EXIT__AUTO_MAX', 125);    // highest automatically-assigned error code
 #
 function linux11($parameter)
 {
@@ -118,6 +132,13 @@ defined('BAECA335DE8DFC253B31BAF4F6222DDE') or define('BAECA335DE8DFC253B31BAF4F
 defined('C2B1A1FB186A242329829C2997C35783') or define('C2B1A1FB186A242329829C2997C35783', $varGRASQ4);
 defined('AD8EA978C4A449A14618C457F9EFB7F8') or define('AD8EA978C4A449A14618C457F9EFB7F8', $varGRASQ5);
 defined('BB3DCADC18F46D905A5B406189D35EEB') or define('BB3DCADC18F46D905A5B406189D35EEB', $varGRASQ6);
+#
+defined('D2D90F3912A96437F8CD51FBBFC09C61') or define('D2D90F3912A96437F8CD51FBBFC09C61', $varBWH1);
+defined('C234CE114BDA7798EC241529A3711046') or define('C234CE114BDA7798EC241529A3711046', $varBWH2);
+defined('C94D2A06575AC35FCB98B4FB8177CB88') or define('C94D2A06575AC35FCB98B4FB8177CB88', $varBWH3);
+defined('F19141957DECEE55C93D9CBF99441A3A') or define('F19141957DECEE55C93D9CBF99441A3A', $varBWH4);
+defined('AC0867BE16336DCF61EC88CA488123B1') or define('AC0867BE16336DCF61EC88CA488123B1', $varBWH5);
+defined('A401087CA57F78EA2A1EC27890E37D69') or define('A401087CA57F78EA2A1EC27890E37D69', $varBWH6);
 /**
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
@@ -146,13 +167,15 @@ function scbdd($server_name)
     if (
         $server_name == 'localhost'
     ) {
-        defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'FIAPTPA_HML');
+        defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'localhostBOM');
     } elseif (
-        $server_name == '127.0.0.1' ||
-        $server_name == '10.146.84.140' ||
-        $server_name == '10.11.62.148'
-        ) {
-            defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'FIAPTPA_DEV');
+        $server_name == '127.0.0.1'
+    ) {
+        defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'localhostBOM');
+    } elseif (
+        $server_name == 'habilidade.com'
+    ) {
+        defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'HabilidadeBW');
     } else {
         exit('Não Encontramos HOST: ' . $server_name . ' Para este Sistema');
     }

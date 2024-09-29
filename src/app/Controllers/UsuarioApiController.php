@@ -6,12 +6,12 @@ use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\TokenCsrfController;
 use App\Controllers\SystemMessageController;
-use App\Controllers\ExempleDbController;
+use App\Controllers\UsuarioDbController;
 // use App\Controllers\SystemUploadDbController;
 
 use Exception;
 
-class ExampleApiController extends ResourceController
+class UsuarioApiController extends ResourceController
 {
     use ResponseTrait;
     private $ModelResponse;
@@ -23,7 +23,7 @@ class ExampleApiController extends ResourceController
 
     public function __construct()
     {
-        $this->DbController = new ExempleDbController();
+        $this->DbController = new UsuarioDbController();
         $this->tokenCsrf = new TokenCsrfController();
         $this->message = new SystemMessageController();
         // $this->DbController = new SystemUploadDbController();
@@ -50,7 +50,7 @@ class ExampleApiController extends ResourceController
         $getMethod = $request->getMethod();
         $getGet = $this->request->getGet('page');
         $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
-        $processRequest = (array)$request->getVar();
+        $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         #
         // myPrint($getMethod, 'src\app\Controllers\AdolescenteApiController.php');
@@ -111,7 +111,7 @@ class ExampleApiController extends ResourceController
         $getMethod = $request->getMethod();
         $getGet = $this->request->getGet('page');
         $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
-        $processRequest = (array)$request->getVar();
+        $processRequest = (array) $request->getVar();
         $processRequest = array_filter($processRequest);
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         #
@@ -174,7 +174,7 @@ class ExampleApiController extends ResourceController
         $request = service('request');
         $getMethod = $request->getMethod();
         $getVar_page = $request->getVar('page');
-        $processRequest = (array)$request->getVar();
+        $processRequest = (array) $request->getVar();
         // $uploadedFiles = $request->getFiles();
         $token_csrf = (isset($processRequest['token_csrf']) ? $processRequest['token_csrf'] : NULL);
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
@@ -197,7 +197,8 @@ class ExampleApiController extends ResourceController
             }
         } else {
             $this->message->message(['ERRO: Dados enviados inválidos'], 'danger');
-        };
+        }
+        ;
 
         if (session()->get('message')) {
             $apiSession = session()->get('message');
@@ -259,7 +260,7 @@ class ExampleApiController extends ResourceController
             // return redirect()->back();
         }
     }
-    
+
     # route POST /www/fia/ptpa/modelo/api/deletar/(:any)
     # route GET /www/fia/ptpa/modelo/api/deletar/(:any)
     # Informação sobre o controller
@@ -268,7 +269,7 @@ class ExampleApiController extends ResourceController
     {
         $request = service('request');
         $getMethod = $request->getMethod();
-        $processRequest = (array)$request->getVar();
+        $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         // myPrint($parameter1, $parameter2);
         try {
@@ -354,7 +355,7 @@ class ExampleApiController extends ResourceController
         $getMethod = $request->getMethod();
         $getGet = $this->request->getGet('page');
         $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
-        $processRequest = (array)$request->getVar();
+        $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         #
         // myPrint($getMethod, 'src\app\Controllers\AdolescenteApiController.php');
@@ -403,4 +404,128 @@ class ExampleApiController extends ResourceController
             return $response;
         }
     }
+
+    #
+    # route POST /www/bw/habilidade/usuario/api/loginEtapa1/(:any)
+    # route GET /www/bw/habilidade/usuario/api/loginEtapa1/(:any)
+    # Informação sobre o controller
+    # retorno do controller [JSON]
+    public function loginEtapa1($parameter = NULL)
+    {
+        # Parâmentros para receber um POST
+        $request = service('request');
+        $getMethod = $request->getMethod();
+        $getGet = $this->request->getGet('page');
+        $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
+        $processRequest = (array) $request->getVar();
+        $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        #
+        try {
+            #
+            $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
+            $requestDb = $this->DbController->dbFilterAuth($processRequest);
+            
+            // myPrint($requestDb, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
+            #
+            $apiRespond = [
+                'status' => 'success',
+                'message' => 'API loading data (dados para carregamento da API)',
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Description',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                // 'method' => '__METHOD__',
+                // 'function' => '__FUNCTION__',
+                'result' => $requestDb,
+                'metadata' => [
+                    'page_title' => 'Application title',
+                    'getURI' => $this->uri->getSegments(),
+                    // Você pode adicionar campos comentados anteriormente se forem relevantes
+                    // 'method' => '__METHOD__',
+                    // 'function' => '__FUNCTION__',
+                ]
+            ];
+            $response = $this->response->setJSON($apiRespond, 201);
+        } catch (\Exception $e) {
+            $apiRespond = array(
+                'message' => array('danger' => $e->getMessage()),
+                'page_title' => 'Application title',
+                'getURI' => $this->uri->getSegments(),
+            );
+            $this->message->message($message = array(), 'danger', $parameter, 5);
+            $response = $this->response->setJSON($apiRespond, 500);
+        }
+        if ($json == 1) {
+            return $response;
+            // return redirect()->back();
+            // return redirect()->to('project/endpoint/parameter/parameter/' . $parameter);
+        } else {
+            return $response;
+        }
+    }
+    #
+    #
+    # route POST /www/bw/habilidade/usuario/api/loginEtapa2/(:any)
+    # route GET /www/bw/habilidade/usuario/api/loginEtapa2/(:any)
+    # Informação sobre o controller
+    # retorno do controller [JSON]
+    public function loginEtapa2($parameter = NULL)
+    {
+        # Parâmentros para receber um POST
+        $request = service('request');
+        $getMethod = $request->getMethod();
+        $getGet = $this->request->getGet('page');
+        $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
+        $processRequest = (array) $request->getVar();
+        $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        #
+        // myPrint($getMethod, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
+        try {
+            #
+            $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
+            $requestDb = $this->DbController->dbRead($id, $page);
+            #
+            $apiRespond = [
+                'status' => 'success',
+                'message' => 'API loading data (dados para carregamento da API)',
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Description',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                // 'method' => '__METHOD__',
+                // 'function' => '__FUNCTION__',
+                'result' => $requestDb,
+                'metadata' => [
+                    'page_title' => 'Application title',
+                    'getURI' => $this->uri->getSegments(),
+                    // Você pode adicionar campos comentados anteriormente se forem relevantes
+                    // 'method' => '__METHOD__',
+                    // 'function' => '__FUNCTION__',
+                ]
+            ];
+            $response = $this->response->setJSON($apiRespond, 201);
+        } catch (\Exception $e) {
+            $apiRespond = array(
+                'message' => array('danger' => $e->getMessage()),
+                'page_title' => 'Application title',
+                'getURI' => $this->uri->getSegments(),
+            );
+            $this->message->message($message = array(), 'danger', $parameter, 5);
+            $response = $this->response->setJSON($apiRespond, 500);
+        }
+        if ($json == 1) {
+            return $response;
+            // return redirect()->back();
+            // return redirect()->to('project/endpoint/parameter/parameter/' . $parameter);
+        } else {
+            return $response;
+        }
+    }
+    #
 }

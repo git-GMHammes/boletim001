@@ -10,7 +10,7 @@
 <body>
     <pre>
         <?php
-        echo "<br /> hostname " . $hostname = setBase64('mysql80');
+        echo "<br /> hostname " . $hostname = setBase64('bomweb-mysql80');
         echo "<br /> username " . $username = setBase64('root');
         echo "<br /> password " . $password = setBase64('pass123');
         echo "<br /> database " . $database = setBase64('bomweb');
@@ -19,6 +19,7 @@
     </pre>
     <br>
     #
+
     <pre>
         <?php
         echo "<br /> hostname " . $hostname = setBase64('10.146.84.165');
@@ -30,11 +31,24 @@
     </pre>
     <br>
     #
+
+    <pre>
+        <?php
+        echo "<br /> hostname " . $hostname = setBase64('mysql02-farm1.kinghost.net');
+        echo "<br /> username " . $username = setBase64('habilida10_add4');
+        echo "<br /> password " . $password = setBase64('Mi5tEri0');
+        echo "<br /> database " . $database = setBase64('habilidade10');
+        echo "<br /> DBDriver " . $DBDriver = setBase64('MySQLi');
+        ?>
+    </pre>
+    <br>
+    #
+
     <br>
     <?php
-    for ($i = 0; $i < 20; $i++) :
+    for ($i = 0; $i < 20; $i++):
         echo criptoNew();
-    ?>
+        ?>
         <br>
         ------
         <br>

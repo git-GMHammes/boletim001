@@ -6,7 +6,8 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 // $routes->get('/', 'Home::index');
-$routes->addRedirect('/', 'exemple/group/endpoint/bom_login');
+$routes->addRedirect('/', 'bw/habilidade/usuario/endpoint/login');
+$routes->addRedirect('/bom', 'exemple/group/endpoint/bom_login');
 $routes->addRedirect('/main', 'exemple/group/endpoint/bom_main');
 
 $routes->group('analise', function ($routes) {
@@ -52,7 +53,38 @@ $routes->group('analise', function ($routes) {
     });
 });
 
+
 $routes->group('bw', function ($routes) {
+    $routes->group('habilidade', function ($routes) {
+        # habilidade
+        $routes->group('usuario', function ($routes) {
+            # www/bw/habilidade/usuario/api/(:any)
+            $routes->group('api', function ($routes) {
+                # www/bw/habilidade/usuario/api/loginEtapa1/(:any)
+                $routes->get('loginEtapa1', 'UsuarioApiController::loginEtapa1');
+                $routes->get('loginEtapa1/(:segment)', 'UsuarioApiController::loginEtapa1/$1');
+                $routes->get('loginEtapa1/(:any)', 'UsuarioApiController::loginEtapa1/$1');
+                $routes->post('loginEtapa1', 'UsuarioApiController::loginEtapa1');
+                $routes->post('loginEtapa1/(:any)', 'UsuarioApiController::loginEtapa1/$1');
+                # www/bw/habilidade/usuario/api/loginEtapa2/(:any)
+                $routes->get('loginEtapa2', 'UsuarioApiController::loginEtapa2');
+                $routes->get('loginEtapa2/(:segment)', 'UsuarioApiController::loginEtapa2/$1');
+                $routes->get('loginEtapa2/(:any)', 'UsuarioApiController::loginEtapa2/$1');
+                $routes->post('loginEtapa2', 'UsuarioApiController::loginEtapa2');
+                $routes->post('loginEtapa2/(:any)', 'UsuarioApiController::loginEtapa2/$1');
+            });
+            # www/bw/habilidade/usuario/endpoint/(:any)
+            $routes->group('endpoint', function ($routes) {
+                # www/bw/habilidade/usuario/endpoint/login/(:any)
+                $routes->get('login', 'UsuarioEndpointController::loginHabilidade');
+                $routes->get('login/(:segment)', 'UsuarioEndpointController::loginHabilidade/$1');
+                $routes->get('login/(:any)', 'UsuarioEndpointController::loginHabilidade/$1');
+                $routes->post('login', 'UsuarioEndpointController::loginHabilidade');
+                $routes->post('login/(:any)', 'UsuarioEndpointController::loginHabilidade/$1');
+            });
+        });
+    });
+
     # Usuário
     $routes->group('usuario', function ($routes) {
         # www/bw/usuario/api/(:any)

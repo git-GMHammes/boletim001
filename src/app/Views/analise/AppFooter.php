@@ -39,7 +39,9 @@ $parametros_backend = array(
             <div>RODAPÉ</div>
         );
     };
-    ReactDOM.render(<AppFooter />, document.querySelector('.app_footer'));
+    const rootElement = document.querySelector('.app_footer');
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<AppFooter />);
 </script>
 <?php
 $parametros_backend = array();

@@ -49,8 +49,9 @@ class Database extends Config
             'time'     => 'H:i:s',
         ],
     ];
+    
     /**
-     * The localhostBOM database connection.
+     * The CONTAINER database connection.
      *
      * @var array<string, mixed>
      */
@@ -81,7 +82,7 @@ class Database extends Config
     ];
 
     /**
-     * The qnapBOM database connection.
+     * The QNAP database connection.
      *
      * @var array<string, mixed>
      */
@@ -110,6 +111,38 @@ class Database extends Config
             'time'     => 'H:i:s',
         ],
     ];
+
+    /**
+     * The Habilidade.Com database connection.
+     *
+     * @var array<string, mixed>
+     */
+    public array $HabilidadeBW = [
+        'DSN'          => '',
+        'hostname'     => D2D90F3912A96437F8CD51FBBFC09C61,
+        'username'     => C234CE114BDA7798EC241529A3711046,
+        'password'     => C94D2A06575AC35FCB98B4FB8177CB88,
+        'database'     => F19141957DECEE55C93D9CBF99441A3A,
+        'DBDriver'     => AC0867BE16336DCF61EC88CA488123B1,
+        'DBPrefix'     => '',
+        'pConnect'     => false,
+        'DBDebug'      => true,
+        'charset'      => 'utf8mb4',
+        'DBCollat'     => 'utf8mb4_general_ci',
+        'swapPre'      => '',
+        'encrypt'      => false,
+        'compress'     => false,
+        'strictOn'     => false,
+        'failover'     => [],
+        'port'         => 3306,
+        'numberNative' => false,
+        'dateFormat'   => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
+    ];
+
 
     //    /**
     //     * Sample database connection for SQLite3.

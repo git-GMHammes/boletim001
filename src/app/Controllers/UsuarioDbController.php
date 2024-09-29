@@ -5,15 +5,15 @@ namespace App\Controllers;
 // use App\Models\UploadModel;
 use App\Controllers\SystemBaseController;
 use App\Controllers\SystemMessageController;
-use App\Models\CadastrosModels;
-use App\Models\VCadastroAdolescentesModels;
+use App\Models\UsuarioModels;
+use App\Models\AuthModels;
 use Exception;
 
-class ExempleDbController extends BaseController
+class UsuarioDbController extends BaseController
 {
     // private $ModelUpload;
-    private $ModelVCadastroAdolescentes;
-    private $ModelCadastro;
+    private $ModelUsuario;
+    private $ModelAuth;
     private $pagination;
     private $message;
     private $uri;
@@ -24,10 +24,10 @@ class ExempleDbController extends BaseController
     public function __construct()
     {
         // $this->ModelUpload = new UploadModel();
-        $this->ModelVCadastroAdolescentes = new VCadastroAdolescentesModels();
+        $this->ModelUsuario = new UsuarioModels();
+        $this->ModelAuth = new AuthModels();
         $this->pagination = new SystemBaseController();
         $this->message = new SystemMessageController();
-        $this->ModelCadastro = new CadastrosModels();
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->message = new SystemMessageController();
     }
@@ -49,42 +49,34 @@ class ExempleDbController extends BaseController
     {
         // myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
         $dbCreate = array();
-        $autoColumn = $this->ModelAdolescentes->getColumnsFromTable();
+        $autoColumn = $this->ModelUsuario->getColumnsFromTable();
         if (isset($autoColumn['COLUMN'])) {
             foreach ($autoColumn['COLUMN'] as $key_autoColumn => $value_autoColumn) {
                 // myPrint($value_autoColumn, '', true);
                 (isset($processRequestFields[$value_autoColumn])) ? ($dbCreate[$value_autoColumn] = $processRequestFields[$value_autoColumn]) : (NULL);
             }
         }
-        if ($dbCreate == array()) {
-            (isset($processRequestFields['id'])) ? ($dbCreate['id'] = $processRequestFields['id']) : (NULL);
-            (isset($processRequestFields['unidade_id'])) ? ($dbCreate['unidade_id'] = $processRequestFields['unidade_id']) : (NULL);
-            (isset($processRequestFields['NMatriculaCertidao'])) ? ($dbCreate['NMatriculaCertidao'] = $processRequestFields['NMatriculaCertidao']) : (NULL);
-            (isset($processRequestFields['CPFAdolescente'])) ? ($dbCreate['CPFAdolescente'] = $processRequestFields['CPFAdolescente']) : (NULL);
-            (isset($processRequestFields['DataNascimentoAdolescente'])) ? ($dbCreate['DataNascimentoAdolescente'] = $processRequestFields['DataNascimentoAdolescente']) : (NULL);
-            (isset($processRequestFields['NomeAdolescente'])) ? ($dbCreate['NomeAdolescente'] = $processRequestFields['NomeAdolescente']) : (NULL);
-            (isset($processRequestFields['Enderecodolescente'])) ? ($dbCreate['Enderecodolescente'] = $processRequestFields['Enderecodolescente']) : (NULL);
-            (isset($processRequestFields['TelefoneAdolescente'])) ? ($dbCreate['TelefoneAdolescente'] = $processRequestFields['TelefoneAdolescente']) : (NULL);
-            (isset($processRequestFields['Certidao'])) ? ($dbCreate['Certidao'] = $processRequestFields['Certidao']) : (NULL);
-            (isset($processRequestFields['NumRegistro'])) ? ($dbCreate['NumRegistro'] = $processRequestFields['NumRegistro']) : (NULL);
-            (isset($processRequestFields['Folha'])) ? ($dbCreate['Folha'] = $processRequestFields['Folha']) : (NULL);
-            (isset($processRequestFields['Livro'])) ? ($dbCreate['Livro'] = $processRequestFields['Livro']) : (NULL);
-            (isset($processRequestFields['Circunscricao'])) ? ($dbCreate['Circunscricao'] = $processRequestFields['Circunscricao']) : (NULL);
-            (isset($processRequestFields['Zona'])) ? ($dbCreate['Zona'] = $processRequestFields['Zona']) : (NULL);
-            (isset($processRequestFields['UFRegistro'])) ? ($dbCreate['UFRegistro'] = $processRequestFields['UFRegistro']) : (NULL);
-            (isset($processRequestFields['BairroAdokescente'])) ? ($dbCreate['BairroAdokescente'] = $processRequestFields['BairroAdokescente']) : (NULL);
-            (isset($processRequestFields['SexoAdolescente'])) ? ($dbCreate['SexoAdolescente'] = $processRequestFields['SexoAdolescente']) : (NULL);
-            (isset($processRequestFields['IdentGeneroAdolescente'])) ? ($dbCreate['IdentGeneroAdolescente'] = $processRequestFields['IdentGeneroAdolescente']) : (NULL);
-            (isset($processRequestFields['CorRacaEtniaAdolescente'])) ? ($dbCreate['CorRacaEtniaAdolescente'] = $processRequestFields['CorRacaEtniaAdolescente']) : (NULL);
-            (isset($processRequestFields['NomeResponsavelAdolescente'])) ? ($dbCreate['NomeResponsavelAdolescente'] = $processRequestFields['NomeResponsavelAdolescente']) : (NULL);
-            (isset($processRequestFields['TelResponsavel'])) ? ($dbCreate['TelResponsavel'] = $processRequestFields['TelResponsavel']) : (NULL);
-            (isset($processRequestFields['CPFResponsavel'])) ? ($dbCreate['CPFResponsavel'] = $processRequestFields['CPFResponsavel']) : (NULL);
-            (isset($processRequestFields['TipoEscolaAdolescente'])) ? ($dbCreate['TipoEscolaAdolescente'] = $processRequestFields['TipoEscolaAdolescente']) : (NULL);
-            (isset($processRequestFields['EscolaridadeAdolescente'])) ? ($dbCreate['EscolaridadeAdolescente'] = $processRequestFields['EscolaridadeAdolescente']) : (NULL);
-            (isset($processRequestFields['TurnoEscolarAdolesc'])) ? ($dbCreate['TurnoEscolarAdolesc'] = $processRequestFields['TurnoEscolarAdolesc']) : (NULL);
-            (isset($processRequestFields['NomeEscola'])) ? ($dbCreate['NomeEscola'] = $processRequestFields['NomeEscola']) : (NULL);
-            (isset($processRequestFields['DataCadastramento'])) ? ($dbCreate['DataCadastramento'] = $processRequestFields['DataCadastramento']) : (NULL);
+        (isset($processRequestFields['modelo'])) ? ($dbCreate['modeloDb'] = $processRequestFields['modelo']) : (NULL);
+        // myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php');
+        return ($dbCreate);
+    }
+
+    // use App\Controllers\SystemUploadDbController;
+    // private $DbController;
+    // $this->DbController = new SystemUploadDbController();
+    // $this->DbController->dbFields($fileds = array();
+    public function dbFieldsAuth($processRequestFields = array())
+    {
+        // myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
+        $dbCreate = array();
+        $autoColumn = $this->ModelUsuario->getColumnsFromTable();
+        if (isset($autoColumn['COLUMN'])) {
+            foreach ($autoColumn['COLUMN'] as $key_autoColumn => $value_autoColumn) {
+                // myPrint($value_autoColumn, '', true);
+                (isset($processRequestFields[$value_autoColumn])) ? ($dbCreate[$value_autoColumn] = $processRequestFields[$value_autoColumn]) : (NULL);
+            }
         }
+        (isset($processRequestFields['modelo'])) ? ($dbCreate['modeloDb'] = $processRequestFields['modelo']) : (NULL);
         // myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php');
         return ($dbCreate);
     }
@@ -137,7 +129,7 @@ class ExempleDbController extends BaseController
         try {
             if (isset($processRequest['id'])) {
                 $dbResponse = $this
-                    ->ModelVCadastroAdolescentes
+                    ->ModelUsuario
                     ->where('id', $processRequest['id'])
                     ->where('deleted_at', NULL)
                     ->orderBy('id', 'DESC')
@@ -146,7 +138,7 @@ class ExempleDbController extends BaseController
                 //
             } elseif ($parameter !== NULL) {
                 $dbResponse = $this
-                    ->ModelVCadastroAdolescentes
+                    ->ModelUsuario
                     ->where('id', $parameter)
                     ->where('deleted_at', NULL)
                     ->orderBy('id', 'DESC')
@@ -155,13 +147,14 @@ class ExempleDbController extends BaseController
                 //
             } else {
                 $dbResponse = $this
-                    ->ModelVCadastroAdolescentes
+                    ->ModelUsuario
                     ->where('deleted_at', NULL)
                     ->orderBy('id', 'DESC')
                     ->dBread()
                     ->paginate($limit, 'paginator', $page);
                 //
-            };
+            }
+            ;
             // Paginação
             $pager = \Config\Services::pager();
             $paginationLinks = $pager->makeLinks($page, $limit, $pager->getTotal('paginator'), 'default_full');
@@ -188,15 +181,58 @@ class ExempleDbController extends BaseController
     // retorno do controller [JSON]
     public function dbFilter($parameter = NULL, $page = 1)
     {
+        $uri = $this->uri->getSegments();
+        $limit = (in_array('filtrar', $uri)) ? (200) : (10);
         // Parâmentros para receber um POST
         $request = service('request');
         $processRequest = (array) $request->getVar();
         //
         try {
             $query = $this
-                ->ModelVCadastroAdolescentes
-                ->where('PerfilId', 5)
-                ->where('AcessoId', 2)
+                ->ModelUsuario
+                ->where('deleted_at', NULL);
+            foreach ($parameter as $key => $value) {
+                $query = $query->like($key, $value);
+            }
+
+            $dbResponse = $query
+                ->orderBy('id', 'DESC')
+                ->paginate($limit, 'paginator', $page);
+
+            // Paginação
+            $pager = \Config\Services::pager();
+            $paginationLinks = $pager->makeLinks($page, $limit, $pager->getTotal('paginator'), 'default_full');
+            $linksArray = $this->pagination->extractPaginationLinks($paginationLinks);
+            //
+            $response = array(
+                'dbResponse' => $dbResponse,
+                'linksArray' => $linksArray
+            );
+            //
+        } catch (\Exception $e) {
+            if (DEBUG_MY_PRINT) {
+                myPrint($e->getMessage(), 'src\app\Controllers\ExempleDbController.php');
+            }
+            $message = $e->getMessage();
+            $this->message->message([$message], 'danger', $parameter, 5);
+            $response = array();
+        }
+        return $response;
+    }
+
+    // route POST /www/sigla/rota
+    // route GET /www/sigla/rota
+    // Informação sobre o controller
+    // retorno do controller [JSON]
+    public function dbFilterAuth($parameter = NULL, $page = 1)
+    {
+        $uri = $this->uri->getSegments();
+        $limit = (in_array('filtrar', $uri)) ? (200) : (10);
+        $parameter = $this->dbFieldsAuth($parameter);
+        //
+        try {
+            $query = $this
+                ->ModelAuth
                 ->where('deleted_at', NULL);
             foreach ($parameter as $key => $value) {
                 $query = $query->like($key, $value);
@@ -305,10 +341,9 @@ class ExempleDbController extends BaseController
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         $limit = 10;
         try {
-            // exit('src\app\Controllers\AdolescenteDbController.php');
             if (isset($processRequest['id'])) {
                 $dbResponse = $this
-                    ->ModelVCadastroAdolescentes
+                    ->ModelUsuario
                     ->where('id', $processRequest['id'])
                     ->where('deleted_at !=', NULL)
                     ->orderBy('id', 'DESC')
@@ -317,7 +352,7 @@ class ExempleDbController extends BaseController
                 //
             } elseif ($parameter !== NULL) {
                 $dbResponse = $this
-                    ->ModelVCadastroAdolescentes
+                    ->ModelUsuario
                     ->where('id', $parameter)
                     ->where('deleted_at !=', NULL)
                     ->orderBy('id', 'DESC')
@@ -326,13 +361,14 @@ class ExempleDbController extends BaseController
                 //
             } else {
                 $dbResponse = $this
-                    ->ModelVCadastroAdolescentes
+                    ->ModelUsuario
                     ->where('deleted_at !=', NULL)
                     ->orderBy('id', 'DESC')
                     ->dBread()
                     ->paginate($limit, 'paginator', $page);
                 //
-            };
+            }
+            ;
             // Paginação
             $pager = \Config\Services::pager();
             $paginationLinks = $pager->makeLinks($page, $limit, $pager->getTotal('paginator'), 'default_full');

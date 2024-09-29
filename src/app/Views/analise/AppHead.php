@@ -34,7 +34,10 @@ $parametros_backend = array(
             <div>CABEÇALHO</div>
         );
     };
-    ReactDOM.render(<AppHead />, document.querySelector('.app_head'));
+    const rootElement = document.querySelector('.app_head');
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<AppHead />);
+
 </script>
 <?php
 $parametros_backend = array();

@@ -9,12 +9,12 @@ $parametros_backend = array(
 );
 ?>
 
-<div class="App_menu_react" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
+<div class="app_footer" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
 
 <script type="text/babel">
-    const AppMenuReact = () => {
+    const AppFooter = () => {
         // Variáveis recebidas do Backend
-        const parametros = JSON.parse(document.querySelector('.App_menu_react').getAttribute('data-result'));
+        const parametros = JSON.parse(document.querySelector('.app_footer').getAttribute('data-result'));
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -23,30 +23,26 @@ $parametros_backend = array(
         const server_port = parametros.server_port;
         const base_url = parametros.base_url;
 
-        const [isCollapsed, setIsCollapsed] = React.useState(false);
-
-        const toggleCollapse = () => {
-            setIsCollapsed(!isCollapsed);
-        };
-        const linkStyle = {
-            color: '#53D7DC',
-            fontFamily: '"Roboto", sans-serif',
-            fontWeight: 700,
-            fontStyle: 'normal'
-        };
+        // Nova constante de estilo para o texto "Footer"
         const headerTextStyle = {
-            backgroundImage: 'linear-gradient(to right, #330033, #14007A)',
+            backgroundImage: 'linear-gradient(to right, #14007A, #330033)',
             color: 'white',
             textDecoration: 'none',
             padding: '10px'
         };
+
+        const linkText = {
+            textDecoration: 'none'
+        }
+
         return (
-            <div>MENU</div>
+            <div>RODAPÉ</div>
         );
     };
-    ReactDOM.render(<AppMenuReact />, document.querySelector('.App_menu_react'));
+    const rootElement = document.querySelector('.app_footer');
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<AppFooter />);
 </script>
-
 <?php
 $parametros_backend = array();
 ?>

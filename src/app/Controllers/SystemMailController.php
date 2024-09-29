@@ -43,6 +43,45 @@ class SystemMailController extends Controller
     # private $sendMail;
     # $this->sendMail = new SystemMailController();
     # $this->sendMail->sendPerguntaAgenersa($parameter = array());
+    public function sendLoginEtapa1($parameter = array())
+    {
+        $setFrom = isset($parameter['setFrom']) ? ($parameter['setFrom']) : ('gustavo@habilidade.com');
+        $setMail = isset($parameter['setMail']) ? ($parameter['setMail']) : ('gustavo@habilidade.com');
+        $messageMail = view('agenersa/pergunta/main', $parameter);
+        #
+        // return view('agenersa/pergunta/main', $templateEmail);
+        # 
+        $config['protocol'] = 'smtp';
+        $config['SMTPHost'] = 'relay.proderj.rj.gov.br';
+        $config['SMTPCrypto'] = false;
+        $config['SMTPPort'] = 25;
+        $config['mailType'] = 'html';
+        $config['SMTPTimeout'] = 256;
+        $config['mailPath'] = '/usr/sbin/sendmail';
+        # 
+        $config['charset'] = 'utf-8';
+        $config['wordWrap'] = true;
+        $email = \Config\Services::email();
+        # -- Config Settings
+        $email->setHeader('Content-Type', 'text/html; charset=UTF-8');
+        $email->setHeader('Content-Transfer-Encoding', 'quoted-printable');
+        $email->initialize($config);
+        $email->setFrom($setFrom, 'Portal Agenenrsa');
+        $email->setTo($this->stringToArray($setMail));
+        // $email->setCC($this->stringToArray($setCC));
+        $email->setSubject('[Pergunta/AGENERSA]: Caixa de Perguntas (' . date('d/m/Y H:i:s') . ')');
+        $email->setMessage($messageMail);
+        # -- Anexar a imagem
+        // $email->attach(FCPATH . 'assets/img/agenersa/LogoAgenersa_Centro.png', 'inline', 'image1');
+        #
+        $sendMessage = $email->send();
+        $result = $sendMessage;
+    }
+
+    # use App\Controllers\SystemMailController;
+    # private $sendMail;
+    # $this->sendMail = new SystemMailController();
+    # $this->sendMail->sendPerguntaAgenersa($parameter = array());
     public function sendPerguntaAgenersa($parameter = array())
     {
         $setFrom = isset($parameter['setFrom']) ? ($parameter['setFrom']) : ('gfs@proderj.rj.gov.br');
