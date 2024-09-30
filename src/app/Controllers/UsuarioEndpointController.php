@@ -11,11 +11,11 @@ class UsuarioEndpointController extends ResourceController
 {
     use ResponseTrait;
 
-    private $template = 'bw/habilidade/templates/main';
-    private $message = 'bw/habilidade/message';
-    private $footer = 'bw/habilidade/footer';
-    private $head = 'bw/habilidade/head';
-    private $menu = 'bw/habilidade/menu';
+    private $template = 'bw/templates/main';
+    private $message = 'bw/message';
+    private $AppFooter = 'bw/AppFooter';
+    private $AppHead = 'bw/AppHead';
+    private $AppMenu = 'bw/AppMenu';
     private $tokenCsrf;
     private $ModelResponse;
     private $uri;
@@ -54,11 +54,11 @@ class UsuarioEndpointController extends ResourceController
         $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
         #
         $loadView = array(
-            $this->head,
-            $this->menu,
+            $this->AppHead,
+            $this->AppMenu,
             $this->message,
-
-            $this->footer,
+            'bw/usuario/AppUser',
+            $this->AppFooter,
         );
         try {
             $this->tokenCsrf->token_csrf();

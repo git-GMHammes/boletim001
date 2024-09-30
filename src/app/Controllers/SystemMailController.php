@@ -45,37 +45,73 @@ class SystemMailController extends Controller
     # $this->sendMail->sendPerguntaAgenersa($parameter = array());
     public function sendLoginEtapa1($parameter = array())
     {
-        $setFrom = isset($parameter['setFrom']) ? ($parameter['setFrom']) : ('gustavo@habilidade.com');
-        $setMail = isset($parameter['setMail']) ? ($parameter['setMail']) : ('gustavo@habilidade.com');
-        $messageMail = view('agenersa/pergunta/main', $parameter);
-        #
-        // return view('agenersa/pergunta/main', $templateEmail);
-        # 
-        $config['protocol'] = 'smtp';
-        $config['SMTPHost'] = 'relay.proderj.rj.gov.br';
-        $config['SMTPCrypto'] = false;
-        $config['SMTPPort'] = 25;
-        $config['mailType'] = 'html';
-        $config['SMTPTimeout'] = 256;
-        $config['mailPath'] = '/usr/sbin/sendmail';
-        # 
-        $config['charset'] = 'utf-8';
-        $config['wordWrap'] = true;
+        // myPrint($parameter, 'src\app\Controllers\SystemMailController.php');
+        if (isset($parameter['dbResponse'][0]['mail'])) {
+            // myPrint($parameter, 'src\app\Controllers\SystemMailController.php');
+            $template['result'] = $parameter['dbResponse'][0];
+            $setTo = $parameter['dbResponse'][0]['mail'];
+            $messageMail = view('mail/habilidade/send_etapa_001', $template);
+        } else {
+            exit('FIM');
+            $setTo = 'gustavo.hammes@extreme.digital';
+            $messageMail = 'Envio de E-mail não autorizado!';
+        }
+
         $email = \Config\Services::email();
-        # -- Config Settings
-        $email->setHeader('Content-Type', 'text/html; charset=UTF-8');
-        $email->setHeader('Content-Transfer-Encoding', 'quoted-printable');
+
+        // Configurações de envio de email diretamente no código
+        $config['protocol'] = 'smtp';
+        $config['SMTPHost'] = 'smtp.kinghost.net';
+        // $config['SMTPPort'] = 465;
+        $config['SMTPPort'] = 587;
+        $config['SMTPUser'] = 'bomweb@habilidade.com';
+        $config['SMTPPass'] = $this->getBase64('Qm9tQFdlYg==');
+        $config['SMTPTimeout'] = 60;
+        $config['SMTPKeepAlive'] = true;
+        // $config['SMTPCrypto'] = 'ssl';
+        $config['SMTPCrypto'] = 'tls';
+        $config['mailType'] = 'html';
+        $config['charset'] = 'UTF-8';
+        $config['wordWrap'] = true;
+        $config['CRLF'] = "\r\n";
+        $config['newline'] = "\r\n";
+        $config['validate'] = true;
+
+        // Carregar as configurações
         $email->initialize($config);
-        $email->setFrom($setFrom, 'Portal Agenenrsa');
-        $email->setTo($this->stringToArray($setMail));
-        // $email->setCC($this->stringToArray($setCC));
-        $email->setSubject('[Pergunta/AGENERSA]: Caixa de Perguntas (' . date('d/m/Y H:i:s') . ')');
+
+        // Definir remetente
+        $email->setFrom('bomweb@habilidade.com', 'Sistema de Boletim');
+
+        // Definir destinatário
+        $email->setTo($setTo);
+
+        // Lista de CC
+        $email->setCC([
+            'sistema.gustavo@gmail.com',
+            'sistema.gustavo@gmail.com',
+            'sistema.gustavo@gmail.com'
+        ]);
+
+        // Lista de CCo
+        $email->setBCC([
+            'mensagem.gustavo@gmail.com',
+            'mensagem.gustavo@gmail.com',
+            'mensagem.gustavo@gmail.com'
+        ]);
+
+        // Assunto e mensagem
+        $email->setSubject('[Etapa 2 / Token / Login]: Dados de Acesso (' . date('d/m/Y H:i:s') . ')');
+
         $email->setMessage($messageMail);
-        # -- Anexar a imagem
-        // $email->attach(FCPATH . 'assets/img/agenersa/LogoAgenersa_Centro.png', 'inline', 'image1');
-        #
-        $sendMessage = $email->send();
-        $result = $sendMessage;
+        // Envio e verificação de erros
+        if ($email->send()) {
+            return [
+                $template['result'],
+            ];
+        } else {
+            return $email->printDebugger(['headers', 'subject', 'body']);
+        }
     }
 
     # use App\Controllers\SystemMailController;
@@ -230,5 +266,15 @@ class SystemMailController extends Controller
             // myPrint($result, 'src\app\Controllers\SystemMailController.php');
             return $result;
         }
+    }
+
+    private function setBase64($parameter)
+    {
+        return base64_encode($parameter);
+    }
+
+    private function getBase64($parameter)
+    {
+        return base64_decode($parameter);
     }
 }

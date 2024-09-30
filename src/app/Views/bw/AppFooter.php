@@ -35,35 +35,43 @@ $parametros_backend = array(
             textDecoration: 'none'
         }
 
+        const navyBlueDark = {
+            backgroundColor: "#000080"
+        };
+
         return (
             <div>
-                <div className="row p-3">
-                    <div className="col-12 col-sm-4">
-                    </div>
-                    <div className="col-12 col-sm-4">
-                        <div className="d-flex justify-content-center text-center">
-                            <i class="bi bi-geo-alt"></i>
-                            &nbsp;
-                            Rua Uruguaiana, 118, 6º-12º andar | Centro, Rio de Janeiro | 20050-093
+                <div style={navyBlueDark}>
+                    <div className="row p-3">
+                        <div className="col-12 col-sm-4">
                         </div>
-                        <div className="d-flex justify-content-center text-center">
-                            <i class="bi bi-calendar3"></i>
-                            &nbsp;
-                            Seg-Sex 10:00-16:00
+                        <div className="col-12 col-sm-4">
+                            <div className="d-flex justify-content-center text-center" style={{ filter: "invert(1)" }}>
+                                <i className="bi bi-geo-alt"></i>
+                                &nbsp;
+                                Rua Uruguaiana, 118, 6º-12º andar | Centro, Rio de Janeiro | 20050-093
+                            </div>
+                            <div className="d-flex justify-content-center text-center" style={{ filter: "invert(1)" }}>
+                                <i className="bi bi-calendar3"></i>
+                                &nbsp;
+                                Seg-Sex 10:00-16:00
+                            </div>
+                            <div className="d-flex justify-content-center text-center" style={{ filter: "invert(1)" }}>
+                                <i className="bi bi-telephone"></i>
+                                &nbsp;
+                                (21) 3883-4100
+                            </div>
                         </div>
-                        <div className="d-flex justify-content-center text-center">
-                            <i class="bi bi-telephone"></i>
-                            &nbsp;
-                            (21) 3883-4100
+                        <div className="col-12 col-sm-4">
                         </div>
-                    </div>
-                    <div className="col-12 col-sm-4">
                     </div>
                 </div>
             </div>
         );
     };
-    ReactDOM.render(<AppFooter />, document.querySelector('.app_footer'));
+    const rootElement = document.querySelector('.app_footer');
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<AppFooter />);
 </script>
 <?php
 $parametros_backend = array();

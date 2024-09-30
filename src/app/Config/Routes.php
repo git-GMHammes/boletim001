@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 // $routes->get('/', 'Home::index');
-$routes->addRedirect('/', 'bw/habilidade/usuario/endpoint/login');
+$routes->addRedirect('/', 'bw/habilidade/usuario/endpoint/auth');
 $routes->addRedirect('/bom', 'exemple/group/endpoint/bom_login');
 $routes->addRedirect('/main', 'exemple/group/endpoint/bom_main');
 
@@ -75,12 +75,12 @@ $routes->group('bw', function ($routes) {
             });
             # www/bw/habilidade/usuario/endpoint/(:any)
             $routes->group('endpoint', function ($routes) {
-                # www/bw/habilidade/usuario/endpoint/login/(:any)
-                $routes->get('login', 'UsuarioEndpointController::loginHabilidade');
-                $routes->get('login/(:segment)', 'UsuarioEndpointController::loginHabilidade/$1');
-                $routes->get('login/(:any)', 'UsuarioEndpointController::loginHabilidade/$1');
-                $routes->post('login', 'UsuarioEndpointController::loginHabilidade');
-                $routes->post('login/(:any)', 'UsuarioEndpointController::loginHabilidade/$1');
+                # www/bw/habilidade/usuario/endpoint/auth/(:any)
+                $routes->get('auth', 'UsuarioEndpointController::loginHabilidade');
+                $routes->get('auth/(:segment)', 'UsuarioEndpointController::loginHabilidade/$1');
+                $routes->get('auth/(:any)', 'UsuarioEndpointController::loginHabilidade/$1');
+                $routes->post('auth', 'UsuarioEndpointController::loginHabilidade');
+                $routes->post('auth/(:any)', 'UsuarioEndpointController::loginHabilidade/$1');
             });
         });
     });

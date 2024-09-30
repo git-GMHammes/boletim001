@@ -86,19 +86,19 @@ $parametros_backend = array(
           <div className="col-12 col-sm-3" style={navyBlueDark}>
             <div className="d-flex justify-content-around align-items-center flex-wrap m-5">
               <div style={circleWithRadialGradient}>
-                <i class="bi bi-instagram"></i>
+                <i className="bi bi-instagram"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i class="bi bi-facebook"></i>
+                <i className="bi bi-facebook"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i class="bi bi-twitter-x"></i>
+                <i className="bi bi-twitter-x"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i class="bi bi-tiktok"></i>
+                <i className="bi bi-tiktok"></i>
               </div>
               <div style={circleWithRadialGradient}>
-                <i class="bi bi-whatsapp"></i>
+                <i className="bi bi-whatsapp"></i>
               </div>
             </div>
           </div>
@@ -125,7 +125,9 @@ $parametros_backend = array(
       </div>
     );
   };
-  ReactDOM.render(<AppHead />, document.querySelector('.app_head'));
+  const rootElement = document.querySelector('.app_head');
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(<AppHead />);
 </script>
 <?php
 $parametros_backend = array();

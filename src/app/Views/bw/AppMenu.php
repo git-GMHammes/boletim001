@@ -9,12 +9,12 @@ $parametros_backend = array(
 );
 ?>
 
-<div class="App_menu_react" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
+<div class="App_menu" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
 
 <script type="text/babel">
-    const AppMenuReact = () => {
+    const AppMenu = () => {
         // Variáveis recebidas do Backend
-        const parametros = JSON.parse(document.querySelector('.App_menu_react').getAttribute('data-result'));
+        const parametros = JSON.parse(document.querySelector('.App_menu').getAttribute('data-result'));
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -178,7 +178,9 @@ $parametros_backend = array(
             </div>
         );
     };
-    ReactDOM.render(<AppMenuReact />, document.querySelector('.App_menu_react'));
+    const rootElement = document.querySelector('.App_menu');
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<AppMenu />);
 </script>
 
 <?php

@@ -7,6 +7,7 @@ use CodeIgniter\API\ResponseTrait;
 use App\Controllers\TokenCsrfController;
 use App\Controllers\SystemMessageController;
 use App\Controllers\UsuarioDbController;
+use App\Controllers\SystemMailController;
 // use App\Controllers\SystemUploadDbController;
 
 use Exception;
@@ -14,6 +15,7 @@ use Exception;
 class UsuarioApiController extends ResourceController
 {
     use ResponseTrait;
+    private $sendMail;
     private $ModelResponse;
     private $dbFields;
     private $uri;
@@ -26,7 +28,7 @@ class UsuarioApiController extends ResourceController
         $this->DbController = new UsuarioDbController();
         $this->tokenCsrf = new TokenCsrfController();
         $this->message = new SystemMessageController();
-        // $this->DbController = new SystemUploadDbController();
+        $this->sendMail = new SystemMailController();
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
     }
     #
@@ -418,37 +420,57 @@ class UsuarioApiController extends ResourceController
         $getGet = $this->request->getGet('page');
         $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
         $processRequest = (array) $request->getVar();
+        // myPrint($processRequest, 'src\app\Controllers\UsuarioApiController.php', true);
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         #
-        try {
-            #
-            $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
-            $requestDb = $this->DbController->dbFilterAuth($processRequest);
-            
-            // myPrint($requestDb, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
-            #
-            $apiRespond = [
-                'status' => 'success',
-                'message' => 'API loading data (dados para carregamento da API)',
-                'date' => date('Y-m-d'),
-                'api' => [
-                    'version' => '1.0',
-                    'method' => $getMethod,
-                    'description' => 'API Description',
-                    'content_type' => 'application/x-www-form-urlencoded'
-                ],
+        $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
+        $requestDb = $this->DbController->dbFilterAuth($processRequest);
+        // myPrint($requestDb, 'src\app\Controllers\UsuarioApiController.php');
+        if (isset($requestDb['dbResponse'][0])) {
+            $status = 'success';
+            $codigo = 201;
+            $sendMail = $this->sendMail->sendLoginEtapa1($requestDb);
+        } else {
+            $status = 'Bad Request';
+            $codigo = 400;
+            $sendMail = array(
+                'id' => '',
+                'cpf' => '',
+                'mail' => '',
+                'access_key_01' => '',
+                'access_key_02' => '',
+                'access_key_03' => '',
+                'created_at' => '',
+                'updated_at' => '',
+                'deleted_at' => ''
+            );
+        }
+        #
+        // myPrint($requestDb, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
+        #
+        $apiRespond = [
+            'status' => $status,
+            'message' => 'API loading data (dados para carregamento da API)',
+            'date' => date('Y-m-d'),
+            'api' => [
+                'version' => '1.0',
+                'method' => $getMethod,
+                'description' => 'API Description',
+                'content_type' => 'application/x-www-form-urlencoded'
+            ],
+            // 'method' => '__METHOD__',
+            // 'function' => '__FUNCTION__',
+            'result' => $sendMail,
+            'metadata' => [
+                'page_title' => 'Application title',
+                'getURI' => $this->uri->getSegments(),
+                // Você pode adicionar campos comentados anteriormente se forem relevantes
                 // 'method' => '__METHOD__',
                 // 'function' => '__FUNCTION__',
-                'result' => $requestDb,
-                'metadata' => [
-                    'page_title' => 'Application title',
-                    'getURI' => $this->uri->getSegments(),
-                    // Você pode adicionar campos comentados anteriormente se forem relevantes
-                    // 'method' => '__METHOD__',
-                    // 'function' => '__FUNCTION__',
-                ]
-            ];
-            $response = $this->response->setJSON($apiRespond, 201);
+            ]
+        ];
+        $response = $this->response->setJSON($apiRespond, $codigo);
+        try {
         } catch (\Exception $e) {
             $apiRespond = array(
                 'message' => array('danger' => $e->getMessage()),
@@ -466,13 +488,13 @@ class UsuarioApiController extends ResourceController
             return $response;
         }
     }
-    #
+
     #
     # route POST /www/bw/habilidade/usuario/api/loginEtapa2/(:any)
     # route GET /www/bw/habilidade/usuario/api/loginEtapa2/(:any)
     # Informação sobre o controller
     # retorno do controller [JSON]
-    public function loginEtapa2($parameter = NULL)
+    public function loginEtapa2($parameter1 = NULL, $parameter2 = NULL, $parameter3 = NULL)
     {
         # Parâmentros para receber um POST
         $request = service('request');
@@ -481,12 +503,47 @@ class UsuarioApiController extends ResourceController
         $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
         $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        $dbResponse = array();
         #
-        // myPrint($getMethod, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
-        try {
+        // myPrint($parameter1, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json', true);
+        // myPrint($parameter2, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json', true);
+        // myPrint($parameter3, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
+        if (
+            $parameter1 !== null &&
+            $parameter2 !== null &&
+            $parameter3 !== null
+        ) {
+            $dbFilter = array(
+                'access_key_01' => $parameter1,
+                'access_key_02' => $parameter2,
+                'access_key_03' => $parameter3,
+            );
+            // myPrint($dbFilter, 'src\app\Controllers\UsuarioApiController.php', true);
+            $requestDb = $this->DbController->dbFilterAuth($dbFilter);
+            // myPrint($requestDb['dbResponse'][0], 'src\app\Controllers\UsuarioApiController.php', true);
+        }
+        if (isset($requestDb['dbResponse'][0])) {
+            $apiRespond = array(
+                'name_session' => 'filterDeploy',
+                'time_in_seconds' => 36000
+            );
             #
-            $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
-            $requestDb = $this->DbController->dbRead($id, $page);
+            session()->set($apiRespond['name_session'], $requestDb['dbResponse'][0]);
+            session()->markAsTempdata($apiRespond['name_session'], $apiRespond['time_in_seconds']);
+        }
+        if (isset($requestDb['dbResponse'][0]['id'])) {
+            $id = $requestDb['dbResponse'][0]['id'];
+            $dbUpdate = array(
+                'access_key_01' => strtoupper(md5($parameter1 . time())),
+                'access_key_02' => strtoupper(md5($parameter2 . time())),
+                'access_key_03' => strtoupper(md5($parameter3 . time())),
+            );
+            // myPrint($dbUpdate, 'src\app\Controllers\UsuarioApiController.php');
+            $dbResponse = $this->DbController->dbUpdateAuth($id, $dbUpdate);
+        }
+        $varSession = (session()->get('filterDeploy')) ? (session()->get('filterDeploy')) : (array());
+        // myPrint($varSession, 'src\app\Controllers\UsuarioApiController.php, LINHA 543');
+        try {
             #
             $apiRespond = [
                 'status' => 'success',
@@ -500,7 +557,7 @@ class UsuarioApiController extends ResourceController
                 ],
                 // 'method' => '__METHOD__',
                 // 'function' => '__FUNCTION__',
-                'result' => $requestDb,
+                'result' => $dbResponse,
                 'metadata' => [
                     'page_title' => 'Application title',
                     'getURI' => $this->uri->getSegments(),
@@ -516,15 +573,15 @@ class UsuarioApiController extends ResourceController
                 'page_title' => 'Application title',
                 'getURI' => $this->uri->getSegments(),
             );
-            $this->message->message($message = array(), 'danger', $parameter, 5);
+            $this->message->message($message = array(), 'danger', $parameter = array(), 5);
             $response = $this->response->setJSON($apiRespond, 500);
         }
         if ($json == 1) {
             return $response;
             // return redirect()->back();
-            // return redirect()->to('project/endpoint/parameter/parameter/' . $parameter);
         } else {
-            return $response;
+            return redirect()->to('/bw/usuario/endpoint/login');
+            // return $response;
         }
     }
     #

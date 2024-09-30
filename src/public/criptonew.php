@@ -10,6 +10,15 @@
 <body>
     <pre>
         <?php
+        echo "<br /> TESTE " . $hostname = setBase64('Bom@Web');
+        echo "<br /> TESTE " . $hostname = getBase64('Qm9tQFdlYg==');
+        ?>
+    </pre>
+    <br>
+    #
+
+    <pre>
+        <?php
         echo "<br /> hostname " . $hostname = setBase64('bomweb-mysql80');
         echo "<br /> username " . $username = setBase64('root');
         echo "<br /> password " . $password = setBase64('pass123');

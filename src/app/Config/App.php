@@ -234,6 +234,10 @@ class App extends BaseConfig
             $server_name == '10.146.84.140'
         ) {
             $this->baseURL = $server_scheme . '://' . $server_name . ':45300';
+        } elseif (
+            $server_name == 'habilidade.com'
+        ) {
+            $this->baseURL = $server_scheme . '://' . $server_name . '/boletim/src/public';
         } else {
             exit('O Sistema não reconheceu a BASE URL do Servidor ' . $server_scheme . '://' . $server_name);
         }

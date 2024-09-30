@@ -69,7 +69,7 @@ class UsuarioDbController extends BaseController
     {
         // myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
         $dbCreate = array();
-        $autoColumn = $this->ModelUsuario->getColumnsFromTable();
+        $autoColumn = $this->ModelAuth->getColumnsFromTable();
         if (isset($autoColumn['COLUMN'])) {
             foreach ($autoColumn['COLUMN'] as $key_autoColumn => $value_autoColumn) {
                 // myPrint($value_autoColumn, '', true);
@@ -77,7 +77,7 @@ class UsuarioDbController extends BaseController
             }
         }
         (isset($processRequestFields['modelo'])) ? ($dbCreate['modeloDb'] = $processRequestFields['modelo']) : (NULL);
-        // myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php');
+        // myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php 80');
         return ($dbCreate);
     }
 
@@ -172,6 +172,7 @@ class UsuarioDbController extends BaseController
             $this->message->message([$message], 'danger', $parameter, 5);
             $response = array();
         }
+        // exit('src\app\Controllers\UsuarioDbController.php');
         return $response;
     }
 
@@ -226,15 +227,19 @@ class UsuarioDbController extends BaseController
     // retorno do controller [JSON]
     public function dbFilterAuth($parameter = NULL, $page = 1)
     {
+        // myPrint($parameter, 'src\app\Controllers\UsuarioDbController.php, Linha 229', true);
         $uri = $this->uri->getSegments();
         $limit = (in_array('filtrar', $uri)) ? (200) : (10);
         $parameter = $this->dbFieldsAuth($parameter);
+        // myPrint($parameter, 'src\app\Controllers\UsuarioDbController.php, Linha 233', true);
         //
         try {
             $query = $this
                 ->ModelAuth
                 ->where('deleted_at', NULL);
             foreach ($parameter as $key => $value) {
+                // myPrint($key,'', true);
+                // myPrint($value, '', true);
                 $query = $query->like($key, $value);
             }
 
@@ -254,12 +259,13 @@ class UsuarioDbController extends BaseController
             //
         } catch (\Exception $e) {
             if (DEBUG_MY_PRINT) {
-                myPrint($e->getMessage(), 'src\app\Controllers\ExempleDbController.php');
+                // myPrint($e->getMessage(), 'src\app\Controllers\ExempleDbController.php');
             }
             $message = $e->getMessage();
             $this->message->message([$message], 'danger', $parameter, 5);
             $response = array();
         }
+        // myPrint($response, 'src\app\Controllers\UsuarioDbController.php, Linha 266');
         return $response;
     }
 
@@ -279,6 +285,46 @@ class UsuarioDbController extends BaseController
                 $this->ModelCadastro->dbUpdate($key, $this->dbFields($parameter));
             }
             $affectedRows = $this->ModelCadastro->affectedRows();
+            if ($affectedRows > 0) {
+                $dbUpdate['updateID'] = $key;
+                $dbUpdate['affectedRows'] = $affectedRows;
+                $dbUpdate['dbUpdate'] = $parameter;
+            } else {
+                $dbUpdate['updateID'] = $key;
+                $dbUpdate['affectedRows'] = $affectedRows;
+                $dbUpdate['dbUpdate'] = $parameter;
+            }
+            $response = $dbUpdate;
+        } catch (\Exception $e) {
+            if (DEBUG_MY_PRINT) {
+                myPrint($e->getMessage(), 'src\app\Controllers\ExempleDbController.php');
+            }
+            $message = $e->getMessage();
+            $this->message->message([$message], 'danger', $parameter, 5);
+            $response = array();
+        }
+        return $response;
+    }
+
+    // route POST /www/sigla/rota
+    // route GET /www/sigla/rota
+    // Informação sobre o controller
+    // retorno do controller [JSON]
+    public function dbUpdateAuth($key, $parameter = NULL)
+    {
+        try {
+            if (
+                isset($parameter['deleted_at'])
+                && $parameter['deleted_at'] == null
+                && count($parameter) == 1
+            ) {
+                $this->ModelAuth->dbUpdate($key, $parameter);
+            } else {
+                $teste = $this->dbFieldsAuth($parameter);
+                // myPrint($teste, 'src\app\Controllers\UsuarioDbController.php 322');
+                $this->ModelAuth->dbUpdate($key, $this->dbFieldsAuth($parameter));
+            }
+            $affectedRows = $this->ModelAuth->affectedRows();
             if ($affectedRows > 0) {
                 $dbUpdate['updateID'] = $key;
                 $dbUpdate['affectedRows'] = $affectedRows;
