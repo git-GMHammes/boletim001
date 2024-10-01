@@ -58,8 +58,44 @@ class UsuarioApiController extends ResourceController
         // myPrint($getMethod, 'src\app\Controllers\AdolescenteApiController.php');
         try {
             #
-            $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
-            $requestDb = $this->DbController->dbRead($id, $page);
+            $login = isset($processRequest['login']) ? ($processRequest['login']) : ('');
+            $password = isset($processRequest['password']) ? ($processRequest['password']) : ('');
+            $dbFilter = array(
+                'login' => $login,
+                'senha' => $password,
+            );
+            // myPrint($dbFilter, 'src\app\Controllers\UsuarioApiController.php', true);
+            $requestDb1 = $this->DbController->dbFilter($dbFilter);
+            // myPrint($requestDb1['dbResponse'], 'src\app\Controllers\UsuarioApiController.php', true);
+            if ($requestDb1['dbResponse'] && count($requestDb1['dbResponse']) === 1) {
+                // myPrint($requestDb1['dbResponse'][0], 'src\app\Controllers\UsuarioApiController.php');
+                $id = isset($requestDb1['dbResponse'][0]['id']) ? $requestDb1['dbResponse'][0]['id'] : null;
+            } else {
+                $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
+            }
+            $requestDb2 = $this->DbController->dbRead($id, $page);
+            // myPrint($requestDb2, 'src\app\Controllers\UsuarioApiController.php');
+            if (
+                isset($requestDb2['dbResponse'][0]['email'])
+                && isset($requestDb2['dbResponse'][0]['login'])
+                && isset($requestDb2['dbResponse'][0]['nome'])
+            ) {
+                $email = isset($requestDb2['dbResponse'][0]['email']) ? $requestDb2['dbResponse'][0]['email'] : (null);
+                $login = isset($requestDb2['dbResponse'][0]['login']) ? $requestDb2['dbResponse'][0]['login'] : (null);
+                $nome = isset($requestDb2['dbResponse'][0]['nome']) ? $requestDb2['dbResponse'][0]['nome'] : (null);
+                $sessionData = array(
+                    'email' => $email,
+                    'login' => $login,
+                    'nome' => $nome,
+                );
+                $apiRespond = array(
+                    'name_session' => 'login_bom',
+                    'time_in_seconds' => 36000
+                );
+                #
+                session()->set($apiRespond['name_session'], $sessionData);
+                session()->markAsTempdata($apiRespond['name_session'], $apiRespond['time_in_seconds']);
+            }
             #
             $apiRespond = [
                 'status' => 'success',
@@ -73,7 +109,7 @@ class UsuarioApiController extends ResourceController
                 ],
                 // 'method' => '__METHOD__',
                 // 'function' => '__FUNCTION__',
-                'result' => $requestDb,
+                'result' => $requestDb2,
                 'metadata' => [
                     'page_title' => 'Application title',
                     'getURI' => $this->uri->getSegments(),

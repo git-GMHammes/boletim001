@@ -225,7 +225,6 @@ $parametros_backend = array(
         )}
       </div>
     );
-
   };
   const rootElement = document.querySelector('.app_login');
   const root = ReactDOM.createRoot(rootElement);
