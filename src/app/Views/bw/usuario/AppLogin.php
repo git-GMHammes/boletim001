@@ -12,12 +12,12 @@ $parametros_backend = array(
 );
 ?>
 
-<div class="app_user" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
+<div class="app_login" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
 
 <script type="text/babel">
-    const AppUser = () => {
+    const AppLogin = () => {
         // Variáveis recebidas do Backend
-        const parametros = JSON.parse(document.querySelector('.app_user').getAttribute('data-result'));
+        const parametros = JSON.parse(document.querySelector('.app_login').getAttribute('data-result'));
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const token_csrf = parametros.token_csrf;
@@ -85,7 +85,7 @@ $parametros_backend = array(
             console.log('Dados a serem enviados:', data);
 
             if (apiIdentifier === 'login-on') {
-                showOffcanvasAlert('info', 'Acionou a mensagem em modo INFO');
+                // showOffcanvasAlert('info', 'Acionou a mensagem em modo INFO');
                 // Convertendo os dados do setPost em JSON
                 response1 = await fetch(base_url + api_login, {
                     method: 'POST',
@@ -136,6 +136,13 @@ $parametros_backend = array(
                 setStartTransition(false);
                 setShowAlert(false);
             }, 5000);
+        };
+
+        const redirectTo = (url) => {
+            const uri = base_url + url;
+            setTimeout(() => {
+                window.location.href = uri;
+            }, 3000);
         };
 
         // Style
@@ -226,9 +233,9 @@ $parametros_backend = array(
             </div>
         );
     };
-    const rootElement = document.querySelector('.app_user');
+    const rootElement = document.querySelector('.app_login');
     const root = ReactDOM.createRoot(rootElement);
-    root.render(<AppUser />);
+    root.render(<AppLogin />);
 </script>
 <?php
 $parametros_backend = array();

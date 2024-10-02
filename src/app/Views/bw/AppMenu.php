@@ -44,6 +44,10 @@ $parametros_backend = array(
                             <span className="navbar-toggler-icon" style={{ filter: "invert(1)" }}></span>
                         </button>
                         <div className="collapse navbar-collapse justify-content-center mt-1" id="navbarTogglerDemo01">
+                            {/* Menu Lateral */}
+                            <button className="btn btn-outline-primary btn-sm m-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                                <i className="bi bi-gear-wide-connected"></i>
+                            </button>
                             <div className="btn-group m-1">
                                 <button
                                     className="btn btn-secondary btn-sm dropdown-toggle"
@@ -172,9 +176,146 @@ $parametros_backend = array(
                                     <li><a className="dropdown-item" href="#">Ação 3</a></li>
                                 </ul>
                             </div>
-                        </div> &nbsp;
+                        </div>
                     </div>
                 </nav>
+                {/* Menu Lateral */}
+                <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                    <div className="offcanvas-header">
+                        <h5 className="offcanvas-title" id="offcanvasExampleLabel">Menu Secundário</h5>
+                        <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div className="offcanvas-body">
+                        <div className="mb-5">
+                            Navegação no Sistema antigo
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Login</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_login`} target="_blank">Acesso</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Principal</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_main`} target="_blank">Acesso</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Empresa</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_empresa_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_empresa_cadasrtar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Linhas</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_linha_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_linha_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Veículo</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_veiculo_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_veiculo_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Tipo de Linha</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_linha_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_linha_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Tarifa</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_tarifa_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_tarifa_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Usuário</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_usuario_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_usuario_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>BOM</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Relatório</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_relatorio_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_relatorio_pendente`} target="_blank">Pendente</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_relatorio_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Log</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_log_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_log_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Configurações</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_log_bom`} target="_blank">BOM</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_log_permissoes`} target="_blank">Permissões</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Tarifa Retroativa</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/tarifa_retroaativa_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/tarifa_retroaativa_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Importar Linhas</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/tarifa_importar_linhas_filtrar`} target="_blank">Filtrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/tarifa_importar_linhas_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     };

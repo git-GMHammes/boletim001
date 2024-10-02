@@ -57,7 +57,7 @@ class UsuarioEndpointController extends ResourceController
             $this->AppHead,
             $this->AppMenu,
             $this->message,
-            'bw/usuario/AppUser',
+            'bw/usuario/AppLogin',
             $this->AppFooter,
         );
         try {
