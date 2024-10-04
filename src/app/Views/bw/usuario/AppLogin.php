@@ -106,6 +106,7 @@ $parametros_backend = array(
                     const dbResponse = getUser.result.dbResponse[0];
                     console.log('dbResponse: ', getUser.result.dbResponse[0]);
                     showOffcanvasAlert('success', 'Link de Homologação atualizado com sucesso!');
+                    redirectTo('index.php/bw/usuario/endpoint/login');
                     return dbResponse;
                 } else {
                     showOffcanvasAlert('danger', 'Não foi possível atualizar o Link de Homologação!');

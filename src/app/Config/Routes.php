@@ -107,6 +107,29 @@ $routes->group('bw', function ($routes) {
             $routes->post('login/(:any)', 'UsuarioEndpointController::loginWeb/$1');
         });
     });
+    
+    # Empresa
+    $routes->group('empresa', function ($routes) {
+        # www/bw/empresa/api/(:any)
+        $routes->group('api', function ($routes) {
+            # www/bw/empresa/api/cadastrar/(:any)
+            $routes->get('cadastrar', 'ApiController::dbMethod');
+            $routes->get('cadastrar/(:segment)', 'ApiController::dbMethod/$1');
+            $routes->get('cadastrar/(:any)', 'ApiController::dbMethod/$1');
+            $routes->post('cadastrar', 'ApiController::dbMethod');
+            $routes->post('cadastrar/(:any)', 'ApiController::dbMethod/$1');
+            $routes->post('cadastrar/(:any)', 'ApiController::dbMethod/$1');
+        });
+        # www/bw/empresa/endpoint/(:any)
+        $routes->group('endpoint', function ($routes) {
+            # www/bw/empresa/endpoint/cadastrar/(:any)
+            $routes->get('cadastrar', 'EmpresaEndpointController::dbCreate');
+            $routes->get('cadastrar/(:segment)', 'EmpresaEndpointController::dbCreate/$1');
+            $routes->get('cadastrar/(:any)', 'EmpresaEndpointController::dbCreate/$1');
+            $routes->post('cadastrar', 'EmpresaEndpointController::dbCreate');
+            $routes->post('cadastrar/(:any)', 'EmpresaEndpointController::dbCreate/$1');
+        });
+    });
 });
 
 $routes->group('bomweb', function ($routes) {

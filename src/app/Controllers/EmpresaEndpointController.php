@@ -11,11 +11,11 @@ class EmpresaEndpointController extends ResourceController
 {
     use ResponseTrait;
 
-    private $template = 'boletim_operacao_mensal/templates/main';
-    private $message = 'boletim_operacao_mensal/message';
-    private $footer = 'boletim_operacao_mensal/footer';
-    private $head = 'boletim_operacao_mensal/head';
-    private $menu = 'boletim_operacao_mensal/menu';
+    private $template = 'bw/templates/main';
+    private $message = 'bw/message';
+    private $footer = 'bw/AppFooter';
+    private $head = 'bw/AppHead';
+    private $menu = 'bw/AppMenu';
     private $tokenCsrf;
     private $ModelResponse;
     private $uri;
@@ -39,27 +39,36 @@ class EmpresaEndpointController extends ResourceController
         exit('403 Forbidden - Directory access is forbidden.');
     }
 
-    #
-    # route POST /www/project/group/api/exibir/(:any))
-    # route GET /www/project/group/api/exibir/(:any))
+    # Consumo de API
+    # route GET /www/bw/empresa/endpoint/cadastrar/(:any)
+    # route POST /www/bw/empresa/endpoint/cadastrar/(:any)
     # Informação sobre o controller
-    # retorno do controller [JSON]
-    public function dbRead($parameter = NULL)
+    # retorno do controller [VIEW]
+    public function dbCreate($parameter = NULL)
     {
-        # Parâmentros para receber um POST
+        // $this->token_csrf();
         $request = service('request');
         $getMethod = $request->getMethod();
-        $getGet = $this->request->getGet('page');
-        $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
-        $processRequest = (array)$request->getVar();
+        $getVar_page = $request->getVar('page');
+        $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
+        // $processRequest = eagarScagaire($processRequest);
         #
-        // myPrint($getMethod, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json');
+        $loadView = array(
+            $this->head,
+            $this->menu,
+            $this->message,
+            'bw/empresa/AppFormulario',
+            $this->footer,
+        );
+        $this->tokenCsrf->token_csrf();
         try {
+            # URI da API                                                                                                          
+            // $endPoint['objeto'] = myEndPoint('index.php/projeto/endereco/api/verbo', '123');
+            $requestJSONform['objeto'] = isset($endPoint['objeto']['result']) ? $endPoint['objeto']['result'] : array();
             #
-            $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
-            // $requestDb = $this->DbController->dbRead($id, $page);
-            #
+            $requestJSONform = array();
             $apiRespond = [
                 'status' => 'success',
                 'message' => 'API loading data (dados para carregamento da API)',
@@ -72,32 +81,55 @@ class EmpresaEndpointController extends ResourceController
                 ],
                 // 'method' => '__METHOD__',
                 // 'function' => '__FUNCTION__',
-                'result' => array(),
+                'result' => $processRequest,
+                'loadView' => $loadView,
                 'metadata' => [
-                    'page_title' => 'Application title',
+                    'page_title' => 'Título do Método',
                     'getURI' => $this->uri->getSegments(),
                     // Você pode adicionar campos comentados anteriormente se forem relevantes
                     // 'method' => '__METHOD__',
                     // 'function' => '__FUNCTION__',
                 ]
             ];
-            $response = $this->response->setJSON($apiRespond, 201);
+            if ($json == 1) {
+                $response = $this->response->setJSON($apiRespond, 201);
+            }
         } catch (\Exception $e) {
-            $apiRespond = array(
-                'message' => array('danger' => $e->getMessage()),
-                'page_title' => 'Application title',
-                'getURI' => $this->uri->getSegments(),
-            );
-            $this->message->message($message = array(), 'danger', $parameter, 5);
-            $response = $this->response->setJSON($apiRespond, 500);
+            $apiRespond = [
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Criar Method',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                'metadata' => [
+                    'page_title' => 'ERRO - Mensagem',
+                    'getURI' => $this->uri->getSegments(),
+                ]
+            ];
+            if ($json == 1) {
+                $response = $this->response->setJSON($apiRespond, 500);
+            }
         }
         if ($json == 1) {
-            return $response;
-            // return redirect()->back();
-            // return redirect()->to('project/endpoint/parameter/parameter/' . $parameter);
+            return $apiRespond;
         } else {
-            return $response;
+            // return $apiRespond;
+            return view($this->template, $apiRespond);
         }
+    }
+
+    #
+    # route POST /www/project/group/api/exibir/(:any))
+    # route GET /www/project/group/api/exibir/(:any))
+    # Informação sobre o controller
+    # retorno do controller [JSON]
+    public function dbRead($parameter = NULL)
+    {
+        exit('READ');
     }
     #
 }

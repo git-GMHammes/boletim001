@@ -85,7 +85,7 @@ $parametros_backend = array(
       console.log('Dados a serem enviados:', data);
 
       if (apiIdentifier === 'login-on') {
-        showOffcanvasAlert('info', 'Acionou a mensagem em modo INFO');
+        // showOffcanvasAlert('info', 'Acionou a mensagem em modo INFO');
         // Convertendo os dados do setPost em JSON
         response1 = await fetch(base_url + api_habilidade_login, {
           method: 'POST',
@@ -100,13 +100,12 @@ $parametros_backend = array(
         }
 
         getPainel = await response1.json();
-
         // Processa os dados recebidos da resposta
-        if (getPainel && getPainel.result.updateID) {
-          const dbResponse = getPainel.result.dbUpdate;
-          console.log('dbResponse: ', dbResponse);
+        if (getPainel && getPainel.result.length > 0) {
+          console.log('getPainel: ', getPainel.result);
           showOffcanvasAlert('success', 'Link de Homologação atualizado com sucesso!');
-          return dbResponse;
+          redirectTo('index.php/bw/usuario/endpoint/login');
+          return true;
         } else {
           showOffcanvasAlert('danger', 'Não foi possível atualizar o Link de Homologação!');
           return null;
@@ -142,6 +141,13 @@ $parametros_backend = array(
         setStartTransition(false);
         setShowAlert(false);
       }, 5000);
+    };
+
+    const redirectTo = (url) => {
+      const uri = base_url + url;
+      setTimeout(() => {
+        window.location.href = uri;
+      }, 3000);
     };
 
     // Style
@@ -183,8 +189,8 @@ $parametros_backend = array(
                   <div className="row">
                     <div className="col-12 col-sm-12">
                       <div>
-                        <label htmlFor="validationServer01" className="form-label text-start">E-mail</label>
-                        <input data-api="login-on" type="mail" id="mail" name="mail" className="form-control is-valid" id="validationServer01" required />
+                        <label htmlFor="email" className="form-label text-start">E-mail</label>
+                        <input data-api="login-on" type="email" id="email" name="email" className="form-control is-valid" required />
                         <div className="valid-feedback">
                           E-mail obrigatório
                         </div>
@@ -194,8 +200,8 @@ $parametros_backend = array(
                   <div className="row">
                     <div className="col-12 col-sm-12">
                       <div>
-                        <label htmlFor="validationServer02" className="form-label text-start">CPF</label>
-                        <input data-api="login-on" type="password" id="cpf" name="cpf" className="form-control is-valid" id="validationServer02" required />
+                        <label htmlFor="cpf" className="form-label text-start">CPF</label>
+                        <input data-api="login-on" type="password" id="cpf" name="cpf" className="form-control is-valid" required />
                         <div className="valid-feedback">
                           CPF Obrigatório
                         </div>
