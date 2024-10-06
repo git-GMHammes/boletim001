@@ -1,4 +1,4 @@
-<div class="app_exec_api"></div>
+<div class="app_exec_loading"></div>
 
 <script type="text/babel">
     const AppExecLoading = (setParametros = {}) => {
@@ -6,24 +6,24 @@
         const [carregando, setCarregando] = React.useState(true);
         const [progress, setProgress] = React.useState(0);
 
-        // A lógica aumenta o progresso em 10% a cada segundo por 10 segundos e então desliga o estado 'carregando'.
         React.useEffect(() => {
-            const loadData = async () => {
-                try {
-                    for (let i = 1; i <= 10; i++) {
-                        await new Promise(resolve => setTimeout(resolve, 1000));
-                        setProgress(prevProgress => Math.min(prevProgress + 10, 100));
-                    }
-                    setCarregando(false);
-                } catch (error) {
-                    console.error('Erro ao carregar dados:', error);
-                } finally {
-                    console.log('Fim do processo de carregamento.');
-                }
-            };
+            let intervalId;
+            if (carregando) {
+                intervalId = setInterval(() => {
+                    setProgress(prevProgress => {
+                        if (prevProgress >= 100) {
+                            return 0; // Reseta o progresso para 0 quando atingir 100
+                        }
+                        return prevProgress + 10; // Incrementa o progresso
+                    });
+                }, 1000); // Incrementa a cada 1 segundo
+            }
+            return () => clearInterval(intervalId);
+        }, [carregando]);
 
-            loadData();
-        }, []);
+        const handleStopLoading = () => {
+            setCarregando(false); // Função que para o loop e define 'carregando' como false
+        };
 
         const renderProgress = (progress = 0) => {
             return (
@@ -41,7 +41,7 @@
 
         const renderSpinners = () => {
             return (
-                <div className="w-100">
+                <div className="d-flex justify-content-center align-items-center min-vh-100">
                     <div className="spinner-border text-primary" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
@@ -61,11 +61,14 @@
                         Carregamento concluído!
                     </div>
                 )}
+                <div className="d-flex justify-content-center mt-3">
+                    <input className="btn btn-primary" type="button" value="Parar Carregamento" onClick={handleStopLoading} />
+                </div>
             </div>
         );
     };
 
-    const rootElement = document.querySelector('.app_exec_api');
+    const rootElement = document.querySelector('.app_exec_loading');
     const root = ReactDOM.createRoot(rootElement);
     root.render(<AppExecLoading />);
 </script>
