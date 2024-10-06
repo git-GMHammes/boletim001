@@ -25,30 +25,24 @@ $routes->group('analise', function ($routes) {
         });
         # www/analise/modelo/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {
-            # www/analise/modelo/endpoint/principal/(:any)
-            $routes->get('principal', 'ModeloEndpointController::main01');
-            $routes->get('principal/(:segment)', 'ModeloEndpointController::main01/$1');
-            $routes->get('principal/(:any)', 'ModeloEndpointController::main01/$1');
-            $routes->post('principal', 'ModeloEndpointController::main01');
-            $routes->post('principal/(:any)', 'ModeloEndpointController::main01/$1');
-            # www/analise/modelo/endpoint/exe01/(:any)
-            $routes->get('exe01', 'ModeloEndpointController::sub01');
-            $routes->get('exe01/(:segment)', 'ModeloEndpointController::sub01/$1');
-            $routes->get('exe01/(:any)', 'ModeloEndpointController::sub01/$1');
-            $routes->post('exe01', 'ModeloEndpointController::sub01');
-            $routes->post('exe01/(:any)', 'ModeloEndpointController::sub01/$1');
-            # www/analise/modelo/endpoint/exe02/(:any)
-            $routes->get('exe02', 'ModeloEndpointController::sub02');
-            $routes->get('exe02/(:segment)', 'ModeloEndpointController::sub02/$1');
-            $routes->get('exe02/(:any)', 'ModeloEndpointController::sub02/$1');
-            $routes->post('exe02', 'ModeloEndpointController::sub02');
-            $routes->post('exe02/(:any)', 'ModeloEndpointController::sub02/$1');
-            # www/analise/modelo/endpoint/exe03/(:any)
-            $routes->get('exe03', 'ModeloEndpointController::sub03');
-            $routes->get('exe03/(:segment)', 'ModeloEndpointController::sub03/$1');
-            $routes->get('exe03/(:any)', 'ModeloEndpointController::sub03/$1');
-            $routes->post('exe03', 'ModeloEndpointController::sub03');
-            $routes->post('exe03/(:any)', 'ModeloEndpointController::sub03/$1');
+            # www/analise/modelo/endpoint/AppPrincipal/(:any)
+            $routes->get('AppPrincipal', 'AnaliseEndpointController::AppPrincipal');
+            $routes->get('AppPrincipal/(:segment)', 'AnaliseEndpointController::AppPrincipal/$1');
+            $routes->get('AppPrincipal/(:any)', 'AnaliseEndpointController::AppPrincipal/$1');
+            $routes->post('AppPrincipal', 'AnaliseEndpointController::AppPrincipal');
+            $routes->post('AppPrincipal/(:any)', 'AnaliseEndpointController::AppPrincipal/$1');
+            # www/analise/modelo/endpoint/AppExecApi/(:any)
+            $routes->get('AppExecApi', 'AnaliseEndpointController::AppExecApi');
+            $routes->get('AppExecApi/(:segment)', 'AnaliseEndpointController::AppExecApi/$1');
+            $routes->get('AppExecApi/(:any)', 'AnaliseEndpointController::AppExecApi/$1');
+            $routes->post('AppExecApi', 'AnaliseEndpointController::AppExecApi');
+            $routes->post('AppExecApi/(:any)', 'AnaliseEndpointController::AppExecApi/$1');
+            # www/analise/modelo/endpoint/AppExecLoading/(:any)
+            $routes->get('AppExecLoading', 'AnaliseEndpointController::AppExecLoading');
+            $routes->get('AppExecLoading/(:segment)', 'AnaliseEndpointController::AppExecLoading/$1');
+            $routes->get('AppExecLoading/(:any)', 'AnaliseEndpointController::AppExecLoading/$1');
+            $routes->post('AppExecLoading', 'AnaliseEndpointController::AppExecLoading');
+            $routes->post('AppExecLoading/(:any)', 'AnaliseEndpointController::AppExecLoading/$1');
         });
     });
 });

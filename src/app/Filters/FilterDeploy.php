@@ -30,9 +30,13 @@ class FilterDeploy implements FilterInterface
     private function definePublico($uri)
     {
         if (
-            in_array('auth', $uri) ||
-            in_array('api', $uri)
+            in_array('auth', $uri)
+            || in_array('api', $uri)
+            || in_array('AppPrincipal', $uri)
+            || in_array('AppExecApi', $uri)
+            || in_array('AppExecLoading', $uri)
         ) {
+            // exit('src\app\Filters\FilterDeploy.php');
             return false;
         } else {
             return true;

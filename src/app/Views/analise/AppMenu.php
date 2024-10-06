@@ -23,25 +23,42 @@ $parametros_backend = array(
         const server_port = parametros.server_port;
         const base_url = parametros.base_url;
 
-        const [isCollapsed, setIsCollapsed] = React.useState(false);
-
-        const toggleCollapse = () => {
-            setIsCollapsed(!isCollapsed);
-        };
-        const linkStyle = {
-            color: '#53D7DC',
-            fontFamily: '"Roboto", sans-serif',
-            fontWeight: 700,
-            fontStyle: 'normal'
-        };
-        const headerTextStyle = {
-            backgroundImage: 'linear-gradient(to right, #330033, #14007A)',
-            color: 'white',
-            textDecoration: 'none',
-            padding: '10px'
-        };
         return (
-            <div>MENU</div>
+            <div>
+                <div className="container mt-5">
+                    <div className="row">
+                        <div className="col-12 col-sm-3">
+                            <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>Exemplos Órfãos</span>
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppPrincipal`}>AppPrincipal (Tab/Form)</a></li>
+                                    <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppExecLoading`}>AppExecLoading (Teste de Loading)</a></li>
+                                    <li><a className="dropdown-item disabled" href={`${base_url}`}>disabled</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="col-12 col-sm-3">
+                            <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>Link Principal</span>
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppExecApi`}>AppExecApi (Exemplo de consumo API)</a></li>
+                                    <li><a className="dropdown-item disabled" href={`${base_url}`}>disabled</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="col-12 col-sm-3">
+
+                        </div>
+                        <div className="col-12 col-sm-3">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     };
     const rootElement = document.querySelector('.App_menu');

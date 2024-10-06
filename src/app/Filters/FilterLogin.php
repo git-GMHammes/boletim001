@@ -25,6 +25,7 @@ class FilterLogin implements FilterInterface
             $this->definePublico($uri)
         ) {
             // return redirect()->to('bw/usuario/endpoint/login');
+            $parameter = array();
             $message->message(['Acesso restrito. '], 'danger', $parameter, 5);
         }
         #
@@ -35,7 +36,7 @@ class FilterLogin implements FilterInterface
         if (
             in_array('login', $uri) ||
             in_array('auth', $uri) ||
-            in_array('api', $uri)
+            in_array('api', $uri) 
         ) {
             return false;
         } else {

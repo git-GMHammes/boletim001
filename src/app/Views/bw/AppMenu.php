@@ -176,9 +176,14 @@ $parametros_backend = array(
                                     <li><a className="dropdown-item" href="#">Ação 3</a></li>
                                 </ul>
                             </div>
+                            {/* Menu Lateral */}
+                            <button className="btn btn-outline-warning btn-sm m-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                <i className="bi bi-gear-wide-connected"></i>
+                            </button>
                         </div>
                     </div>
                 </nav>
+
                 {/* Menu Lateral */}
                 <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                     <div className="offcanvas-header">
@@ -312,6 +317,27 @@ $parametros_backend = array(
                             <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                                 <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/tarifa_importar_linhas_filtrar`} target="_blank">Filtrar</a></li>
                                 <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/tarifa_importar_linhas_cadastrar`} target="_blank">Cadastrar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Menu Lateral */}
+                <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                    <div className="offcanvas-header">
+                        <h5 className="offcanvas-title" id="offcanvasRightLabel">Menu Secundário</h5>
+                        <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div className="offcanvas-body">
+                        <div className="mb-5">
+                            Navegação de Modelos
+                        </div>
+                        <div className="dropdown btn-sm mb-2">
+                            <button className="btn btn-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <span>Modelos</span>
+                            </button>
+                            <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppNavTab`} target="_blank">AppNavTab</a></li>
                             </ul>
                         </div>
                     </div>
