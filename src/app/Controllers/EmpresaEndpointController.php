@@ -59,15 +59,13 @@ class EmpresaEndpointController extends ResourceController
             $this->head,
             $this->menu,
             $this->message,
+            'bw/empresa/AppForm',
             'bw/empresa/AppFormulario',
             $this->footer,
         );
         $this->tokenCsrf->token_csrf();
         try {
             # URI da API                                                                                                          
-            // $endPoint['objeto'] = myEndPoint('index.php/projeto/endereco/api/verbo', '123');
-            $requestJSONform['objeto'] = isset($endPoint['objeto']['result']) ? $endPoint['objeto']['result'] : array();
-            #
             $requestJSONform = array();
             $apiRespond = [
                 'status' => 'success',

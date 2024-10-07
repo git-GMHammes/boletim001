@@ -113,12 +113,26 @@ $routes->group('bw', function ($routes) {
         # www/bw/empresa/api/(:any)
         $routes->group('api', function ($routes) {
             # www/bw/empresa/api/cadastrar/(:any)
-            $routes->get('cadastrar', 'ApiController::dbMethod');
-            $routes->get('cadastrar/(:segment)', 'ApiController::dbMethod/$1');
-            $routes->get('cadastrar/(:any)', 'ApiController::dbMethod/$1');
-            $routes->post('cadastrar', 'ApiController::dbMethod');
-            $routes->post('cadastrar/(:any)', 'ApiController::dbMethod/$1');
-            $routes->post('cadastrar/(:any)', 'ApiController::dbMethod/$1');
+            $routes->get('cadastrar', 'EmpresaApiController::create_update');
+            $routes->get('cadastrar/(:segment)', 'EmpresaApiController::create_update/$1');
+            $routes->get('cadastrar/(:any)', 'EmpresaApiController::create_update/$1');
+            $routes->post('cadastrar', 'EmpresaApiController::create_update');
+            $routes->post('cadastrar/(:any)', 'EmpresaApiController::create_update/$1');
+            $routes->post('cadastrar/(:any)', 'EmpresaApiController::create_update/$1');
+            # www/bw/empresa/api/exibir/(:any)
+            $routes->get('exibir', 'EmpresaApiController::dbRead');
+            $routes->get('exibir/(:segment)', 'EmpresaApiController::dbRead/$1');
+            $routes->get('exibir/(:any)', 'EmpresaApiController::dbRead/$1');
+            $routes->post('exibir', 'EmpresaApiController::dbRead');
+            $routes->post('exibir/(:any)', 'EmpresaApiController::dbRead/$1');
+            $routes->post('exibir/(:any)', 'EmpresaApiController::dbRead/$1');
+            # www/bw/empresa/api/atualizar/(:any)
+            $routes->get('atualizar', 'EmpresaApiController::create_update');
+            $routes->get('atualizar/(:segment)', 'EmpresaApiController::create_update/$1');
+            $routes->get('atualizar/(:any)', 'EmpresaApiController::create_update/$1');
+            $routes->post('atualizar', 'EmpresaApiController::create_update');
+            $routes->post('atualizar/(:any)', 'EmpresaApiController::create_update/$1');
+            $routes->post('atualizar/(:any)', 'EmpresaApiController::create_update/$1');
         });
         # www/bw/empresa/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {
