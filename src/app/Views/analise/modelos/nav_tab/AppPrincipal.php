@@ -6,7 +6,7 @@ $parametros_backend = array(
     'server_port' => $_SERVER['SERVER_PORT'],
     'getURI' => isset($metadata['getURI']) ? ($metadata['getURI']) : (array()),
     'base_url' => base_url(),
-    'base_api_pessoas' => 'https://fakerapi.it/api/v1/persons?_locale=pt_PT&_quantity=3',
+    'base_api_pessoas' => 'https://fakerapi.it/api/v1/persons?_locale=pt_PT&_quantity=3000000',
 );
 ?>
 
@@ -33,37 +33,43 @@ $parametros_backend = array(
         const [tabNav, setTabNav] = React.useState('list');
 
         console.log('parametros: ', parametros);
-        
+
         return (
             <div>
-                <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <div className="d-flex justify-content-center align-items-center min-vh-100 mt-5 mb-5">
                     <div className="container">
-                        <ul className="nav nav-tabs border border-top-0 border-start-0 border-end-0 rounded-top">
-                            <li className="nav-item">
-                                <a
-                                    className={`nav-link ${tabNav === 'list' ? 'active' : ''}`}
-                                    href="#"
-                                    onClick={() => handleTabClick('list')}
-                                >
-                                    Lista de Pessoas
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a
-                                    className={`nav-link ${tabNav === 'form' ? 'active' : ''}`}
-                                    href="#"
-                                    onClick={() => handleTabClick('form')}
-                                >
-                                    Formulário
-                                </a>
-                            </li>
-                        </ul>
-                        {/* Carrega todas as funções acima */}
-                        <div className="border border-top-0 rounded-bottom p-3">
-                            {tabNav === 'list' && <AppPessoas setParametros={parametros} />}
-                            {/*
+                        <div className="container">
+                            <AppLoading setParametros={{
+                                tipoLoading: "spinner",
+                                carregando: false
+                            }} />
+                            <ul className="nav nav-tabs border border-top-0 border-start-0 border-end-0 rounded-top">
+                                <li className="nav-item">
+                                    <a
+                                        className={`nav-link ${tabNav === 'list' ? 'active' : ''}`}
+                                        href="#"
+                                        onClick={() => handleTabClick('list')}
+                                    >
+                                        Lista de Pessoas
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a
+                                        className={`nav-link ${tabNav === 'form' ? 'active' : ''}`}
+                                        href="#"
+                                        onClick={() => handleTabClick('form')}
+                                    >
+                                        Formulário
+                                    </a>
+                                </li>
+                            </ul>
+                            {/* Carrega todas as funções acima */}
+                            <div className="border border-top-0 rounded-bottom p-3">
+                                {tabNav === 'list' && <AppPessoas setParametros={parametros} />}
+                                {/*
                             {tabNav === 'form' && <AppTab parametros={parametros} />}
                             */}
+                            </div>
                         </div>
                     </div>
                 </div>

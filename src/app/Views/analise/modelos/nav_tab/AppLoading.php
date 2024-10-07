@@ -1,7 +1,5 @@
-<div class="app_exec_loading"></div>
-
 <script type="text/babel">
-    const AppExecLoading = ({ setParametros = {} }) => {
+    const AppLoading = ({ setParametros = {} }) => {
         // Definindo valores a partir de setParametros ou valores default
         const tipoLoading = setParametros?.tipoLoading ?? 'spinner';
         const carregando = setParametros?.carregando ?? true;
@@ -28,7 +26,7 @@
         const renderProgress = (progress = 0) => {
             return (
                 <div>
-                    <div className="d-flex justify-content-center align-items-center min-vh-100">
+                    <div className="d-flex justify-content-center">
                         <div className="progress w-100">
                             <div className="progress-bar" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
                                 {progress}%
@@ -41,7 +39,7 @@
 
         const renderSpinners = () => {
             return (
-                <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <div className="d-flex justify-content-center">
                     <div className="spinner-border text-primary" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
@@ -61,7 +59,4 @@
         );
     };
 
-    const rootElement = document.querySelector('.app_exec_loading');
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(<AppExecLoading />);
 </script>

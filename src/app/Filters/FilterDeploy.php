@@ -35,6 +35,7 @@ class FilterDeploy implements FilterInterface
             || in_array('AppPrincipal', $uri)
             || in_array('AppExecApi', $uri)
             || in_array('AppExecLoading', $uri)
+            || in_array('AppExecForm', $uri)
         ) {
             // exit('src\app\Filters\FilterDeploy.php');
             return false;

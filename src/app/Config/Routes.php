@@ -43,6 +43,12 @@ $routes->group('analise', function ($routes) {
             $routes->get('AppExecLoading/(:any)', 'AnaliseEndpointController::AppExecLoading/$1');
             $routes->post('AppExecLoading', 'AnaliseEndpointController::AppExecLoading');
             $routes->post('AppExecLoading/(:any)', 'AnaliseEndpointController::AppExecLoading/$1');
+            # www/analise/modelo/endpoint/AppExecForm/(:any)
+            $routes->get('AppExecForm', 'AnaliseEndpointController::AppExecForm');
+            $routes->get('AppExecForm/(:segment)', 'AnaliseEndpointController::AppExecForm/$1');
+            $routes->get('AppExecForm/(:any)', 'AnaliseEndpointController::AppExecForm/$1');
+            $routes->post('AppExecForm', 'AnaliseEndpointController::AppExecForm');
+            $routes->post('AppExecForm/(:any)', 'AnaliseEndpointController::AppExecForm/$1');
         });
     });
 });

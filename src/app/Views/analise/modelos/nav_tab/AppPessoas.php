@@ -2,6 +2,7 @@
     const AppPessoas = ({ setParametros = {} }) => {
 
         const url_api_pessoas = setParametros.base_api_pessoas || '';
+        const [dataLoadingPessoas, setDataLoadingPessoas] = React.useState(true);
 
         // Listas
         const [persons, setPersons] = React.useState([]);
@@ -31,8 +32,11 @@
             try {
                 const response = await fetch(url_api_pessoas);
                 const data = await response.json();
-                console.log("Dados Pessoas: ", data)
-                setPersons(data.data);
+                if (data.total > 0) {
+                    console.log("Dados Pessoas: ", data)
+                    setPersons(data.data);
+                    setDataLoadingPessoas(false);
+                }
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
             }
@@ -53,6 +57,50 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {dataLoadingPessoas ? (
+                                    <tr>
+                                        <td>
+                                            {dataLoadingPessoas ? (
+                                                <AppLoading setParametros={{
+                                                    tipoLoading: "spinner",
+                                                    carregando: dataLoadingPessoas
+                                                }} />
+                                            ) : null}
+                                        </td>
+                                        <td>
+                                            {dataLoadingPessoas ? (
+                                                <AppLoading setParametros={{
+                                                    tipoLoading: "spinner",
+                                                    carregando: dataLoadingPessoas
+                                                }} />
+                                            ) : null}
+                                        </td>
+                                        <td>
+                                            {dataLoadingPessoas ? (
+                                                <AppLoading setParametros={{
+                                                    tipoLoading: "spinner",
+                                                    carregando: dataLoadingPessoas
+                                                }} />
+                                            ) : null}
+                                        </td>
+                                        <td>
+                                            {dataLoadingPessoas ? (
+                                                <AppLoading setParametros={{
+                                                    tipoLoading: "spinner",
+                                                    carregando: dataLoadingPessoas
+                                                }} />
+                                            ) : null}
+                                        </td>
+                                        <td>
+                                            {dataLoadingPessoas ? (
+                                                <AppLoading setParametros={{
+                                                    tipoLoading: "spinner",
+                                                    carregando: dataLoadingPessoas
+                                                }} />
+                                            ) : null}
+                                        </td>
+                                    </tr>
+                                ) : null}
                                 {persons.map((person, index) => (
                                     <tr key={person.id}>
                                         <th scope="row">{index + 1}</th>

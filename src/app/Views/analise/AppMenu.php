@@ -35,6 +35,7 @@ $parametros_backend = array(
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppPrincipal`}>AppPrincipal (Tab/Form)</a></li>
                                     <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppExecLoading`}>AppExecLoading (Teste de Loading)</a></li>
+                                    <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppExecForm`}>AppExecForm (Teste de Formulario)</a></li>
                                     <li><a className="dropdown-item disabled" href={`${base_url}`}>disabled</a></li>
                                 </ul>
                             </div>
