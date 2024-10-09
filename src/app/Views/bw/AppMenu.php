@@ -60,7 +60,7 @@ $parametros_backend = array(
                                 </button>
                                 <ul className="dropdown-menu p-2">
                                     <li><a className="dropdown-item" href={`${base_url}bw/empresa/endpoint/principal`}>Principal</a></li>
-                                    <li><a className="dropdown-item" href={`${base_url}bw/empresa/endpoint/cadastrar`}>Cadastrar</a></li>
+                                    <li><a className="dropdown-item disabled" href={`${base_url}bw/empresa/endpoint/cadastrar`}>Cadastrar</a></li>
                                     <li><a className="dropdown-item disabled" href={`${base_url}bw/empresa/endpoint/filtrar`}>Filtrar</a></li>
                                 </ul>
                             </div>

@@ -37,12 +37,6 @@ $parametros_backend = array(
         // Definindo o estado para controlar a aba ativa
         const [tabNav, setTabNav] = React.useState('form');
 
-        // Estado para controlar o alerta
-        const [showAlert, setShowAlert] = React.useState(false);
-        const [alertType, setAlertType] = React.useState('');
-        const [alertMessage, setAlertMessage] = React.useState('');
-        const [startTransition, setStartTransition] = React.useState(false);
-
         // Função para trocar de aba
         const handleTabClick = (tab) => {
             setTabNav(tab); // Atualiza a aba selecionada
@@ -73,18 +67,6 @@ $parametros_backend = array(
                     AJUDA
                 </div>
             );
-        };
-
-        // Style
-        const offcanvasStyles = {
-            width: '250px',
-            height: '150px',
-            transition: 'transform 1s ease-in-out',
-            transform: startTransition ? 'translateX(0)' : 'translateX(100%)',
-            position: 'fixed',
-            top: '10px',
-            right: '0',
-            zIndex: '1055'
         };
 
         return (
@@ -136,14 +118,6 @@ $parametros_backend = array(
                         {tabNav === 'del' && renderDel()}
                         {tabNav === 'help' && renderHelp()}
                     </div>
-                    {showAlert && (
-                        <div
-                            className={`bg-${alertType} text-white p-3`}
-                            style={offcanvasStyles}
-                        >
-                            {alertMessage}
-                        </div>
-                    )}
                 </div>
             </div>
         );

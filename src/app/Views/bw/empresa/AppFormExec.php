@@ -15,16 +15,12 @@
 
         // Definindo o estado para controlar a aba ativa
         const [tabNav, setTabNav] = React.useState('form');
+
+        // Estado para controlar o alerta
         const [showAlert, setShowAlert] = React.useState(false);
         const [alertType, setAlertType] = React.useState('');
         const [alertMessage, setAlertMessage] = React.useState('');
-
-        // Declarar parametros de mensagem
-        const [message, setMessage] = React.useState({
-            show: false,
-            type: null,
-            message: null
-        });
+        const [startTransition, setStartTransition] = React.useState(false);
 
         // Função para trocar de aba
         const handleTabClick = (tab) => {
@@ -90,21 +86,32 @@
                 if (getEmpresa.result.affectedRows && getEmpresa.result.affectedRows > 0) {
                     dbResponse = getEmpresa.result.dbCreate;
                     console.log('dbResponse: ', dbResponse);
-                    setMessage({
-                        show: true,
-                        type: 'success',
-                        message: 'Empresa cadastrada com sucesso!'
-                    });
+                    showOffcanvasAlert('success', 'Cadastro atualizado com sucesso!');
+                    // redirectTo('index.php/bw/empresa/endpoint/cadastrar');
                     return dbResponse;
                 } else {
-                    setMessage({
-                        show: true,
-                        type: 'danger',
-                        message: 'Erro de conexão com o servidor.'
-                    });
+                    showOffcanvasAlert('danger', 'Não foi possível cadastrar!');
                     return null;
                 }
             }
+        };
+
+        // Offcanvas (success, danger, warning, info)
+        // Função para exibir o alerta
+        const showOffcanvasAlert = (type, message) => {
+            setAlertType(type);
+            setAlertMessage(message);
+            setShowAlert(true);
+
+            // Inicia a transição após o componente ser renderizado
+            setTimeout(() => {
+                setStartTransition(true);
+            }, 50);
+
+            setTimeout(() => {
+                setStartTransition(false);
+                setShowAlert(false);
+            }, 5000);
         };
 
         const redirectTo = (url) => {
@@ -114,6 +121,17 @@
             }, 3000);
         };
 
+        const offcanvasStyles = {
+            width: '250px',
+            height: '150px',
+            transition: 'transform 1s ease-in-out',
+            transform: startTransition ? 'translateX(0)' : 'translateX(100%)',
+            position: 'fixed',
+            top: '10px',
+            right: '0',
+            zIndex: '1055'
+        };
+
         return (
             <div>
                 <form className="was-validated" onSubmit={(e) => {
@@ -121,63 +139,22 @@
                     submitAllForms('form-empresa', formData);
                 }}>
                     <div>
-                        <input
-                            data-api="form-empresa"
-                            type="hidden"
-                            className="form-control"
-                            id="token_csrf"
-                            name="token_csrf"
-                            value={token_csrf}
-                        />
-                        <input
-                            data-api="form-empresa"
-                            type="hidden"
-                            className="form-control"
-                            id="id"
-                            name="id"
-                            value={formData.id || ''}
-                        />
+                        <input data-api="form-empresa" type="hidden" className="form-control" id="token_csrf" name="token_csrf" value={token_csrf} />
+                        <input data-api="form-empresa" type="hidden" className="form-control" id="id" name="id" value={formData.id || ''} />
                         <div className="row">
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="codigo" className="form-label">Código</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="text"
-                                    className="form-control"
-                                    id="codigo"
-                                    name="codigo"
-                                    value={formData.codigo || ''}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <input data-api="form-empresa" type="text" className="form-control" id="codigo" name="codigo" value={formData.codigo || ''} onChange={handleChange} required />
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="nome" className="form-label">Nome</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="text"
-                                    className="form-control"
-                                    id="nome"
-                                    name="nome"
-                                    value={formData.nome || ''}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <input data-api="form-empresa" type="text" className="form-control" id="nome" name="nome" value={formData.nome || ''} onChange={handleChange} required />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="responsavel" className="form-label">Responsável</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="text"
-                                    className="form-control"
-                                    id="responsavel"
-                                    name="responsavel"
-                                    value={formData.responsavel || ''}
-                                    onChange={handleChange}
-                                    equired
-                                />
+                                <input data-api="form-empresa" type="text" className="form-control" id="responsavel" name="responsavel" value={formData.responsavel || ''} onChange={handleChange} required />
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="email_contato" className="form-label">E-mail</label>
@@ -187,16 +164,7 @@
                         <div className="row">
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="inicio_vigencia_bom" className="form-label">Início Vigência BOM</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="date"
-                                    className="form-control"
-                                    id="inicio_vigencia_bom"
-                                    name="inicio_vigencia_bom"
-                                    value={formData.inicio_vigencia_bom || ''}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <input data-api="form-empresa" type="date" className="form-control" id="inicio_vigencia_bom" name="inicio_vigencia_bom" value={formData.inicio_vigencia_bom || ''} onChange={handleChange} required />
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="active" className="form-label">Ativo</label>
@@ -235,16 +203,7 @@
                         <div className="row">
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="data_criacao" className="form-label">Data de Criação</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="datetime-local"
-                                    className="form-control"
-                                    id="data_criacao"
-                                    name="data_criacao"
-                                    value={formData.data_criacao || ''}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <input data-api="form-empresa" type="datetime-local" className="form-control" id="data_criacao" name="data_criacao" value={formData.data_criacao || ''} onChange={handleChange} required />
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="data_criacao" className="form-label">&nbsp;</label>
@@ -255,8 +214,14 @@
                         </div>
                     </div>
                 </form>
-                {/* Exibe o componente de alerta */}
-                <AppMessage setParametros={message} />
+                {showAlert && (
+                    <div
+                        className={`bg-${alertType} text-white p-3`}
+                        style={offcanvasStyles}
+                    >
+                        {alertMessage}
+                    </div>
+                )}
             </div>
         );
     };

@@ -136,12 +136,12 @@ $routes->group('bw', function ($routes) {
         });
         # www/bw/empresa/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {
-            # www/bw/empresa/endpoint/cadastrar/(:any)
-            $routes->get('cadastrar', 'EmpresaEndpointController::dbCreate');
-            $routes->get('cadastrar/(:segment)', 'EmpresaEndpointController::dbCreate/$1');
-            $routes->get('cadastrar/(:any)', 'EmpresaEndpointController::dbCreate/$1');
-            $routes->post('cadastrar', 'EmpresaEndpointController::dbCreate');
-            $routes->post('cadastrar/(:any)', 'EmpresaEndpointController::dbCreate/$1');
+            # www/bw/empresa/endpoint/principal/(:any)
+            $routes->get('principal', 'EmpresaEndpointController::dbCreate');
+            $routes->get('principal/(:segment)', 'EmpresaEndpointController::dbCreate/$1');
+            $routes->get('principal/(:any)', 'EmpresaEndpointController::dbCreate/$1');
+            $routes->post('principal', 'EmpresaEndpointController::dbCreate');
+            $routes->post('principal/(:any)', 'EmpresaEndpointController::dbCreate/$1');
         });
     });
 });

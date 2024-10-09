@@ -59,8 +59,9 @@ class EmpresaEndpointController extends ResourceController
             $this->head,
             $this->menu,
             $this->message,
+            'bw/AppMessage',
             'bw/empresa/AppForm',
-            'bw/empresa/AppFormulario',
+            'bw/empresa/AppPrincipal',
             $this->footer,
         );
         $this->tokenCsrf->token_csrf();
