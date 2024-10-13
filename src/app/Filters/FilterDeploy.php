@@ -18,11 +18,11 @@ class FilterDeploy implements FilterInterface
         #
         if (session()->get('filterDeploy')) {
             $filterDeploy = session()->get('filterDeploy');
-            // myPrint($filterDeploy, '', true);
+            // myPrint($filterDeploy, '');
         } elseif (
             $this->definePublico($uri)
         ) {
-            return redirect()->to('bw/habilidade/usuario/endpoint/auth');
+            // return redirect()->to('bw/habilidade/usuario/endpoint/auth');
         }
         #
     }
@@ -31,6 +31,8 @@ class FilterDeploy implements FilterInterface
     {
         if (
             in_array('auth', $uri)
+            || in_array('analise', $uri)
+            || in_array('modelo', $uri)
             || in_array('api', $uri)
             || in_array('AppPrincipal', $uri)
             || in_array('AppExecApi', $uri)

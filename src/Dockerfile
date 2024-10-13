@@ -18,7 +18,7 @@ RUN apt-get update && \
 # -----------------------------
 # Instalação de extensão PHP
 # -----------------------------
-RUN docker-php-ext-install intl pdo pdo_mysql mysqli soap ctype fileinfo
+RUN docker-php-ext-install intl pdo pdo_mysql mysqli soap ctype fileinfo calendar
 
 # -----------------------------
 # Instalação do Composer

@@ -5,6 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
 // $routes->get('/', 'Home::index');
 $routes->addRedirect('/', 'bw/habilidade/usuario/endpoint/auth');
 $routes->addRedirect('/bom', 'exemple/group/endpoint/bom_login');
@@ -15,13 +16,13 @@ $routes->group('analise', function ($routes) {
     $routes->group('modelo', function ($routes) {
         # www/analise/modelo/api/(:any)
         $routes->group('api', function ($routes) {
-            # www/analise/modelo/api/exe01/(:any)
-            $routes->get('exe01', 'ModeloApiController::dbMethod');
-            $routes->get('exe01/(:segment)', 'ModeloApiController::dbMethod/$1');
-            $routes->get('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
-            $routes->post('exe01', 'ModeloApiController::dbMethod');
-            $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
-            $routes->post('exe01/(:any)', 'ModeloApiController::dbMethod/$1');
+            # www/analise/modelo/api/diasmes/(:any)
+            $routes->get('diasmes', 'CalendarioApiController::getDiasMes');
+            $routes->get('diasmes/(:segment)', 'CalendarioApiController::getDiasMes/$1');
+            $routes->get('diasmes/(:any)', 'CalendarioApiController::getDiasMes/$1');
+            $routes->post('diasmes', 'CalendarioApiController::getDiasMes');
+            $routes->post('diasmes/(:any)', 'CalendarioApiController::getDiasMes/$1');
+            $routes->post('diasmes/(:any)', 'CalendarioApiController::getDiasMes/$1');
         });
         # www/analise/modelo/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {
@@ -49,6 +50,12 @@ $routes->group('analise', function ($routes) {
             $routes->get('AppExecForm/(:any)', 'AnaliseEndpointController::AppExecForm/$1');
             $routes->post('AppExecForm', 'AnaliseEndpointController::AppExecForm');
             $routes->post('AppExecForm/(:any)', 'AnaliseEndpointController::AppExecForm/$1');
+            # www/analise/modelo/endpoint/AppExecCalendario/(:any)
+            $routes->get('AppExecCalendario', 'AnaliseEndpointController::AppExecCalendario');
+            $routes->get('AppExecCalendario/(:segment)', 'AnaliseEndpointController::AppExecCalendario/$1');
+            $routes->get('AppExecCalendario/(:any)', 'AnaliseEndpointController::AppExecCalendario/$1');
+            $routes->post('AppExecCalendario', 'AnaliseEndpointController::AppExecCalendario');
+            $routes->post('AppExecCalendario/(:any)', 'AnaliseEndpointController::AppExecCalendario/$1');
         });
     });
 });

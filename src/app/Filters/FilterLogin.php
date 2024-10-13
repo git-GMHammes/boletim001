@@ -20,13 +20,13 @@ class FilterLogin implements FilterInterface
         #
         if (session()->get('login_bom')) {
             $login_bom = session()->get('login_bom');
-            // myPrint($login_bom, '', true);
+            myPrint($login_bom, '', true);
         } elseif (
             $this->definePublico($uri)
         ) {
-            // return redirect()->to('bw/usuario/endpoint/login');
-            $parameter = array();
-            $message->message(['Acesso restrito. '], 'danger', $parameter, 5);
+            return redirect()->to('bw/usuario/endpoint/login');
+            // $parameter = array();
+            // $message->message(['Acesso restrito. '], 'danger', $parameter, 5);
         }
         #
     }
