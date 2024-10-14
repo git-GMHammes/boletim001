@@ -50,7 +50,7 @@ class SystemCalendarController extends ResourceController
 
         try {
             // Verifica se o ano e o mês são válidos
-            if ($ano < 1900 || $ano > (int) date("Y") || $mes < 1 || $mes > 12) {
+            if ($ano < 1900 || $ano > (int) date("Y") + 5 || $mes < 1 || $mes > 12) {
                 return [
                     'dias' => [],
                     'error' => 'Data inválida.'

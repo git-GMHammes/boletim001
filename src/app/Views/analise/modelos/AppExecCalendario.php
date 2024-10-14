@@ -73,36 +73,38 @@ $parametros_backend = array(
         };
 
         // Função para alterar o ano
-const handleAnoChange = (operacao) => {
-    setAnoMes((prevAnoMes) => {
-        const novoAno = operacao === 'incrementar' ? prevAnoMes.ano + 1 : prevAnoMes.ano - 1;
-        return { ...prevAnoMes, ano: novoAno };
-    });
-};
+        const handleAnoChange = (operacao) => {
+            setAnoMes((prevAnoMes) => {
+                const novoAno = operacao === 'incrementar' ? prevAnoMes.ano + 1 : prevAnoMes.ano - 1;
+                console.log('Novo Ano: ', novoAno);  // Para verificar no console
+                return { ...prevAnoMes, ano: novoAno };
+            });
+        };
 
-// Função para alterar o mês
-const handleMesChange = (operacao) => {
-    setAnoMes((prevAnoMes) => {
-        let novoMes = prevAnoMes.mes;
-        let novoAno = prevAnoMes.ano;
+        // Função para alterar o mês
+        const handleMesChange = (operacao) => {
+            setAnoMes((prevAnoMes) => {
+                let novoMes = parseInt(prevAnoMes.mes);
+                let novoAno = prevAnoMes.ano;
 
-        if (operacao === 'incrementar') {
-            novoMes = parseInt(prevAnoMes.mes) + 1;
-            if (novoMes > 12) {
-                novoMes = 1;
-                novoAno += 1;  // Incrementa o ano quando passa de dezembro
-            }
-        } else {
-            novoMes = parseInt(prevAnoMes.mes) - 1;
-            if (novoMes < 1) {
-                novoMes = 12;
-                novoAno -= 1;  // Decrementa o ano quando passa de janeiro
-            }
-        }
-        
-        return { ano: novoAno, mes: String(novoMes).padStart(2, '0') };
-    });
-};
+                if (operacao === 'incrementar') {
+                    novoMes += 1;
+                    if (novoMes > 12) {
+                        novoMes = 1;
+                        novoAno += 1;  // Avança o ano após o mês 12
+                    }
+                } else {
+                    novoMes -= 1;
+                    if (novoMes < 1) {
+                        novoMes = 12;
+                        novoAno -= 1;  // Retrocede o ano quando o mês vai para antes de janeiro
+                    }
+                }
+
+                console.log('Novo Mês: ', novoMes, 'Novo Ano: ', novoAno);  // Verificando no console
+                return { ano: novoAno, mes: String(novoMes).padStart(2, '0') };
+            });
+        };
 
         React.useEffect(() => {
             const handleResize = () => {
@@ -129,21 +131,23 @@ const handleMesChange = (operacao) => {
             let semana = [];
 
             diasCalendario.forEach((cal_map, index) => {
-
                 semana.push(
                     <td key={index} className={`text-center ${cal_map.semana === 'domingo' || cal_map.semana === 'sábado' ? 'text-secondary' : 'text-dark'}`}>
-                        <a className={`btn btn-outline-${cal_map.semana === 'domingo' || cal_map.semana === 'sábado' ? 'danger' : 'dark'} btn-sm rounded-circle`} href="#" role="button">
+                        <a className={`btn btn-outline-${cal_map.semana === 'domingo' || cal_map.semana === 'sábado' ? 'danger' : 'dark'} btn-sm rounded-circle`}
+                            href="#"
+                            role="button"
+                            disabled={cal_map.mes !== mesCalendario ? true : null}>
                             {cal_map.dia}
                         </a>
                     </td>
                 );
 
+                // Após completar uma semana (7 dias) ou no último dia do mês, adicionar a linha ao calendário
                 if (semana.length === 7 || index === diasCalendario.length - 1) {
                     calendario.push(<tr key={`week-${index}`}>{semana}</tr>);
                     semana = [];
                 }
             });
-
 
             return calendario;
         };
@@ -154,24 +158,27 @@ const handleMesChange = (operacao) => {
                     <div className="text-center fs-2 text">
                         AGENDAMENTOS
                     </div>
+
                     <div className="text-center fs-2 text">
-                    <button type="button" className="btn btn-sm" onClick={() => handleAnoChange('decrementar')}>
-                    <i className="bi bi-arrow-bar-left"></i>
+                        <button type="button" className="btn btn-sm" onClick={() => handleAnoChange('decrementar')}>
+                            <i className="bi bi-arrow-bar-left"></i>
                         </button>
                         &emsp; {anoCalendario} &emsp;
                         <button type="button" className="btn btn-sm" onClick={() => handleAnoChange('incrementar')}>
-                        <i className="bi bi-arrow-bar-right"></i>
+                            <i className="bi bi-arrow-bar-right"></i>
                         </button>
                     </div>
+
                     <div className="text-center fs-2 text">
-                    <button type="button" className="btn btn-sm" onClick={() => handleMesChange('decrementar')}>
-                    <i className="bi bi-chevron-double-left"></i>
+                        <button type="button" className="btn btn-sm" onClick={() => handleMesChange('decrementar')}>
+                            <i className="bi bi-chevron-double-left"></i>
                         </button>
                         &emsp; {mesCalendario} &emsp;
                         <button type="button" className="btn btn-sm" onClick={() => handleMesChange('incrementar')}>
-                        <i className="bi bi-chevron-double-right"></i>
+                            <i className="bi bi-chevron-double-right"></i>
                         </button>
                     </div>
+
                     <div className="container border border-dark">
                         <table className="table table-hover">
                             <thead>
@@ -199,4 +206,3 @@ const handleMesChange = (operacao) => {
     const root = ReactDOM.createRoot(rootElement);
     root.render(<AppExecCalendario />);
 </script>
- 

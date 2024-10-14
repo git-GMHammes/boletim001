@@ -110,7 +110,7 @@ class CalendarioApiController extends ResourceController
             return $response;
         }
     }
-    #
+    
     # route POST /www/sigla/rota
     # route GET /www/sigla/rota
     # Informação sobre o controller
