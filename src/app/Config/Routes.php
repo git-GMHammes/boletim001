@@ -56,6 +56,12 @@ $routes->group('analise', function ($routes) {
             $routes->get('AppExecCalendario/(:any)', 'AnaliseEndpointController::AppExecCalendario/$1');
             $routes->post('AppExecCalendario', 'AnaliseEndpointController::AppExecCalendario');
             $routes->post('AppExecCalendario/(:any)', 'AnaliseEndpointController::AppExecCalendario/$1');
+            # www/analise/modelo/endpoint/AppExecEmpresa/(:any)
+            $routes->get('AppExecEmpresa', 'AnaliseEndpointController::AppExecEmpresa');
+            $routes->get('AppExecEmpresa/(:segment)', 'AnaliseEndpointController::AppExecEmpresa/$1');
+            $routes->get('AppExecEmpresa/(:any)', 'AnaliseEndpointController::AppExecEmpresa/$1');
+            $routes->post('AppExecEmpresa', 'AnaliseEndpointController::AppExecEmpresa');
+            $routes->post('AppExecEmpresa/(:any)', 'AnaliseEndpointController::AppExecEmpresa/$1');
         });
     });
 });
@@ -133,6 +139,13 @@ $routes->group('bw', function ($routes) {
             $routes->post('exibir', 'EmpresaApiController::dbRead');
             $routes->post('exibir/(:any)', 'EmpresaApiController::dbRead/$1');
             $routes->post('exibir/(:any)', 'EmpresaApiController::dbRead/$1');
+            # www/bw/empresa/api/filtrar/(:any)
+            $routes->get('filtrar', 'EmpresaApiController::dbFilter');
+            $routes->get('filtrar/(:segment)', 'EmpresaApiController::dbFilter/$1');
+            $routes->get('filtrar/(:any)', 'EmpresaApiController::dbFilter/$1');
+            $routes->post('filtrar', 'EmpresaApiController::dbFilter');
+            $routes->post('filtrar/(:any)', 'EmpresaApiController::dbFilter/$1');
+            $routes->post('filtrar/(:any)', 'EmpresaApiController::dbFilter/$1');
             # www/bw/empresa/api/atualizar/(:any)
             $routes->get('atualizar', 'EmpresaApiController::create_update');
             $routes->get('atualizar/(:segment)', 'EmpresaApiController::create_update/$1');

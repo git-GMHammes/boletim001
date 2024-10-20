@@ -105,7 +105,6 @@ class ExampleApiController extends ResourceController
     # retorno do controller [JSON]
     public function dbFilter($parameter = NULL)
     {
-
         # Parâmentros para receber um POST
         $request = service('request');
         $getMethod = $request->getMethod();

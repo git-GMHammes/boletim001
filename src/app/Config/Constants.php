@@ -171,8 +171,8 @@ function scbdd($server_name)
     } elseif (
         $server_name == '127.0.0.1'
     ) {
-        // defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'localhostBOM');
-        defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'HabilidadeBW');
+        defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'localhostBOM');
+        // defined('GRUPO_DB_CONFIG') or define('GRUPO_DB_CONFIG', 'HabilidadeBW');
     } elseif (
         $server_name == 'habilidade.com'
     ) {

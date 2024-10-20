@@ -61,6 +61,7 @@ class EmpresaEndpointController extends ResourceController
             $this->message,
             'bw/AppMessage',
             'bw/empresa/AppForm',
+            'bw/empresa/AppList',
             'bw/empresa/AppPrincipal',
             $this->footer,
         );

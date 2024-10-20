@@ -197,6 +197,70 @@ class EmpresaApiController extends ResourceController
         }
     }
 
+    # route POST /# www/project/group/api/filtrar/(:any)
+    # route GET /# www/project/group/api/filtrar/(:any)
+    # Informação sobre o controller
+    # retorno do controller [JSON]
+    public function dbFilter($parameter = NULL)
+    {
+        # Parâmentros para receber um POST
+        $request = service('request');
+        $getMethod = $request->getMethod();
+        $getGet = $this->request->getGet('page');
+        $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
+        $processRequest = (array) $request->getVar();
+        $processRequest = array_filter($processRequest);
+        $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        myPrint($processRequest, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json', true);
+        #
+        try {
+            #
+            // return $this->response->setJSON($processRequest, 200);
+            $requestDb = $this->DbController->dbFilter($processRequest, $page);
+            // myPrint($requestDb, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json', true);
+            #
+            $apiRespond = [
+                'status' => 'success',
+                'message' => 'API loading data (dados para carregamento da API)',
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Description',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                // 'method' => '__METHOD__',
+                // 'function' => '__FUNCTION__',
+                'result' => $requestDb,
+                'metadata' => [
+                    'page_title' => 'Application title',
+                    'getURI' => $this->uri->getSegments(),
+                    // Você pode adicionar campos comentados anteriormente se forem relevantes
+                    // 'method' => '__METHOD__',
+                    // 'function' => '__FUNCTION__',
+                ]
+            ];
+            $response = $this->response->setJSON($apiRespond, 201);
+        } catch (\Exception $e) {
+            $apiRespond = array(
+                'message' => array('danger' => $e->getMessage()),
+                'page_title' => 'Application title',
+                'getURI' => $this->uri->getSegments(),
+            );
+            $this->message->message($message = array(), 'danger', $parameter, 5);
+            $response = $this->response->setJSON($apiRespond, 500);
+        }
+        if ($json == 1) {
+            return $response;
+            // return redirect()->back();
+            // return redirect()->to('project/endpoint/parameter/parameter/' . $parameter);
+        } else {
+            return $response;
+        }
+    }
+
+
+
     # route POST /www/sigla/rota
     # route GET /www/sigla/rota
     # Informação sobre o controller

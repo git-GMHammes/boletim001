@@ -356,88 +356,167 @@ class AnaliseEndpointController extends ResourceController
         }
     }
 
-    
-        # Consumo de API
-        # route GET /www/analise/modelo/endpoint/AppExecCalendario/(:any)
-        # route POST /www/analise/modelo/endpoint/AppExecCalendario/(:any)
-        # Informação sobre o controller
-        # retorno do controller [VIEW]
-        public function AppExecCalendario($parameter = NULL)
-        {
-            // $this->token_csrf();
-            $request = service('request');
-            $getMethod = $request->getMethod();
-            $getVar_page = $request->getVar('page');
-            $processRequest = (array) $request->getVar();
-            $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
-            $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
-            // $processRequest = eagarScagaire($processRequest);
+    # Consumo de API
+    # route GET /www/analise/modelo/endpoint/AppExecCalendario/(:any)
+    # route POST /www/analise/modelo/endpoint/AppExecCalendario/(:any)
+    # Informação sobre o controller
+    # retorno do controller [VIEW]
+    public function AppExecCalendario($parameter = NULL)
+    {
+        // $this->token_csrf();
+        $request = service('request');
+        $getMethod = $request->getMethod();
+        $getVar_page = $request->getVar('page');
+        $processRequest = (array) $request->getVar();
+        $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
+        // $processRequest = eagarScagaire($processRequest);
+        #
+        $loadView = array(
+            $this->head,
+            $this->menu,
+            $this->message,
+            'analise/modelos/AppExecCalendario',
+            $this->footer,
+        );
+        // myPrint($loadView, 'src\app\Controllers\AnaliseEndpointController.php');
+        $this->tokenCsrf->token_csrf();
+        try {
             #
-            $loadView = array(
-                $this->head,
-                $this->menu,
-                $this->message,
-                'analise/modelos/AppExecCalendario',
-                $this->footer,
-            );
-            // myPrint($loadView, 'src\app\Controllers\AnaliseEndpointController.php');
-            $this->tokenCsrf->token_csrf();
-            try {
-                #
-                $requestJSONform = array();
-                $apiRespond = [
-                    'status' => 'success',
-                    'message' => 'API loading data (dados para carregamento da API)',
-                    'date' => date('Y-m-d'),
-                    'api' => [
-                        'version' => '1.0',
-                        'method' => $getMethod,
-                        'description' => 'API Description',
-                        'content_type' => 'application/x-www-form-urlencoded'
-                    ],
+            $requestJSONform = array();
+            $apiRespond = [
+                'status' => 'success',
+                'message' => 'API loading data (dados para carregamento da API)',
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Description',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                // 'method' => '__METHOD__',
+                // 'function' => '__FUNCTION__',
+                'result' => $processRequest,
+                'loadView' => $loadView,
+                'metadata' => [
+                    'page_title' => 'Título do Método',
+                    'getURI' => $this->uri->getSegments(),
+                    // Você pode adicionar campos comentados anteriormente se forem relevantes
                     // 'method' => '__METHOD__',
                     // 'function' => '__FUNCTION__',
-                    'result' => $processRequest,
-                    'loadView' => $loadView,
-                    'metadata' => [
-                        'page_title' => 'Título do Método',
-                        'getURI' => $this->uri->getSegments(),
-                        // Você pode adicionar campos comentados anteriormente se forem relevantes
-                        // 'method' => '__METHOD__',
-                        // 'function' => '__FUNCTION__',
-                    ]
-                ];
-                if ($json == 1) {
-                    $response = $this->response->setJSON($apiRespond, 201);
-                }
-            } catch (\Exception $e) {
-                $apiRespond = [
-                    'status' => 'error',
-                    'message' => $e->getMessage(),
-                    'date' => date('Y-m-d'),
-                    'api' => [
-                        'version' => '1.0',
-                        'method' => $getMethod,
-                        'description' => 'API Criar Method',
-                        'content_type' => 'application/x-www-form-urlencoded'
-                    ],
-                    'metadata' => [
-                        'page_title' => 'ERRO - Mensagem',
-                        'getURI' => $this->uri->getSegments(),
-                    ]
-                ];
-                if ($json == 1) {
-                    $response = $this->response->setJSON($apiRespond, 500);
-                }
-            }
+                ]
+            ];
             if ($json == 1) {
-                return $apiRespond;
-            } else {
-                // return $apiRespond;
-                return view($this->template, $apiRespond);
+                $response = $this->response->setJSON($apiRespond, 201);
+            }
+        } catch (\Exception $e) {
+            $apiRespond = [
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Criar Method',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                'metadata' => [
+                    'page_title' => 'ERRO - Mensagem',
+                    'getURI' => $this->uri->getSegments(),
+                ]
+            ];
+            if ($json == 1) {
+                $response = $this->response->setJSON($apiRespond, 500);
             }
         }
-    
+        if ($json == 1) {
+            return $apiRespond;
+        } else {
+            // return $apiRespond;
+            return view($this->template, $apiRespond);
+        }
+    }
+
+    # Consumo de API
+    # route GET /www/analise/modelo/endpoint/AppExecEmpresa/(:any)
+    # route POST /www/analise/modelo/endpoint/AppExecEmpresa/(:any)
+    # Informação sobre o controller
+    # retorno do controller [VIEW]
+    public function AppExecEmpresa($parameter = NULL)
+    {
+        // $this->token_csrf();
+        $request = service('request');
+        $getMethod = $request->getMethod();
+        $getVar_page = $request->getVar('page');
+        $processRequest = (array) $request->getVar();
+        $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
+        $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
+        // $processRequest = eagarScagaire($processRequest);
+        #
+        $loadView = array(
+            $this->head,
+            $this->menu,
+            $this->message,
+            'analise/modelos/AppExecEmpresas',
+            $this->footer,
+        );
+        // myPrint($loadView, 'src\app\Controllers\AnaliseEndpointController.php');
+        $this->tokenCsrf->token_csrf();
+        try {
+            #
+            $requestJSONform = array();
+            $apiRespond = [
+                'status' => 'success',
+                'message' => 'API loading data (dados para carregamento da API)',
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Description',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                // 'method' => '__METHOD__',
+                // 'function' => '__FUNCTION__',
+                'result' => $processRequest,
+                'loadView' => $loadView,
+                'metadata' => [
+                    'page_title' => 'Título do Método',
+                    'getURI' => $this->uri->getSegments(),
+                    // Você pode adicionar campos comentados anteriormente se forem relevantes
+                    // 'method' => '__METHOD__',
+                    // 'function' => '__FUNCTION__',
+                ]
+            ];
+            if ($json == 1) {
+                $response = $this->response->setJSON($apiRespond, 201);
+            }
+        } catch (\Exception $e) {
+            $apiRespond = [
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'date' => date('Y-m-d'),
+                'api' => [
+                    'version' => '1.0',
+                    'method' => $getMethod,
+                    'description' => 'API Criar Method',
+                    'content_type' => 'application/x-www-form-urlencoded'
+                ],
+                'metadata' => [
+                    'page_title' => 'ERRO - Mensagem',
+                    'getURI' => $this->uri->getSegments(),
+                ]
+            ];
+            if ($json == 1) {
+                $response = $this->response->setJSON($apiRespond, 500);
+            }
+        }
+        if ($json == 1) {
+            return $apiRespond;
+        } else {
+            // return $apiRespond;
+            return view($this->template, $apiRespond);
+        }
+    }
 
 }
 

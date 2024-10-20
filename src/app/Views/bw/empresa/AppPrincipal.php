@@ -11,6 +11,8 @@ $parametros_backend = array(
     'api_empresa_cadastrar' => 'bw/empresa/api/cadastrar',
     'api_empresa_atualizar' => 'bw/empresa/api/atualizar',
     'api_empresa_listar' => 'bw/empresa/api/atualizar',
+    'api_empresa_exibir' => 'bw/empresa/api/exibir',
+    'api_empresa_filtrar' => 'bw/empresa/api/filtrar',
 );
 // myPrint($parametros_backend, 'src\app\Views\bw\empresa\AppPrincipal.php', true);
 ?>
@@ -33,6 +35,7 @@ $parametros_backend = array(
         // Lista de APIs
         const api_empresa_cadastrar = parametros.api_empresa_cadastrar;
         const api_empresa_atualizar = parametros.api_empresa_atualizar;
+        const api_empresa_exibir = parametros.api_empresa_exibir;
 
         // Definindo o estado para controlar a aba ativa
         const [tabNav, setTabNav] = React.useState('form');
@@ -70,53 +73,57 @@ $parametros_backend = array(
         };
 
         return (
-            <div id="top" className="d-flex justify-content-center align-items-center min-vh-100">
-                <div className="container">
-                    <ul className="nav nav-tabs border border-top-0 border-start-0 border-end-0 rounded-top">
-                        <li className="nav-item">
-                            <a
-                                className={`nav-link ${tabNav === 'form' ? 'active' : ''}`}
-                                href="#top"
-                                onClick={() => handleTabClick('form')}
-                            >
-                                Formulario
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a
-                                className={`nav-link ${tabNav === 'list' ? 'active' : ''}`}
-                                href="#top"
-                                onClick={() => handleTabClick('list')}
-                            >
-                                Listar
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a
-                                className={`nav-link ${tabNav === 'del' ? 'active' : ''}`}
-                                href="#top"
-                                onClick={() => handleTabClick('del')}
-                            >
-                                Excluir
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a
-                                className={`nav-link ${tabNav === 'help' ? 'active' : ''}`}
-                                href="#top"
-                                onClick={() => handleTabClick('help')}
-                            >
-                                Ajuda
-                            </a>
-                        </li>
-                    </ul>
+            <div className="mt-1">
+                <div>
+                    <div id="top" className="d-flex justify-content-center align-items-center min-vh-100">
+                        <div className="container">
+                            <ul className="nav nav-tabs border border-top-0 border-start-0 border-end-0 rounded-top">
+                                <li className="nav-item">
+                                    <a
+                                        className={`nav-link ${tabNav === 'form' ? 'active' : ''}`}
+                                        href="#top"
+                                        onClick={() => handleTabClick('form')}
+                                    >
+                                        Formulario
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a
+                                        className={`nav-link ${tabNav === 'list' ? 'active' : ''}`}
+                                        href="#top"
+                                        onClick={() => handleTabClick('list')}
+                                    >
+                                        Listar
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a
+                                        className={`nav-link ${tabNav === 'del' ? 'active' : ''}`}
+                                        href="#top"
+                                        onClick={() => handleTabClick('del')}
+                                    >
+                                        Excluir
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a
+                                        className={`nav-link ${tabNav === 'help' ? 'active' : ''}`}
+                                        href="#top"
+                                        onClick={() => handleTabClick('help')}
+                                    >
+                                        Ajuda
+                                    </a>
+                                </li>
+                            </ul>
 
-                    {/* Carrega todas as funções acima */}
-                    <div className="border border-top-0 rounded-bottom p-3">
-                        {tabNav === 'form' && <AppForm setParametros={parametros} />}
-                        {tabNav === 'list' && renderList()}
-                        {tabNav === 'del' && renderDel()}
-                        {tabNav === 'help' && renderHelp()}
+                            {/* Carrega todas as funções acima */}
+                            <div className="border border-top-0 rounded-bottom p-3">
+                                {tabNav === 'form' && <AppForm setParametros={parametros} />}
+                                {tabNav === 'list' && <AppList setParametros={parametros} />}
+                                {tabNav === 'del' && renderDel()}
+                                {tabNav === 'help' && renderHelp()}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
