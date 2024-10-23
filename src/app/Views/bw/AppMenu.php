@@ -75,9 +75,9 @@ $parametros_backend = array(
                                     Linha
                                 </button>
                                 <ul className="dropdown-menu p-2">
-                                    <li><a className="dropdown-item" href="#">Tipo de Linha</a></li>
-                                    <li><a className="dropdown-item" href="#">Importar Linhas</a></li>
-                                    <li><a className="dropdown-item" href="#">Ação 3</a></li>
+                                    <li><a className="dropdown-item" href={`${base_url}bw/linha/endpoint/principal`}>Principal</a></li>
+                                    <li><a className="dropdown-item disabled" href={`${base_url}bw/linha/endpoint/cadastrar`}>Cadastrar</a></li>
+                                    <li><a className="dropdown-item disabled" href={`${base_url}bw/linha/endpoint/filtrar`}>Filtrar</a></li>
                                 </ul>
                             </div>
                             <div className="btn-group m-1">
@@ -225,7 +225,7 @@ $parametros_backend = array(
                             </button>
                             <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                                 <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_linha_filtrar`} target="_blank">Filtrar</a></li>
-                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_linha_cadastrar`} target="_blank">Cadastrar</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}exemple/group/endpoint/bom_linha_cadasrtar`} target="_blank">Cadastrar</a></li>
                             </ul>
                         </div>
                         <div className="dropdown btn-sm mb-2">

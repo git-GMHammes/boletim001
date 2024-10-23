@@ -120,7 +120,7 @@ $routes->group('bw', function ($routes) {
             $routes->post('login/(:any)', 'UsuarioEndpointController::loginWeb/$1');
         });
     });
-    
+
     # Empresa
     $routes->group('empresa', function ($routes) {
         # www/bw/empresa/api/(:any)
@@ -162,6 +162,50 @@ $routes->group('bw', function ($routes) {
             $routes->get('principal/(:any)', 'EmpresaEndpointController::dbCreate/$1');
             $routes->post('principal', 'EmpresaEndpointController::dbCreate');
             $routes->post('principal/(:any)', 'EmpresaEndpointController::dbCreate/$1');
+        });
+    });
+
+    # Linha
+    $routes->group('linha', function ($routes) {
+        # www/bw/linha/api/(:any)
+        $routes->group('api', function ($routes) {
+            # www/bw/linha/api/cadastrar/(:any)
+            $routes->get('cadastrar', 'LinhaApiController::create_update');
+            $routes->get('cadastrar/(:segment)', 'LinhaApiController::create_update/$1');
+            $routes->get('cadastrar/(:any)', 'LinhaApiController::create_update/$1');
+            $routes->post('cadastrar', 'LinhaApiController::create_update');
+            $routes->post('cadastrar/(:any)', 'LinhaApiController::create_update/$1');
+            $routes->post('cadastrar/(:any)', 'LinhaApiController::create_update/$1');
+            # www/bw/linha/api/exibir/(:any)
+            $routes->get('exibir', 'LinhaApiController::dbRead');
+            $routes->get('exibir/(:segment)', 'LinhaApiController::dbRead/$1');
+            $routes->get('exibir/(:any)', 'LinhaApiController::dbRead/$1');
+            $routes->post('exibir', 'LinhaApiController::dbRead');
+            $routes->post('exibir/(:any)', 'LinhaApiController::dbRead/$1');
+            $routes->post('exibir/(:any)', 'LinhaApiController::dbRead/$1');
+            # www/bw/linha/api/filtrar/(:any)
+            $routes->get('filtrar', 'LinhaApiController::dbFilter');
+            $routes->get('filtrar/(:segment)', 'LinhaApiController::dbFilter/$1');
+            $routes->get('filtrar/(:any)', 'LinhaApiController::dbFilter/$1');
+            $routes->post('filtrar', 'LinhaApiController::dbFilter');
+            $routes->post('filtrar/(:any)', 'LinhaApiController::dbFilter/$1');
+            $routes->post('filtrar/(:any)', 'LinhaApiController::dbFilter/$1');
+            # www/bw/linha/api/atualizar/(:any)
+            $routes->get('atualizar', 'LinhaApiController::create_update');
+            $routes->get('atualizar/(:segment)', 'LinhaApiController::create_update/$1');
+            $routes->get('atualizar/(:any)', 'LinhaApiController::create_update/$1');
+            $routes->post('atualizar', 'LinhaApiController::create_update');
+            $routes->post('atualizar/(:any)', 'LinhaApiController::create_update/$1');
+            $routes->post('atualizar/(:any)', 'LinhaApiController::create_update/$1');
+        });
+        # www/bw/linha/endpoint/(:any)
+        $routes->group('endpoint', function ($routes) {
+            # www/bw/linha/endpoint/principal/(:any)
+            $routes->get('principal', 'LinhaEndpointController::dbCreate');
+            $routes->get('principal/(:segment)', 'LinhaEndpointController::dbCreate/$1');
+            $routes->get('principal/(:any)', 'LinhaEndpointController::dbCreate/$1');
+            $routes->post('principal', 'LinhaEndpointController::dbCreate');
+            $routes->post('principal/(:any)', 'LinhaEndpointController::dbCreate/$1');
         });
     });
 });

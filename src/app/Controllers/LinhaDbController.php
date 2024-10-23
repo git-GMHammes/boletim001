@@ -9,11 +9,11 @@ use App\Models\EmporesaModels;
 # use App\Models\VEmporesaModelsModels;
 use Exception;
 
-class EmpresaDbController extends BaseController
+class LinhaDbController extends BaseController
 {
     # private $ModelUpload;
-    private $ModelEmpresa;
-    # private $ModelEmpresa;
+    private $ModelLinha;
+    # private $ModelLinha;
     private $message;
     private $uri;
     private $pagination;
@@ -23,9 +23,9 @@ class EmpresaDbController extends BaseController
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->pagination = new SystemBaseController();
         $this->message = new SystemMessageController();
-        $this->ModelEmpresa = new EmporesaModels();
+        $this->ModelLinha = new EmporesaModels();
         # $this->ModelUpload = new UploadModel();
-        # $this->ModelEmpresa = new VEmporesaModelsModels();
+        # $this->ModelLinha = new VEmporesaModelsModels();
     }
 
     # route POST /www/sigla/rota
@@ -45,7 +45,7 @@ class EmpresaDbController extends BaseController
     {
         # myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
         $dbCreate = array();
-        $autoColumn = $this->ModelEmpresa->getColumnsFromTable();
+        $autoColumn = $this->ModelLinha->getColumnsFromTable();
         if (isset($autoColumn['COLUMN'])) {
             foreach ($autoColumn['COLUMN'] as $key_autoColumn => $value_autoColumn) {
                 # myPrint($value_autoColumn, '', true);
@@ -65,7 +65,7 @@ class EmpresaDbController extends BaseController
     {
         # myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
         $dbCreate = array();
-        $autoColumn = $this->ModelEmpresa->getColumnsFromTable();
+        $autoColumn = $this->ModelLinha->getColumnsFromTable();
         // myPrint($autoColumn, '', true);
         if (isset($autoColumn['COLUMN'])) {
             foreach ($autoColumn['COLUMN'] as $key_autoColumn => $value_autoColumn) {
@@ -85,10 +85,10 @@ class EmpresaDbController extends BaseController
     {
 
         try {
-            $this->ModelEmpresa->dbCreate($this->dbFields($parameter));
-            $affectedRows = $this->ModelEmpresa->affectedRows();
+            $this->ModelLinha->dbCreate($this->dbFields($parameter));
+            $affectedRows = $this->ModelLinha->affectedRows();
             if ($affectedRows > 0) {
-                $dbCreate['insertID'] = $this->ModelEmpresa->insertID();
+                $dbCreate['insertID'] = $this->ModelLinha->insertID();
                 $dbCreate['affectedRows'] = $affectedRows;
                 $dbCreate['dbCreate'] = $parameter;
             } else {
@@ -118,7 +118,7 @@ class EmpresaDbController extends BaseController
         try {
             if ($parameter !== NULL) {
                 $dbResponse = $this
-                    ->ModelEmpresa
+                    ->ModelLinha
                     ->where('id', $parameter)
                     ->where('deleted_at', NULL)
                     ->orderBy('updated_at', 'asc')
@@ -127,7 +127,7 @@ class EmpresaDbController extends BaseController
                 #
             } else {
                 $dbResponse = $this
-                    ->ModelEmpresa
+                    ->ModelLinha
                     ->where('deleted_at', NULL)
                     ->orderBy('updated_at', 'asc')
                     ->dBread()
@@ -143,7 +143,7 @@ class EmpresaDbController extends BaseController
                 'dbResponse' => $dbResponse,
                 'linksArray' => $linksArray
             );
-            # myPrint($response, 'src\app\Controllers\EmpresaDbController.php');
+            # myPrint($response, 'src\app\Controllers\LinhaDbController.php');
         } catch (\Exception $e) {
             if (DEBUG_MY_PRINT) {
                 myPrint($e->getMessage(), 'src\app\Controllers\ExempleDbController.php');
@@ -169,7 +169,7 @@ class EmpresaDbController extends BaseController
         #
         try {
             $query = $this
-                ->ModelEmpresa
+                ->ModelLinha
                 ->where('deleted_at', NULL);
             foreach ($parameter as $key => $value) {
                 $query = $query->like($key, $value);
@@ -199,7 +199,7 @@ class EmpresaDbController extends BaseController
             $response = array();
         }
         #
-        // myPrint($response, 'src\app\Controllers\EmpresaDbController.php');
+        // myPrint($response, 'src\app\Controllers\LinhaDbController.php');
         return $response;
     }
 
@@ -214,12 +214,12 @@ class EmpresaDbController extends BaseController
             && empty($parameter['deleted_at'])
             && count($parameter) == 1
         ) {
-            $this->ModelEmpresa->dbUpdate($key, $parameter);
+            $this->ModelLinha->dbUpdate($key, $parameter);
         } else {
-            $this->ModelEmpresa->dbUpdate($key, $this->dbFields($parameter));
+            $this->ModelLinha->dbUpdate($key, $this->dbFields($parameter));
         }
         try {
-            $affectedRows = $this->ModelEmpresa->affectedRows();
+            $affectedRows = $this->ModelLinha->affectedRows();
             if ($affectedRows > 0) {
                 $dbUpdate['updateID'] = $key;
                 $dbUpdate['affectedRows'] = $affectedRows;
@@ -248,8 +248,8 @@ class EmpresaDbController extends BaseController
     public function dbDelete($parameter = NULL)
     {
         try {
-            $this->ModelEmpresa->dbDelete('id', $parameter);
-            $affectedRows = $this->ModelEmpresa->affectedRows();
+            $this->ModelLinha->dbDelete('id', $parameter);
+            $affectedRows = $this->ModelLinha->affectedRows();
             if ($affectedRows > 0) {
                 $dbUpdate['updateID'] = $parameter;
                 $dbUpdate['affectedRows'] = $affectedRows;
@@ -280,7 +280,7 @@ class EmpresaDbController extends BaseController
             # exit('src\app\Controllers\AdolescenteDbController.php');
             if (isset($processRequest['id'])) {
                 $dbResponse = $this
-                    ->ModelEmpresa
+                    ->ModelLinha
                     ->where('id', $processRequest['id'])
                     ->where('deleted_at !=', NULL)
                     ->orderBy('id', 'DESC')
@@ -289,7 +289,7 @@ class EmpresaDbController extends BaseController
                 #
             } elseif ($parameter !== NULL) {
                 $dbResponse = $this
-                    ->ModelEmpresa
+                    ->ModelLinha
                     ->where('id', $parameter)
                     ->where('deleted_at !=', NULL)
                     ->orderBy('id', 'DESC')
@@ -298,7 +298,7 @@ class EmpresaDbController extends BaseController
                 #
             } else {
                 $dbResponse = $this
-                    ->ModelEmpresa
+                    ->ModelLinha
                     ->where('deleted_at !=', NULL)
                     ->orderBy('id', 'DESC')
                     ->dBread()

@@ -1,9 +1,12 @@
 <script type="text/babel">
-    const AppList = ({ setParametros = {} }) => {
+    const AppLimpar = ({ setParametros = {} }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = setParametros.getURI;
         const debugMyPrint = setParametros.DEBUG_MY_PRINT;
+        const request_scheme = setParametros.request_scheme;
+        const server_name = setParametros.server_name;
+        const server_port = setParametros.server_port;
         const base_url = setParametros.base_url;
         const api_empresa_exibir = setParametros.api_empresa_exibir;
         const api_empresa_filtrar = setParametros.api_empresa_filtrar;
@@ -50,7 +53,7 @@
 
             if (apiIdentifier === 'filtra-empresa') {
                 // Convertendo os dados do setPost em JSON
-                response1 = await fetch(base_url + api_empresa_filtrar, {
+                response1 = await fetch(base_url + api_empresa_cadastrar, {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: {
@@ -63,12 +66,11 @@
                 }
 
                 getEmpresa = await response1.json();
-                
+
                 // Processa os dados recebidos da resposta
-                if (getEmpresa.result && getEmpresa.result.dbResponse && getEmpresa.result.dbResponse[0]) {
+                if (getEmpresa.result.affectedRows && getEmpresa.result.affectedRows > 0) {
+                    dbResponse = getEmpresa.result.dbCreate;
                     console.log('dbResponse: ', dbResponse);
-                    dbResponse = getEmpresa.result.dbResponse;
-                    setEmpresas(dbResponse);
                     setMessage({
                         show: true,
                         type: 'success',
@@ -179,7 +181,7 @@
                             </th>
                             <th scope="col">
                                 <hr />
-                                Editar
+                                Restaurar
                             </th>
                             <th scope="col">
                                 <form className="was-validated mb-3" onSubmit={(e) => {
@@ -189,7 +191,7 @@
                                     <button className="btn btn-outline-secondary btn-sm" type="submit">Enviar</button>
                                 </form>
                                 <hr />
-                                Excluir
+                                Eliminar
                             </th>
                         </tr>
                     </thead>
@@ -200,13 +202,13 @@
                                 <td>{empresa.responsavel}</td>
                                 <td>{empresa.email_contato}</td>
                                 <td>
-                                    <button type="button" className="btn btn-outline-primary btn-sm">
-                                        <i className="bi bi-pencil-square"></i>
+                                    <button type="button" className="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-database-fill-check"></i>
                                     </button>
                                 </td>
                                 <td>
                                     <button type="button" className="btn btn-outline-danger btn-sm">
-                                        <i className="bi bi-trash3"></i>
+                                        <i class="bi bi-database-fill-x"></i>
                                     </button>
                                 </td>
                             </tr>

@@ -7,12 +7,12 @@ use CodeIgniter\API\ResponseTrait;
 # 
 use App\Controllers\TokenCsrfController;
 use App\Controllers\SystemMessageController;
-use App\Controllers\EmpresaDbController;
+use App\Controllers\LinhaDbController;
 // use App\Controllers\SystemUploadDbController;
 # 
 use Exception;
 
-class EmpresaApiController extends ResourceController
+class LinhaApiController extends ResourceController
 {
     use ResponseTrait;
     private $ModelResponse;
@@ -24,7 +24,7 @@ class EmpresaApiController extends ResourceController
     public function __construct()
     {
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
-        $this->DbController = new EmpresaDbController();
+        $this->DbController = new LinhaDbController();
         $this->tokenCsrf = new TokenCsrfController();
         $this->message = new SystemMessageController();
         #
@@ -39,10 +39,10 @@ class EmpresaApiController extends ResourceController
         exit('403 Forbidden - Directory access is forbidden.');
     }
 
-    # route POST /www/bw/empresa/api/cadastrar/(:any)
-    # route GET /www/bw/empresa/api/cadastrar/(:any)
-    # route POST /www/bw/empresa/api/atualizar/(:any)
-    # route GET /www/bw/empresa/api/atualizar/(:any)
+    # route POST /www/bw/Linha/api/cadastrar/(:any)
+    # route GET /www/bw/Linha/api/cadastrar/(:any)
+    # route POST /www/bw/Linha/api/atualizar/(:any)
+    # route GET /www/bw/Linha/api/atualizar/(:any)
     # Informação sobre o controller
     # retorno do controller [JSON]
     public function create_update($parameter = NULL)
@@ -53,7 +53,7 @@ class EmpresaApiController extends ResourceController
         $getVar_page = $request->getVar('page');
         $processRequest = (array) $request->getVar();
         #
-        // myPrint($processRequest, 'src\app\Controllers\EmpresaApiController.phpn');
+        // myPrint($processRequest, 'src\app\Controllers\LinhaApiController.phpn');
         #
         $token_csrf = (isset($processRequest['token_csrf']) ? $processRequest['token_csrf'] : NULL);
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
@@ -137,8 +137,8 @@ class EmpresaApiController extends ResourceController
     }
 
     #
-    # route POST /bw/empresa/api/exibir/(:any)
-    # route GET /bw/empresa/api/exibir/(:any)
+    # route POST /bw/Linha/api/exibir/(:any)
+    # route GET /bw/Linha/api/exibir/(:any)
     # Informação sobre o controller
     # retorno do controller [JSON]
     public function dbRead($parameter = NULL)

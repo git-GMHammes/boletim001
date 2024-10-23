@@ -7,7 +7,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
 
-class EmpresaEndpointController extends ResourceController
+class LinhaEndpointController extends ResourceController
 {
     use ResponseTrait;
 
@@ -41,8 +41,8 @@ class EmpresaEndpointController extends ResourceController
     }
 
     # Consumo de API
-    # route GET /www/bw/empresa/endpoint/cadastrar/(:any)
-    # route POST /www/bw/empresa/endpoint/cadastrar/(:any)
+    # route GET /www/bw/Linha/endpoint/cadastrar/(:any)
+    # route POST /www/bw/Linha/endpoint/cadastrar/(:any)
     # Informação sobre o controller
     # retorno do controller [VIEW]
     public function dbCreate($parameter = NULL)
@@ -62,10 +62,10 @@ class EmpresaEndpointController extends ResourceController
             $this->message,
             $this->app_message,
             'bw/AppMessage',
-            'bw/empresa/AppForm',
-            'bw/empresa/AppLimpar',
-            'bw/empresa/AppList',
-            'bw/empresa/AppPrincipal',
+            'bw/Linha/AppForm',
+            'bw/Linha/AppLimpar',
+            'bw/Linha/AppList',
+            'bw/Linha/AppPrincipal',
             $this->footer,
         );
         $this->tokenCsrf->token_csrf();
