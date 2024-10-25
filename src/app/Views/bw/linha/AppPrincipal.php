@@ -23,6 +23,7 @@ $parametros_backend = array(
     const AppPrincipal = () => {
         // Variáveis recebidas do Backend
         const parametros = JSON.parse(document.querySelector('.app_Principal').getAttribute('data-result'));
+        parametros.origemForm = 'linha'
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;

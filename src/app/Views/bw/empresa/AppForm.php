@@ -114,6 +114,23 @@
             }, 3000);
         };
 
+        const requiredField = {
+            color: '#FF0000',
+        };
+
+        const formLabelStyle = {
+            position: 'absolute',
+            top: '-15px',
+            left: '20px',
+            backgroundColor: 'white',
+            padding: '0 5px',
+        };
+
+        const formControlStyle = {
+            fontSize: '1rem',
+            borderColor: '#fff',
+        };
+
         return (
             <div>
                 <form className="was-validated" onSubmit={(e) => {
@@ -255,6 +272,7 @@
                         </div>
                     </div>
                 </form>
+                
                 {/* Exibe o componente de alerta */}
                 <AppMessage setParametros={message} />
             </div>

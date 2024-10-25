@@ -63,7 +63,7 @@
                 }
 
                 getEmpresa = await response1.json();
-                
+
                 // Processa os dados recebidos da resposta
                 if (getEmpresa.result && getEmpresa.result.dbResponse && getEmpresa.result.dbResponse[0]) {
                     console.log('dbResponse: ', dbResponse);
