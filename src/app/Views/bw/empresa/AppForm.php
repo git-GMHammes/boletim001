@@ -152,21 +152,38 @@
                             className="form-control"
                             id="id"
                             name="id"
-                            value={formData.id || ''}
+                            value={formData.id}
                         />
                         <div className="row">
                             <div className="col-12 col-sm-6">
-                                <label htmlFor="codigo" className="form-label">Código</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="text"
-                                    className="form-control"
-                                    id="codigo"
-                                    name="codigo"
-                                    value={formData.codigo || ''}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="row">
+                                    <div className="col-12 col-sm-3">
+                                        <label htmlFor="codigo" className="form-label">ID (Data Base)</label>
+                                        <input
+                                            data-api="form-empresa"
+                                            type="text"
+                                            className="form-control"
+                                            id="id"
+                                            name="id"
+                                            value={formData.id || ''}
+                                            onChange={handleChange}
+                                            disabled
+                                        />
+                                    </div>
+                                    <div className="col-12 col-sm-9">
+                                        <label htmlFor="codigo" className="form-label">Código</label>
+                                        <input
+                                            data-api="form-empresa"
+                                            type="text"
+                                            className="form-control"
+                                            id="codigo"
+                                            name="codigo"
+                                            value={formData.codigo || ''}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                </div>
                             </div>
                             <div className="col-12 col-sm-6">
                                 <label htmlFor="nome" className="form-label">Nome</label>
@@ -272,7 +289,7 @@
                         </div>
                     </div>
                 </form>
-                
+
                 {/* Exibe o componente de alerta */}
                 <AppMessage setParametros={message} />
             </div>
