@@ -1,17 +1,21 @@
 <script type="text/babel">
-    const AppForm = ({ setParametros = {} }) => {
+    const AppForm = ({ parametros = {} }) => {
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
-        const getURI = setParametros.getURI;
-        const debugMyPrint = setParametros.DEBUG_MY_PRINT;
-        const request_scheme = setParametros.request_scheme;
-        const server_name = setParametros.server_name;
-        const server_port = setParametros.server_port;
-        const base_url = setParametros.base_url;
-        const token_csrf = setParametros.token_csrf;
+        const getURI = parametros.getURI;
+        const request_scheme = parametros.request_scheme;
+        const debugMyPrint = parametros.DEBUG_MY_PRINT;
+        const server_name = parametros.server_name;
+        const server_port = parametros.server_port;
+        const token_csrf = parametros.token_csrf;
+        const origemForm = parametros.origemForm;
+        const base_url = parametros.base_url;
 
         // Lista de APIs
-        const api_empresa_cadastrar = setParametros.api_empresa_cadastrar;
-        const api_empresa_atualizar = setParametros.api_empresa_atualizar;
+        const api_post_cadastrar_atualizar = parametros.api_post_cadastrar_atualizar;
+        // ↓↓↓ Exclui
+        const api_empresa_cadastrar = parametros.api_empresa_cadastrar;
+        const api_empresa_atualizar = parametros.api_empresa_atualizar;
+        // ↑↑↑ Exclui
 
         // Definindo o estado para controlar a aba ativa
         const [tabNav, setTabNav] = React.useState('form');
@@ -26,6 +30,78 @@
             message: null
         });
 
+        // Função submitAllForms para envio dos dados
+        const submitAllForms = async (apiIdentifier) => {
+            console.log('submitAllForms...');
+            const data = formData;
+
+            console.log('Dados a serem enviados:', data);
+            console.log(`filtro-${origemForm}`);
+            console.log(`${base_url}${api_post_cadastrar_atualizar}`);
+
+            try {
+                const response = await fetch(`${base_url}${api_post_cadastrar_atualizar}`, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.statusText}`);
+                }
+
+                const dataApi = await response.json();
+                let resposta = '';
+
+                if (getURI.includes('cadastrar')) {
+                    resposta = 'Cadastro';
+                } else if (getURI.includes('atualizar')) {
+                    resposta = 'Atualização';
+                } else {
+                    resposta = 'Ação';
+                }
+
+                if (dataApi.status === 'success' && dataApi.result?.affectedRows > 0) {
+                    console.log("dataApi.result:: ", dataApi.result.insertID)
+
+                    if (dataApi.result && dataApi.result.insertID) {
+                        setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            id: dataApi.result.insertID
+                        }));
+                    }
+
+                    if (dataApi.result && dataApi.result.updateID) {
+                        setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            id: dataApi.result.updateID
+                        }));
+                    }
+
+                    setMessage({
+                        show: true,
+                        type: 'success',
+                        message: `${resposta} realizada com sucesso`
+                    });
+                } else {
+                    setMessage({
+                        show: true,
+                        type: 'danger',
+                        message: `Não foi possível realizar o ${resposta}`,
+                    });
+                }
+            } catch (error) {
+                console.error('Erro no submitAllForms:', error);
+                setMessage({
+                    show: true,
+                    type: 'danger',
+                    message: 'Erro ao tentar enviar o formulário.',
+                });
+            }
+        };
+
         // Função para trocar de aba
         const handleTabClick = (tab) => {
             setTabNav(tab); // Atualiza a aba selecionada
@@ -34,6 +110,8 @@
         // Declare Todos os Campos do Formulário Aqui
         const [formData, setFormData] = React.useState({
             token_csrf: token_csrf,
+            json: "1",
+
             id: null,
             codigo: null,
             nome: null,
@@ -44,8 +122,23 @@
             data_criacao: null,
         });
 
+        // Função handleFocus - Foco no objeto
+        const handleFocus = (event) => {
+            const { name, value } = event.target;
+
+            console.log('name handleFocus: ', name);
+            console.log('value handleFocus: ', value);
+
+            setMessage((prev) => ({
+                ...prev,
+                show: false
+            }));
+        };
+
+        // Função handleChange - Mudança no valor
         const handleChange = (event) => {
             const { name, value } = event.target;
+
             console.log('name handleChange: ', name);
             console.log('value handleChange: ', value);
 
@@ -62,50 +155,18 @@
             }
         };
 
-        const submitAllForms = async (apiIdentifier) => {
-            console.log('submitAllForms...');
-            const data = formData;
-            let getEmpresa = '';
-            let dbResponse = [];
-            let response1 = '';
-            console.log('Dados a serem enviados:', data);
+        // Função handleBlur - Ao sair do foco
+        const handleBlur = (event) => {
+            const { name, value } = event.target;
 
-            if (apiIdentifier === 'form-empresa') {
-                // Convertendo os dados do setPost em JSON
-                response1 = await fetch(base_url + api_empresa_cadastrar, {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+            console.log('name handleBlur: ', name);
+            console.log('value handleBlur: ', value);
 
-                if (!response1.ok) {
-                    throw new Error(`Erro na requisição: ${response1.statusText}`);
-                }
-
-                getEmpresa = await response1.json();
-
-                // Processa os dados recebidos da resposta
-                if (getEmpresa.result.affectedRows && getEmpresa.result.affectedRows > 0) {
-                    dbResponse = getEmpresa.result.dbCreate;
-                    console.log('dbResponse: ', dbResponse);
-                    setMessage({
-                        show: true,
-                        type: 'success',
-                        message: 'Empresa cadastrada com sucesso!'
-                    });
-                    return dbResponse;
-                } else {
-                    setMessage({
-                        show: true,
-                        type: 'danger',
-                        message: 'Erro de conexão com o servidor.'
-                    });
-                    return null;
-                }
-            }
-        };
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value
+            }));
+        }
 
         const redirectTo = (url) => {
             const uri = base_url + url;
@@ -133,11 +194,16 @@
 
         return (
             <div>
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms('form-empresa', formData);
-                }}>
-                    <div>
+                <div>
+                    <form className="was-validated" onSubmit={(e) => {
+                        e.preventDefault();
+                        submitAllForms(`filtro-${origemForm}`, formData);
+                    }}>
+                    </form>
+                    <form className="was-validated" onSubmit={(e) => {
+                        e.preventDefault();
+                        submitAllForms(`filtro-${origemForm}`, formData);
+                    }}>
                         <input
                             data-api="form-empresa"
                             type="hidden"
@@ -154,144 +220,83 @@
                             name="id"
                             value={formData.id}
                         />
-                        <div className="row">
-                            <div className="col-12 col-sm-6">
-                                <div className="row">
-                                    <div className="col-12 col-sm-3">
-                                        <label htmlFor="codigo" className="form-label">ID (Data Base)</label>
-                                        <input
-                                            data-api="form-empresa"
-                                            type="text"
-                                            className="form-control"
-                                            id="id"
-                                            name="id"
-                                            value={formData.id || ''}
-                                            onChange={handleChange}
-                                            disabled
-                                        />
-                                    </div>
-                                    <div className="col-12 col-sm-9">
-                                        <label htmlFor="codigo" className="form-label">Código</label>
-                                        <input
-                                            data-api="form-empresa"
-                                            type="text"
-                                            className="form-control"
-                                            id="codigo"
-                                            name="codigo"
-                                            value={formData.codigo || ''}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
+                        <input
+                            data-api="form-empresa"
+                            type="hidden"
+                            className="form-control"
+                            id="json"
+                            name="json"
+                            value={formData.json}
+                        />
+                    </form>
+                    <div className="row">
+                        <div className="col-12 col-sm-6">
+                            <div className="row">
+                                <div className="col-12 col-sm-3">
+                                    <AppID
+                                        formData={formData} setFormData={setFormData} parametros={parametros}
+                                    />
                                 </div>
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label htmlFor="nome" className="form-label">Nome</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="text"
-                                    className="form-control"
-                                    id="nome"
-                                    name="nome"
-                                    value={formData.nome || ''}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-12 col-sm-6">
-                                <label htmlFor="responsavel" className="form-label">Responsável</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="text"
-                                    className="form-control"
-                                    id="responsavel"
-                                    name="responsavel"
-                                    value={formData.responsavel || ''}
-                                    onChange={handleChange}
-                                    equired
-                                />
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label htmlFor="email_contato" className="form-label">E-mail</label>
-                                <input data-api="form-empresa" type="email" className="form-control" id="email_contato" name="email_contato" value={formData.email_contato || ''} onChange={handleChange} required />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-12 col-sm-6">
-                                <label htmlFor="inicio_vigencia_bom" className="form-label">Início Vigência BOM</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="date"
-                                    className="form-control"
-                                    id="inicio_vigencia_bom"
-                                    name="inicio_vigencia_bom"
-                                    value={formData.inicio_vigencia_bom || ''}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label htmlFor="active" className="form-label">Ativo</label>
-                                <div className="border border-dark ps-2 pe-1 pt-1 pb-1 ps-1 rounded">
-                                    <div class="d-flex justify-content-start">
-                                        <div className="form-check">
-                                            <input
-                                                data-api="form-empresa"
-                                                className="form-check-input"
-                                                type="radio"
-                                                id="ativoSim"
-                                                name="ativo"
-                                                value="1"
-                                                checked={formData.ativo === 1}
-                                                onChange={handleChange}
-                                            />
-                                            <label className="form-check-label" htmlFor="ativoSim">Sim</label>
-                                        </div>&emsp;/&emsp;
-                                        <div className="form-check">
-                                            <input
-                                                data-api="form-empresa"
-                                                className="form-check-input"
-                                                type="radio"
-                                                id="ativoNao"
-                                                name="ativo"
-                                                value="0"
-                                                checked={formData.ativo === 0}
-                                                onChange={handleChange}
-                                            />
-                                            <label className="form-check-label" htmlFor="ativoNao">Não</label>
-                                        </div>
-                                    </div>
+                                <div className="col-12 col-sm-9">
+                                    <AppCodigo
+                                        formData={formData}
+                                        setFormData={setFormData}
+                                        parametros={parametros}
+                                        submitAllForms={submitAllForms}
+                                    />
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-12 col-sm-6">
-                                <label htmlFor="data_criacao" className="form-label">Data de Criação</label>
-                                <input
-                                    data-api="form-empresa"
-                                    type="datetime-local"
-                                    className="form-control"
-                                    id="data_criacao"
-                                    name="data_criacao"
-                                    value={formData.data_criacao || ''}
-                                    onChange={handleChange}
-                                    required
+                        <div className="col-12 col-sm-6">
+                            <AppNome
+                                formData={formData}
+                                setFormData={setFormData}
+                                parametros={parametros}
+                                submitAllForms={submitAllForms}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-sm-6">
+                            <AppResponsavelEmpresa
+                                formData={formData}
+                                setFormData={setFormData}
+                                parametros={parametros}
+                                submitAllForms={submitAllForms}
                                 />
-                            </div>
-                            <div className="col-12 col-sm-6">
-                                <label htmlFor="data_criacao" className="form-label">&nbsp;</label>
-                                <div>
-                                    <button className="btn btn-outline-dark mb-5 w-100" type="submit">Enviar</button>
                                 </div>
+                                <div className="col-12 col-sm-6">
+                                <AppEmailContato
+                                formData={formData}
+                                setFormData={setFormData}
+                                parametros={parametros}
+                                submitAllForms={submitAllForms}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-sm-6">
+                            <AppInicioVigenciaBom formData={formData} setFormData={setFormData} parametros={parametros} />
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <AppAtivo formData={formData} setFormData={setFormData} parametros={parametros} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-sm-6">
+                            <AppDataCriacao formData={formData} setFormData={setFormData} parametros={parametros} />
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <label htmlFor="data_criacao" className="form-label"></label>
+                            <div>
+                                <button className="btn btn-outline-dark w-100 p-2" type="submit">Enviar</button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
 
                 {/* Exibe o componente de alerta */}
-                <AppMessage setParametros={message} />
+                <AppMessage parametros={message} />
             </div>
         );
     };

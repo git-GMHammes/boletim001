@@ -43,17 +43,17 @@ class EmpresaDbController extends BaseController
     # $this->DbController->dbFields($fileds = array();
     public function dbFields($processRequestFields = array())
     {
-        # myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
+        // myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
         $dbCreate = array();
         $autoColumn = $this->ModelEmpresa->getColumnsFromTable();
         if (isset($autoColumn['COLUMN'])) {
             foreach ($autoColumn['COLUMN'] as $key_autoColumn => $value_autoColumn) {
-                # myPrint($value_autoColumn, '', true);
+                // myPrint($value_autoColumn, '', true);
                 (isset($processRequestFields[$value_autoColumn])) ? ($dbCreate[$value_autoColumn] = $processRequestFields[$value_autoColumn]) : (NULL);
             }
         }
-        (isset($processRequestFields['modelo'])) ? ($dbCreate['modelo'] = $processRequestFields['modelo']) : (NULL);
-        # myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php');
+        (isset($processRequestFields['Nome'])) ? ($dbCreate['nome'] = $processRequestFields['Nome']) : (NULL);
+        // myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php');
         return ($dbCreate);
     }
 
@@ -83,7 +83,7 @@ class EmpresaDbController extends BaseController
     # $this->DbController->dbCreate($parameter);
     public function dbCreate($parameter = NULL)
     {
-
+        // myPrint($parameter, 'src\app\Controllers\EmpresaDbController.php');
         try {
             $this->ModelEmpresa->dbCreate($this->dbFields($parameter));
             $affectedRows = $this->ModelEmpresa->affectedRows();

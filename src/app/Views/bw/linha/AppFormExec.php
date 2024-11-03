@@ -1,17 +1,17 @@
 <script type="text/babel">
-    const AppForm = ({ setParametros = {} }) => {
+    const AppForm = ({ parametros = {} }) => {
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
-        const getURI = setParametros.getURI;
-        const debugMyPrint = setParametros.DEBUG_MY_PRINT;
-        const request_scheme = setParametros.request_scheme;
-        const server_name = setParametros.server_name;
-        const server_port = setParametros.server_port;
-        const base_url = setParametros.base_url;
-        const token_csrf = setParametros.token_csrf;
+        const getURI = parametros.getURI;
+        const debugMyPrint = parametros.DEBUG_MY_PRINT;
+        const request_scheme = parametros.request_scheme;
+        const server_name = parametros.server_name;
+        const server_port = parametros.server_port;
+        const base_url = parametros.base_url;
+        const token_csrf = parametros.token_csrf;
 
         // Lista de APIs
-        const api_empresa_cadastrar = setParametros.api_empresa_cadastrar;
-        const api_empresa_atualizar = setParametros.api_empresa_atualizar;
+        const api_empresa_cadastrar = parametros.api_empresa_cadastrar;
+        const api_empresa_atualizar = parametros.api_empresa_atualizar;
 
         // Definindo o estado para controlar a aba ativa
         const [tabNav, setTabNav] = React.useState('form');

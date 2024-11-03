@@ -1,7 +1,7 @@
 <script type="text/babel">
-    const AppForm = ({ setParametros = {} }) => {
+    const AppForm = ({ parametros = {} }) => {
 
-        const parametros = setParametros || {};
+        const parametros = parametros || {};
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
@@ -470,7 +470,7 @@
                 </form>
 
                 {/* Exibe o componente de alerta */}
-                < AppMessage setParametros={message} />
+                < AppMessage parametros={message} />
             </div >
         );
     };

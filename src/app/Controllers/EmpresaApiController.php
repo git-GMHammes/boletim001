@@ -53,7 +53,6 @@ class EmpresaApiController extends ResourceController
         $getVar_page = $request->getVar('page');
         $processRequest = (array) $request->getVar();
         #
-        // myPrint($processRequest, 'src\app\Controllers\EmpresaApiController.phpn');
         #
         $token_csrf = (isset($processRequest['token_csrf']) ? $processRequest['token_csrf'] : NULL);
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
@@ -63,14 +62,15 @@ class EmpresaApiController extends ResourceController
             if ($this->tokenCsrf->valid_token_csrf($token_csrf)) {
                 $id = (isset($processRequest['id'])) ? ($processRequest['id']) : (array());
                 $dbResponse = $this->DbController->dbUpdate($id, $processRequest);
+                // myPrint($dbResponse, 'src\app\Controllers\EmpresaApiController.php, UPDATE');
                 if (isset($dbResponse["affectedRows"]) && $dbResponse["affectedRows"] > 0) {
                     $processRequestSuccess = true;
                 }
             }
         } elseif ($choice_update === false) {
             if ($this->tokenCsrf->valid_token_csrf($token_csrf)) {
-                // return $this->response->setJSON($processRequest, 200);
                 $dbResponse = $this->DbController->dbCreate($processRequest);
+                // myPrint($dbResponse, 'src\app\Controllers\EmpresaApiController.php, CREATE');
                 if (isset($dbResponse["affectedRows"]) && $dbResponse["affectedRows"] > 0) {
                     $processRequestSuccess = true;
                 }
@@ -78,7 +78,6 @@ class EmpresaApiController extends ResourceController
         } else {
             $this->message->message(['ERRO: Dados enviados inválidos'], 'danger');
         }
-        ;
         if (session()->get('message')) {
             $apiSession = session()->get('message');
             // myPrint($apiSession, '');

@@ -119,9 +119,9 @@ $parametros_backend = array(
 
                             {/* Carrega todas as funções acima */}
                             <div className="border border-top-0 rounded-bottom p-3">
-                                {tabNav === 'form' && <AppForm setParametros={parametros} />}
-                                {tabNav === 'list' && <AppList setParametros={parametros} />}
-                                {tabNav === 'lix' && <AppLimpar setParametros={parametros} />}
+                                {tabNav === 'form' && <AppForm parametros={parametros} />}
+                                {tabNav === 'list' && <AppList parametros={parametros} />}
+                                {tabNav === 'lix' && <AppLimpar parametros={parametros} />}
                                 {tabNav === 'help' && renderHelp()}
                             </div>
                         </div>

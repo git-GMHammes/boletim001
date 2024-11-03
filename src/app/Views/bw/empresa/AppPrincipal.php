@@ -8,8 +8,11 @@ $parametros_backend = array(
     'server_port' => $_SERVER['SERVER_PORT'],
     'getURI' => isset($metadata['getURI']) ? ($metadata['getURI']) : (array()),
     'base_url' => base_url(),
+    'api_post_cadastrar_atualizar' => 'bw/empresa/api/cadastrar',
+    # pode ser que seja excluido ↓↓↓
     'api_empresa_cadastrar' => 'bw/empresa/api/cadastrar',
     'api_empresa_atualizar' => 'bw/empresa/api/atualizar',
+    # pode ser que seja excluido ↑↑↑
     'api_empresa_listar' => 'bw/empresa/api/atualizar',
     'api_empresa_exibir' => 'bw/empresa/api/exibir',
     'api_empresa_filtrar' => 'bw/empresa/api/filtrar',
@@ -23,6 +26,7 @@ $parametros_backend = array(
     const AppPrincipal = () => {
         // Variáveis recebidas do Backend
         const parametros = JSON.parse(document.querySelector('.app_Principal').getAttribute('data-result'));
+        parametros.origemForm = 'empresa'
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -118,9 +122,9 @@ $parametros_backend = array(
 
                             {/* Carrega todas as funções acima */}
                             <div className="border border-top-0 rounded-bottom p-3">
-                                {tabNav === 'form' && <AppForm setParametros={parametros} />}
-                                {tabNav === 'list' && <AppList setParametros={parametros} />}
-                                {tabNav === 'lix' && <AppLimpar setParametros={parametros} />}
+                                {tabNav === 'form' && <AppForm parametros={parametros} />}
+                                {tabNav === 'list' && <AppList parametros={parametros} />}
+                                {tabNav === 'lix' && <AppLimpar parametros={parametros} />}
                                 {tabNav === 'help' && renderHelp()}
                             </div>
                         </div>

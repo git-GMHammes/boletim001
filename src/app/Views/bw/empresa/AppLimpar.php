@@ -1,15 +1,15 @@
 <script type="text/babel">
-    const AppLimpar = ({ setParametros = {} }) => {
+    const AppLimpar = ({ parametros = {} }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
-        const getURI = setParametros.getURI;
-        const debugMyPrint = setParametros.DEBUG_MY_PRINT;
-        const request_scheme = setParametros.request_scheme;
-        const server_name = setParametros.server_name;
-        const server_port = setParametros.server_port;
-        const base_url = setParametros.base_url;
-        const api_empresa_exibir = setParametros.api_empresa_exibir;
-        const api_empresa_filtrar = setParametros.api_empresa_filtrar;
+        const getURI = parametros.getURI;
+        const debugMyPrint = parametros.DEBUG_MY_PRINT;
+        const request_scheme = parametros.request_scheme;
+        const server_name = parametros.server_name;
+        const server_port = parametros.server_port;
+        const base_url = parametros.base_url;
+        const api_empresa_exibir = parametros.api_empresa_exibir;
+        const api_empresa_filtrar = parametros.api_empresa_filtrar;
 
         // Estado para armazenar empresas da API
         const [empresas, setEmpresas] = React.useState([]);
@@ -219,7 +219,7 @@
                         )}
                     </tbody>
                 </table>
-                <AppMessage setParametros={message} />
+                <AppMessage parametros={message} />
             </div>
         );
     }
