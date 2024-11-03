@@ -56,44 +56,46 @@ class EmpresaEndpointController extends ResourceController
         $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
         // $processRequest = eagarScagaire($processRequest);
         #
-        $loadView = array(
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposValidacao';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposValidacao';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+
+        // Remove a extensão .php dos arquivos e adiciona o caminho
+        $files = array_map(function ($file) {
+            return 'bw/camposValidacao/' . pathinfo($file, PATHINFO_FILENAME);
+        }, $files);
+
+        // Estrutura de views a serem carregadas
+        $loadView1 = array(
             $this->head,
             $this->menu,
             $this->message,
             $this->app_message,
-            # Campos
-            "bw/camposValidacao/AppResponsavelTelefoneRecado",
-            "bw/camposValidacao/AppResponsavelTelefoneMovel",
-            "bw/camposValidacao/AppResponsavelTelefoneFixo",
-            "bw/camposValidacao/AppResponsavelEmpresa",
-            "bw/camposValidacao/AppInicioVigenciaBom",
-            "bw/camposValidacao/AppResponsavelNome",
-            "bw/camposValidacao/AppUnidadeEndereco",
-            "bw/camposValidacao/AppResponsavelCPF",
-            "bw/camposValidacao/AppTelefoneRecado",
-            "bw/camposValidacao/AppTelefoneMovel",
-            "bw/camposValidacao/AppEmailContato",
-            "bw/camposValidacao/AppTelefoneFixo",
-            "bw/camposValidacao/AppUnidadeNome",
-            "bw/camposValidacao/AppDataCriacao",
-            "bw/camposValidacao/AppDataForm",
-            "bw/camposValidacao/AppTelefone",
-            "bw/camposValidacao/AppCodigo",
-            "bw/camposValidacao/AppEmail",
-            "bw/camposValidacao/AppAtivo",
-            "bw/camposValidacao/AppNome",
-            "bw/camposValidacao/AppCpf",
-            "bw/camposValidacao/AppRG",
-            "bw/camposValidacao/AppID",
-            # Campos
-            "bw/camposValidacao/AppCapAtend",
-            'bw/AppMessage',
+        );
+        $loadView2 = $files;
+        $loadView3 = array(
             'bw/empresa/AppForm',
-            'bw/empresa/AppLimpar',
-            'bw/empresa/AppList',
             'bw/empresa/AppPrincipal',
             $this->footer,
         );
+        $loadView = array_merge($loadView1, $loadView2, $loadView3);
+
+        // Imprime o array final para depuração
+        // myPrint($loadView, 'src\app\Controllers\EmpresaEndpointController.php');
+
         $this->tokenCsrf->token_csrf();
         try {
             # URI da API                                                                                                          

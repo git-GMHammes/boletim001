@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,6 +46,9 @@
         <!-- <h1>Template Principal</h1> -->
     </header>
     <main>
+        <?php
+        // myPrint($loadView, 'src\app\Views\bw\templates\main.php', true);
+        ?>
         <?php if ($loadView !== array()): ?>
             <?php foreach ($loadView as $getView): ?>
                 <?php
