@@ -55,4 +55,13 @@ class SystemBaseController extends Controller
         // exit('FIM');
         return $links;
     }
+
+    # use App\Controllers\SystemBaseController;
+    # private $viewValidacao;
+    # $this->viewValidacao = new SystemBaseController();
+    # $loadView2 = $this->viewValidacao->camposValidacao();
+    public function camposValidacao()
+    {
+        
+    }
 }
