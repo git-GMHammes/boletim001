@@ -41,8 +41,8 @@ class EmpresaEndpointController extends ResourceController
     }
 
     # Consumo de API
-    # route GET /www/bw/empresa/endpoint/cadastrar/(:any)
-    # route POST /www/bw/empresa/endpoint/cadastrar/(:any)
+    # route GET /www/bw/empresa/endpoint/principal/(:any)
+    # route POST /www/bw/empresa/endpoint/principal/(:any)
     # Informação sobre o controller
     # retorno do controller [VIEW]
     public function dbCreate($parameter = NULL)
@@ -87,6 +87,8 @@ class EmpresaEndpointController extends ResourceController
         );
         $loadView2 = $files;
         $loadView3 = array(
+            'bw/empresa/AppList',
+            'bw/empresa/AppLimpar',
             'bw/empresa/AppForm',
             'bw/empresa/AppPrincipal',
             $this->footer,

@@ -96,7 +96,7 @@
                                                 className="btn btn-outline-dark btn-sm"
                                                 onClick={handleClose}
                                             >
-                                                <i class="bi bi-circle"></i>
+                                                <i className="bi bi-circle"></i>
                                             </button>
                                         </div>
                                         <div
@@ -105,7 +105,7 @@
                                                 className="btn btn-outline-dark btn-sm"
                                                 onClick={handleClose}
                                             >
-                                                <i class="bi bi-caret-left"></i>
+                                                <i className="bi bi-caret-left"></i>
                                             </button>
                                         </div>
                                     </div>

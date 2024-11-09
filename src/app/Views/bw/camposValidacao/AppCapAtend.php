@@ -7,12 +7,13 @@
         const base_url = parametros.base_url || '';
         const getURI = parametros.getURI || [];
 
-        // Definindo mensagens do Sistema
+        // const [alertMessage, setAlertMessage] = React.useState('');
+        // const [alertType, setAlertType] = React.useState('');
+        // const [tabNav, setTabNav] = React.useState('form');
+        // const [showAlert, setShowAlert] = React.useState(false);
         const [defineAtualizar, setDefineAtualizar] = React.useState(false);
-        const [tabNav, setTabNav] = React.useState('form');
-        const [showAlert, setShowAlert] = React.useState(false);
-        const [alertType, setAlertType] = React.useState('');
-        const [alertMessage, setAlertMessage] = React.useState('');
+        
+        // Definindo mensagens do Sistema
         const [message, setMessage] = React.useState({
             show: false,
             type: null,

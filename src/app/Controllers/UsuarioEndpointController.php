@@ -57,6 +57,7 @@ class UsuarioEndpointController extends ResourceController
             $this->AppHead,
             $this->AppMenu,
             $this->message,
+            'bw/AppMessage',
             'bw/usuario/AppLogin',
             $this->AppFooter,
         );
@@ -134,6 +135,7 @@ class UsuarioEndpointController extends ResourceController
         #
         $this->template = 'habilidade/templates/main';
         $loadView = array(
+            'bw/AppMessage',
             'habilidade/usuario/AppLogin',
         );
         $this->tokenCsrf->token_csrf();

@@ -13,19 +13,17 @@
             message: null
         });
 
-        // Validação de E-mail: permite apenas e-mails com "@" e "." e no formato especificado
+        // Validação de E-mail: formato atualizado para aceitar .com, .com.br, .net, etc.
         const isValidEmail = (email_contato) => {
-            const regexEmail = /^[\w.-]+@([\w-]+\.)+(com|org|net|digital)$/; // Inclui domínio .digital
+            const regexEmail = /^[a-zA-Z][\w.-]{4,}@[\w-]{5,}\.[a-z]{2,}(\.[a-z]{2})?$/;
             return regexEmail.test(email_contato);
         };
 
         // Função handleFocus - Recebe foco
         const handleFocus = (event) => {
             const { name, value } = event.target;
-
             console.log('name handleFocus (src/app/Views/bw/camposValidacao/AppEmailContato.php): ', name);
             console.log('value handleFocus (src/app/Views/bw/camposValidacao/AppEmailContato.php): ', value);
-
             setMessage((prev) => ({
                 ...prev,
                 show: false
@@ -47,8 +45,8 @@
         // Função handleBlur - Perde o foco
         const handleBlur = async (event) => {
             const { name, value } = event.target;
-            console.log('name handleBlur (src/app/Views/bw/camposValidacao/AppEmailContarto.php): ', name);
-            console.log('value handleBlur (src/app/Views/bw/camposValidacao/AppEmailContarto.php): ', value);
+            console.log('name handleBlur (src/app/Views/bw/camposValidacao/AppEmailContato.php): ', name);
+            console.log('value handleBlur (src/app/Views/bw/camposValidacao/AppEmailContato.php): ', value);
 
             if (name === 'email_contato') {
                 if (!value) {
@@ -68,7 +66,7 @@
                     setMessage({
                         show: true,
                         type: 'success',
-                        message: 'E-mail inválido. Por favor, insira um e-mail ex. (usuario@email_contato.com).'
+                        message: 'E-mail validado com sucesso.'
                     });
                 } else {
                     // Limpa o campo se o e-mail for inválido
@@ -76,12 +74,15 @@
                         ...prev,
                         [name]: ''
                     }));
+                    setMessage({
+                        show: true,
+                        type: 'danger',
+                        message: 'E-mail inválido. Por favor, insira um e-mail ex. (usuario@email.com).'
+                    });
                     console.log('E-mail Inválido: campo limpo');
-                    console.log('E-mail OK');
                 }
-
             }
-        }
+        };
 
         const redirectTo = (url) => {
             const uri = base_url + url;
@@ -121,7 +122,7 @@
                     <label htmlFor="email_contato" style={formLabelStyle} className="form-label">#Email<strong style={requiredField}>*</strong></label>
                     <input
                         data-api={`filtro-${origemForm}`}
-                        type="email_contato"
+                        type="text"
                         id="email_contato"
                         name="email_contato"
                         value={formData.email_contato || ''}
@@ -135,7 +136,7 @@
                 </div>
                 {showEmptyMessage && (
                     <span style={{ color: 'red', fontSize: '12px' }}>
-                        E-mail inválido. Por favor, insira um e-mail ex. (usuario@email_contato.com).
+                        E-mail inválido. Por favor, insira um e-mail ex. (usuario@email.com).
                     </span>
                 )}
 

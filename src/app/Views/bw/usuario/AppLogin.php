@@ -28,11 +28,12 @@ $parametros_backend = array(
         const base_url = parametros.base_url;
         const api_login = parametros.api_login;
 
-        // Estado para controlar o alerta
-        const [showAlert, setShowAlert] = React.useState(false);
-        const [alertType, setAlertType] = React.useState('');
-        const [alertMessage, setAlertMessage] = React.useState('');
-        const [startTransition, setStartTransition] = React.useState(false);
+        // Constante para exibir o alerta (primary, secondary, success, danger, warning, info, light, dark)
+        const [message, setMessage] = React.useState({
+            show: false,
+            type: null,
+            message: null
+        });
 
         const captureFormData = (apiIdentifier) => {
             const data = {};
@@ -85,7 +86,13 @@ $parametros_backend = array(
             console.log('Dados a serem enviados:', data);
 
             if (apiIdentifier === 'login-on') {
-                // showOffcanvasAlert('info', 'Acionou a mensagem em modo INFO');
+
+                // Função para exibir o alerta (primary, secondary, success, danger, warning, info, light, dark)
+                setMessage({
+                    show: true,
+                    type: 'light',
+                    message: `Login realizado com sucesso.`
+                });
                 // Convertendo os dados do setPost em JSON
                 response1 = await fetch(base_url + api_login, {
                     method: 'POST',
@@ -105,11 +112,23 @@ $parametros_backend = array(
                 if (getUser && getUser.result.dbResponse[0]) {
                     const dbResponse = getUser.result.dbResponse[0];
                     console.log('dbResponse: ', getUser.result.dbResponse[0]);
-                    showOffcanvasAlert('success', 'Link de Homologação atualizado com sucesso!');
+
+                    // Função para exibir o alerta (primary, secondary, success, danger, warning, info, light, dark)
+                    setMessage({
+                        show: true,
+                        type: 'light',
+                        message: `Resultado recebido com sucesso!`
+                    });
                     redirectTo('index.php/bw/usuario/endpoint/login');
                     return dbResponse;
                 } else {
-                    showOffcanvasAlert('danger', 'Não foi possível atualizar o Link de Homologação!');
+
+                    // Função para exibir o alerta (primary, secondary, success, danger, warning, info, light, dark)
+                    setMessage({
+                        show: true,
+                        type: 'light',
+                        message: `Erro ao receber o resultado.`
+                    });
                     return null;
                 }
             }
@@ -121,24 +140,6 @@ $parametros_backend = array(
             password: '',
         });
 
-        // Offcanvas (success, danger, warning, info)
-        // Função para exibir o alerta
-        const showOffcanvasAlert = (type, message) => {
-            setAlertType(type);
-            setAlertMessage(message);
-            setShowAlert(true);
-
-            // Inicia a transição após o componente ser renderizado
-            setTimeout(() => {
-                setStartTransition(true);
-            }, 50);
-
-            setTimeout(() => {
-                setStartTransition(false);
-                setShowAlert(false);
-            }, 5000);
-        };
-
         const redirectTo = (url) => {
             const uri = base_url + url;
             setTimeout(() => {
@@ -147,18 +148,6 @@ $parametros_backend = array(
         };
 
         // Style
-
-        const offcanvasStyles = {
-            width: '250px',
-            height: '150px',
-            transition: 'transform 1s ease-in-out',
-            transform: startTransition ? 'translateX(0)' : 'translateX(100%)',
-            position: 'fixed',
-            top: '10px',
-            right: '0',
-            zIndex: '1055'
-        };
-
         const styleAlturaMinima = {
             minHeight: '620px'
         };
@@ -223,17 +212,14 @@ $parametros_backend = array(
                         </div>
                     </div>
                 </div>
-                {showAlert && (
-                    <div
-                        className={`bg-${alertType} text-white p-3`}
-                        style={offcanvasStyles}
-                    >
-                        {alertMessage}
-                    </div>
-                )}
+
+                {/* Exibe o componente de alerta */}
+                <AppMessage parametros={message} modalId="modal_cap_atend" />
+
             </div>
         );
-    };
+    }
+
     const rootElement = document.querySelector('.app_login');
     const root = ReactDOM.createRoot(rootElement);
     root.render(<AppLogin />);

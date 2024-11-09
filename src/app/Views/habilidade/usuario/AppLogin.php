@@ -29,10 +29,11 @@ $parametros_backend = array(
     const api_habilidade_login = parametros.api_habilidade_login;
 
     // Estado para controlar o alerta
-    const [showAlert, setShowAlert] = React.useState(false);
-    const [alertType, setAlertType] = React.useState('');
-    const [alertMessage, setAlertMessage] = React.useState('');
-    const [startTransition, setStartTransition] = React.useState(false);
+    const [message, setMessage] = React.useState({
+      show: false,
+      type: null,
+      message: null
+    });
 
     const captureFormData = (apiIdentifier) => {
       const data = {};
@@ -82,10 +83,10 @@ $parametros_backend = array(
       const data = captureFormData(apiIdentifier);
       let getPainel = '';
       let response1 = '';
+      
       console.log('Dados a serem enviados:', data);
 
       if (apiIdentifier === 'login-on') {
-        // showOffcanvasAlert('info', 'Acionou a mensagem em modo INFO');
         // Convertendo os dados do setPost em JSON
         response1 = await fetch(base_url + api_habilidade_login, {
           method: 'POST',
@@ -103,11 +104,17 @@ $parametros_backend = array(
         // Processa os dados recebidos da resposta
         if (getPainel && getPainel.result.length > 0) {
           console.log('getPainel: ', getPainel.result);
-          showOffcanvasAlert('success', 'Link de Homologação atualizado com sucesso!');
+
+          // Função para exibir o alerta (primary, secondary, success, danger, warning, info, light, dark)
+          setMessage({
+            show: true,
+            type: 'light',
+            message: `Um e-mail foi encaminhado para: ${data.email}`
+          });
+
           redirectTo('index.php/bw/usuario/endpoint/login');
           return true;
         } else {
-          showOffcanvasAlert('danger', 'Não foi possível atualizar o Link de Homologação!');
           return null;
         }
       }
@@ -122,25 +129,6 @@ $parametros_backend = array(
     // Função para trocar de aba
     const handleClick = () => {
       console.log('handleClick: Acionado');
-      showOffcanvasAlert('info', 'Acionou a mensagem em modo INFO');
-    };
-
-    // Offcanvas (success, danger, warning, info)
-    // Função para exibir o alerta
-    const showOffcanvasAlert = (type, message) => {
-      setAlertType(type);
-      setAlertMessage(message);
-      setShowAlert(true);
-
-      // Inicia a transição após o componente ser renderizado
-      setTimeout(() => {
-        setStartTransition(true);
-      }, 50);
-
-      setTimeout(() => {
-        setStartTransition(false);
-        setShowAlert(false);
-      }, 5000);
     };
 
     const redirectTo = (url) => {
@@ -153,17 +141,6 @@ $parametros_backend = array(
     // Style
     const styleLarguraLogin = {
       width: '300px'
-    };
-
-    const offcanvasStyles = {
-      width: '250px',
-      height: '150px',
-      transition: 'transform 1s ease-in-out',
-      transform: startTransition ? 'translateX(0)' : 'translateX(100%)',
-      position: 'fixed',
-      top: '10px',
-      right: '0',
-      zIndex: '1055'
     };
 
     return (
@@ -221,14 +198,10 @@ $parametros_backend = array(
             </div>
           </div>
         </div>
-        {showAlert && (
-          <div
-            className={`bg-${alertType} text-white p-3`}
-            style={offcanvasStyles}
-          >
-            {alertMessage}
-          </div>
-        )}
+
+        {/* Exibe o componente de alerta */}
+        <AppMessage parametros={message} modalId="modal_AppLogin" />
+
       </div>
     );
   };
