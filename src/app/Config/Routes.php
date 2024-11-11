@@ -26,6 +26,12 @@ $routes->group('analise', function ($routes) {
         });
         # www/analise/modelo/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {
+            # www/analise/modelo/endpoint/AppMap/(:any)
+            $routes->get('AppMap', 'AnaliseEndpointController::AppMap');
+            $routes->get('AppMap/(:segment)', 'AnaliseEndpointController::AppMap/$1');
+            $routes->get('AppMap/(:any)', 'AnaliseEndpointController::AppMap/$1');
+            $routes->post('AppMap', 'AnaliseEndpointController::AppMap');
+            $routes->post('AppMap/(:any)', 'AnaliseEndpointController::AppMap/$1');
             # www/analise/modelo/endpoint/AppPrincipal/(:any)
             $routes->get('AppPrincipal', 'AnaliseEndpointController::AppPrincipal');
             $routes->get('AppPrincipal/(:segment)', 'AnaliseEndpointController::AppPrincipal/$1');
