@@ -20,3 +20,4 @@ src/vendor/*
 src/public/seguranca/*
 src/composer.lock
 src/composer.lock
+src/composer.lock
