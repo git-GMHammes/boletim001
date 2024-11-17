@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppEmail = ({ formData = {}, setFormData = () => { }, parametros = {} }) => {
+    const AppEmail = ({ formData = {}, setFormData = () => { }, parametros = {}, submitAllForms }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -25,7 +25,7 @@
                 ...prev,
                 show: false
             }));
-            setShowEmptyMessage(false); // Oculta a mensagem "Campo Obrigatório" ao focar
+            setShowEmptyMessage(false);
         };
 
         // Função handleChange simplificada

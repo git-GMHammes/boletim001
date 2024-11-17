@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppInicioVigenciaBom = ({ formData = {}, setFormData = () => { }, parametros = {} }) => {
+    const AppInicioVigenciaBom = ({ formData = {}, setFormData = () => { }, parametros = {}, submitAllForms }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -46,7 +46,7 @@
         };
 
         // Função handleBlur para validar o campo de data
-        const handleBlur = (event) => {
+        const handleBlur = async (event) => {
             const { name, value } = event.target;
 
             // Verifica se o campo está vazio
@@ -90,6 +90,7 @@
                 console.log('Data fora do intervalo permitido: depois do limite máximo');
             } else {
                 console.log('Data dentro do intervalo permitido');
+                await submitAllForms(`filtro-${origemForm}`);
             }
         };
 

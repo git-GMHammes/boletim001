@@ -270,16 +270,25 @@
                                 formData={formData}
                                 setFormData={setFormData}
                                 parametros={parametros}
-                                submitAllForms={submitAllForms}
                             />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-12 col-sm-6">
-                            <AppInicioVigenciaBom formData={formData} setFormData={setFormData} parametros={parametros} />
+                            <AppInicioVigenciaBom 
+                            formData={formData} 
+                            setFormData={setFormData} 
+                            parametros={parametros} 
+                            submitAllForms={submitAllForms}
+                            />
                         </div>
                         <div className="col-12 col-sm-6">
-                            <AppAtivo formData={formData} setFormData={setFormData} parametros={parametros} />
+                            <AppAtivo 
+                            formData={formData} 
+                            setFormData={setFormData} 
+                            parametros={parametros} 
+                            submitAllForms={submitAllForms}
+                            />
                         </div>
                     </div>
                     <div className="row">
