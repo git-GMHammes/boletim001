@@ -9,6 +9,8 @@ $parametros_backend = array(
     'getURI' => isset($metadata['getURI']) ? ($metadata['getURI']) : (array()),
     'base_url' => base_url(),
     'api_post_cadastrar_atualizar' => 'bw/empresa/api/cadastrar',
+    'api_empresa_excluir' => 'bw/empresa/api/excluir',
+    'getVar_page' => isset($metadata['getVar_page']) ? ('?page=' . $metadata['getVar_page']) : ('?page=' . '1'),
     # pode ser que seja excluido ↓↓↓
     'api_empresa_cadastrar' => 'bw/empresa/api/cadastrar',
     'api_empresa_atualizar' => 'bw/empresa/api/atualizar',

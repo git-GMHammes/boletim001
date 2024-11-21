@@ -2,21 +2,47 @@
     const AppList = ({ parametros = {} }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
-        const getURI = parametros.getURI;
-        const debugMyPrint = parametros.DEBUG_MY_PRINT;
-        const base_url = parametros.base_url;
-        const api_empresa_exibir = parametros.api_empresa_exibir;
-        const api_empresa_filtrar = parametros.api_empresa_filtrar;
+        const getURI = parametros.getURI || '';
+        const debugMyPrint = parametros.DEBUG_MY_PRINT || '';
+        const base_url = parametros.base_url || '';
+        const api_empresa_exibir = parametros.api_empresa_exibir || '';
+        const getVar_page = parametros.getVar_page || '';
+        const api_empresa_filtrar = parametros.api_empresa_filtrar || '';
+
+        // Paginação 
+        const [paginacaoLista, setPaginacaoLista] = React.useState([]);
 
         // Estado para armazenar empresas da API
         const [empresas, setEmpresas] = React.useState([]);
 
         // Declare Todos os Campos do Formulário Aqui
         const [formData, setFormData] = React.useState({
+            token_csrf: parametros.token_csrf || '',  // Passe o token_csrf aqui
+            json: "1",
+            id: null,
+            codigo: null,
             nome: null,
             responsavel: null,
             email_contato: null,
+            inicio_vigencia_bom: null,
+            active: null,
+            data_criacao: null,
         });
+
+        // Função para abrir o modal e preencher o formData com os dados da empresa selecionada
+        const handleOpenModal = (empresa) => {
+            setFormData({
+                ...formData,
+                id: empresa.id,
+                codigo: empresa.codigo,
+                nome: empresa.nome,
+                responsavel: empresa.responsavel,
+                email_contato: empresa.email_contato,
+                inicio_vigencia_bom: empresa.inicio_vigencia_bom,
+                active: empresa.active,
+                data_criacao: empresa.data_criacao,
+            });
+        };
 
         const handleChange = (event) => {
             const { name, value } = event.target;
@@ -63,7 +89,7 @@
                 }
 
                 getEmpresa = await response1.json();
-                
+
                 // Processa os dados recebidos da resposta
                 if (getEmpresa.result && getEmpresa.result.dbResponse && getEmpresa.result.dbResponse[0]) {
                     console.log('dbResponse: ', dbResponse);
@@ -87,15 +113,23 @@
         };
 
         // Função fetch com try, catch, finally
-        const fetchEmpresa = async () => {
-            console.log('URL: ', base_url + api_empresa_exibir);
+        const fetchEmpresa = async (
+            custonBaseURL = base_url,
+            custonApiGetEmpresaExibir = api_empresa_exibir,
+            customPage = getVar_page
+        ) => {
+            console.log('URL: ', custonBaseURL + custonApiGetEmpresaExibir + customPage);
             try {
-                const response = await fetch(base_url + api_empresa_exibir);
-                console.log('response: ', response);
+                const response = await fetch(custonBaseURL + custonApiGetEmpresaExibir + customPage);
+                // console.log('response: ', response);
+
                 if (response.ok) {
-                    const data = await response.json();
+                    const dataApi = await response.json();
+                    // console.log('dataApi :: ', dataApi);
+
                     // Adaptando a resposta JSON para setar apenas o dbResponse
-                    setEmpresas(data.result.dbResponse);
+                    setEmpresas(dataApi.result.dbResponse);
+                    setPaginacaoLista(dataApi.result.linksArray);
                 } else {
                     console.error("Erro ao buscar dados: ", response.status);
                 }
@@ -179,17 +213,21 @@
                             </th>
                             <th scope="col">
                                 <hr />
-                                Editar
+                                <div className="d-flex justify-content-center">
+                                    Editar
+                                </div>
                             </th>
                             <th scope="col">
                                 <form className="was-validated mb-3" onSubmit={(e) => {
                                     e.preventDefault();
                                     submitAllForms('filtra-empresa', formData);
                                 }}>
-                                    <button className="btn btn-outline-secondary btn-sm" type="submit">Enviar</button>
+                                    <button className="btn btn-outline-secondary btn-sm" type="submit">Filtrar</button>
                                 </form>
                                 <hr />
-                                Excluir
+                                <div className="d-flex justify-content-center">
+                                    Excluir
+                                </div>
                             </th>
                         </tr>
                     </thead>
@@ -200,14 +238,25 @@
                                 <td>{empresa.responsavel}</td>
                                 <td>{empresa.email_contato}</td>
                                 <td>
-                                    <button type="button" className="btn btn-outline-primary btn-sm">
-                                        <i className="bi bi-pencil-square"></i>
-                                    </button>
+                                    <div className="d-flex justify-content-center">
+                                        {/* Botão que ativa o modal específico para cada empresa */}
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target={`#staticBackdrop-${index}`}
+                                            onClick={() => handleOpenModal(empresa)}
+                                        >
+                                            <i className="bi bi-pencil-square"></i>
+                                        </button>
+                                    </div>
                                 </td>
                                 <td>
-                                    <button type="button" className="btn btn-outline-danger btn-sm">
-                                        <i className="bi bi-trash3"></i>
-                                    </button>
+                                    <div className="d-flex justify-content-center">
+                                        <button type="button" className="btn btn-outline-danger btn-sm">
+                                            <i className="bi bi-trash3"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         )) : (
@@ -217,6 +266,65 @@
                         )}
                     </tbody>
                 </table>
+                {/* Modal */}
+                {empresas.length > 0 ? empresas.map((empresa, index) => (
+                    <div key={index}>
+                        {/* Modal específico para cada empresa */}
+                        <div
+                            className="modal fade"
+                            id={`staticBackdrop-${index}`}
+                            data-bs-backdrop="static"
+                            data-bs-keyboard="false"
+                            tabIndex="-1"
+                            aria-labelledby={`staticBackdropLabel-${index}`}
+                            aria-hidden="true"
+                        >
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id={`staticBackdropLabel-${index}`}>
+                                            Atualizar {`(${empresa.nome})`}
+                                        </h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        {/* Conteúdo personalizado para cada empresa */}
+                                        <AppForm
+                                            parametros={parametros}
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                        />
+                                        Informações sobre {empresa.nome}
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+                                            Fechar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )) : null}
+                {/* Paginação */}
+                {paginacaoLista ? (
+                    <nav aria-label="Page navigation example">
+                        <ul className="pagination">
+                            {paginacaoLista.map((paginacao_value, index) => (
+                                <li key={index} className={`page-item ${paginacao_value.active ? 'active' : ''}`}>
+                                    <button
+                                        className="page-link"
+                                        onClick={() => fetchEmpresa(base_url, api_empresa_exibir, paginacao_value.href)}
+                                    >
+                                        {paginacao_value.text.trim()}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                ) : (
+                    null
+                )}
                 <AppMessage parametros={message} />
             </div>
         );

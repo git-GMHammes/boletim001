@@ -55,7 +55,7 @@ class UsuarioApiController extends ResourceController
         $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         #
-        // myPrint($getMethod, 'src\app\Controllers\AdolescenteApiController.php');
+        // myPrint($getMethod, 'src\app\Controllers\ObjetoApiController.php');
         try {
             #
             $login = isset($processRequest['login']) ? ($processRequest['login']) : ('');
@@ -156,9 +156,9 @@ class UsuarioApiController extends ResourceController
         try {
             #
             // return $this->response->setJSON($processRequest, 200);
-            // myPrint($processRequest, 'src\app\Controllers\AdolescenteApiController.php');
+            // myPrint($processRequest, 'src\app\Controllers\ObjetoApiController.php');
             $requestDb = $this->DbController->dbFilter($processRequest, $page);
-            // myPrint($requestDb, 'src\app\Controllers\AdolescenteApiController.php', true);
+            // myPrint($requestDb, 'src\app\Controllers\ObjetoApiController.php', true);
             #
             $apiRespond = [
                 'status' => 'success',
@@ -317,9 +317,9 @@ class UsuarioApiController extends ResourceController
                 && $parameter2 == 'eliminar'
                 && $this->checkMedicalRecords('cadastros', $parameter1)
             ) {
-                myPrint($parameter1, 'src\app\Controllers\AdolescenteApiController.php, 302', true);
+                myPrint($parameter1, 'src\app\Controllers\ObjetoApiController.php, 302', true);
                 $dbResponse = $this->DbController->dbDelete($parameter1);
-                $this->message->message(['Adolescente Eliminado com sucesso com Sucesso.'], 'success', $dbUpdate = array(), 5);
+                $this->message->message(['Objeto Eliminado com sucesso com Sucesso.'], 'success', $dbUpdate = array(), 5);
             } elseif (
                 $parameter1 !== NULL
                 && $parameter2 == 'restaurar'
@@ -328,7 +328,7 @@ class UsuarioApiController extends ResourceController
                     'deleted_at' => null
                 );
                 $dbResponse = $this->DbController->dbUpdate($parameter1, $dbUpdate);
-                $this->message->message(['Adolescente Restaurado com sucesso com Sucesso.'], 'success', $dbUpdate = array(), 5);
+                $this->message->message(['Objeto Restaurado com sucesso com Sucesso.'], 'success', $dbUpdate = array(), 5);
             } elseif (
                 $parameter1 !== NULL
                 && $this->checkMedicalRecords('cadastros', $parameter1)
@@ -337,9 +337,9 @@ class UsuarioApiController extends ResourceController
                     'deleted_at' => date('Y-m-d H:i:s')
                 );
                 $dbResponse = $this->DbController->dbUpdate($parameter1, $dbUpdate);
-                $this->message->message(['Adolescente Excluído com Sucesso.'], 'success', $dbUpdate = array(), 5);
+                $this->message->message(['Objeto Excluído com Sucesso.'], 'success', $dbUpdate = array(), 5);
             } else {
-                $this->message->message(['Erro ao Excluir o Adolescente.'], 'warning', $dbUpdate = array(), 5);
+                $this->message->message(['Erro ao Excluir o Objeto.'], 'warning', $dbUpdate = array(), 5);
             }
             $apiRespond = [
                 'status' => 'success',
@@ -396,7 +396,7 @@ class UsuarioApiController extends ResourceController
         $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         #
-        // myPrint($getMethod, 'src\app\Controllers\AdolescenteApiController.php');
+        // myPrint($getMethod, 'src\app\Controllers\ObjetoApiController.php');
         try {
             #
             $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);

@@ -122,7 +122,7 @@ $parametros_backend['base_paginator'] = implode('/', $parametros_backend['getURI
 
                 case 'filtro-002':
                     console.log(apiIdentifier, '- OK');
-                    const data = captureFormData('filtro-adolescente');
+                    const data = captureFormData('filtro-Objeto');
                     const responsavelData = await fetchData(`${base_url}/${api_url_002}`, data);
                     if (responsavelData && responsavelData.result && responsavelData.result.dbResponse && responsavelData.result.dbResponse.length > 0) {
                         console.log('form-responsavel:', responsavelData.result.dbResponse);

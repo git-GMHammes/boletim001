@@ -7,7 +7,7 @@ $parametros_backend = array(
     'result' => isset($result) ? ($result) : (array()),
     'getURI' => isset($metadata['getURI']) ? ($metadata['getURI']) : (array()),
     'base_url' => base_url(),
-    'api_get_value_adolescente' => 'fia/ptpa/adolescente/api/exibir/20',
+    'api_get_value_Objeto' => 'fia/ptpa/Objeto/api/exibir/20',
     'api_get_municipio' => 'fia/ptpa/municipio/api/exibir',
     'api_get_unidade' => '',
     'api_get_genero' => '',
@@ -16,13 +16,13 @@ $parametros_backend = array(
 );
 ?>
 
-<div class="app_form_adolescente" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
+<div class="app_form_Objeto" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
 
 <script type="text/babel">
-    const AppFormAdolescente = () => {        
+    const AppFormObjeto = () => {        
         
         // Variáveis recebidas do Backend
-        const parametros = JSON.parse(document.querySelector('.app_form_adolescente').getAttribute('data-result'));
+        const parametros = JSON.parse(document.querySelector('.app_form_Objeto').getAttribute('data-result'));
         
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
@@ -31,7 +31,7 @@ $parametros_backend = array(
         const server_name = parametros.server_name;
         const server_port = parametros.server_port;
         const base_url = parametros.base_url;
-        const api_get_value_adolescente = parametros.api_get_value_adolescente;
+        const api_get_value_Objeto = parametros.api_get_value_Objeto;
         const api_get_municipio = parametros.api_get_municipio;
 
         // Declare todas as Listas, NO PLURAL de APIs aqui:
@@ -67,7 +67,7 @@ $parametros_backend = array(
             // Fetch para obter os dados do usuário
             const fetchUserData = async () => {
                 try {
-                    const response = await fetch(base_url + api_get_value_adolescente);
+                    const response = await fetch(base_url + api_get_value_Objeto);
                     const data = await response.json();
                     if (data.result && data.result.dbResponse && data.result.dbResponse.length > 0) {
                         const user = data.result.dbResponse[0];
@@ -167,7 +167,7 @@ $parametros_backend = array(
         );
     };
 
-    ReactDOM.render(<AppFormAdolescente />, document.querySelector('.app_form_adolescente'));
+    ReactDOM.render(<AppFormObjeto />, document.querySelector('.app_form_Objeto'));
 </script>
 <?php
 $parametros_backend = array();

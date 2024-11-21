@@ -27,7 +27,7 @@
         // Função handleBlur para verificar a seleção do campo
         const handleBlur = async () => {
             // Verifica se o valor não foi selecionado
-            if (formData.ativo !== 1 && formData.ativo !== 0) {
+            if (formData.active !== 1 && formData.active !== 0) {
                 setShowEmptyMessage(true);
             } else {
                 setShowEmptyMessage(false);
@@ -65,12 +65,13 @@
                             className="form-check-input"
                             type="radio"
                             id="ativoSim"
-                            name="ativo"
+                            name="active"
                             value="1"
-                            checked={formData.ativo === 1}
+                            checked={formData.active === 1}
                             onFocus={handleFocus}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            disabled={formData.id === null ? true : false}
                         />
                         <label className="form-check-label" htmlFor="ativoSim">Sim</label>
                     </div>&emsp;/&emsp;
@@ -80,12 +81,13 @@
                             className="form-check-input"
                             type="radio"
                             id="ativoNao"
-                            name="ativo"
+                            name="active"
                             value="0"
-                            checked={formData.ativo === 0}
+                            checked={formData.active === 0}
                             onFocus={handleFocus}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            disabled={formData.id === null ? true : false}
                         />
                         <label className="form-check-label" htmlFor="ativoNao">Não</label>
                     </div>

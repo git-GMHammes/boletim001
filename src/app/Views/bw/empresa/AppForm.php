@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppForm = ({ parametros = {} }) => {
+    const AppForm = ({ parametros = {}, formData: externalFormData, setFormData: externalSetFormData }) => {
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const request_scheme = parametros.request_scheme;
@@ -15,6 +15,7 @@
         // ↓↓↓ Exclui
         const api_empresa_cadastrar = parametros.api_empresa_cadastrar;
         const api_empresa_atualizar = parametros.api_empresa_atualizar;
+        const api_empresa_excluir = parametros.api_empresa_excluir;
         // ↑↑↑ Exclui
 
         // Definindo o estado para controlar a aba ativa
@@ -29,6 +30,24 @@
             type: null,
             message: null
         });
+
+        // Inicialização condicional de formData
+        const [internalFormData, internalSetFormData] = React.useState({
+            token_csrf: token_csrf || '',
+            json: "1",
+            id: null,
+            codigo: null,
+            nome: null,
+            responsavel: null,
+            email_contato: null,
+            inicio_vigencia_bom: null,
+            active: null,
+            data_criacao: null,
+        });
+
+        // Use o formData passado externamente, ou o estado interno como fallback
+        const formData = externalFormData || internalFormData;
+        const setFormData = externalSetFormData || internalSetFormData;
 
         // Função submitAllForms para envio dos dados
         const submitAllForms = async (apiIdentifier) => {
@@ -102,25 +121,45 @@
             }
         };
 
+        const dbDelete = async (parameter) => {
+            const response = await fetch(`${base_url}${api_empresa_excluir}/${parameter}`);
+
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+
+            const dataApi = await response.json();
+            console.log('const dataApi :: ', dataApi);
+            if (
+                dataApi.status &&
+                dataApi.status === 'success' &&
+                dataApi.result &&
+                dataApi.result.affectedRows > 0
+            ) {
+                setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    id: null,
+                    codigo: null
+                }));
+                setMessage({
+                    show: true,
+                    type: 'success',
+                    message: 'Exclusão realizada com sucesso'
+                });
+                // redirectTo('bw/empresa');
+            } else {
+                setMessage({
+                    show: true,
+                    type: 'danger',
+                    message: 'Não foi possível realizar a exclusão',
+                });
+            }
+        }
+
         // Função para trocar de aba
         const handleTabClick = (tab) => {
             setTabNav(tab); // Atualiza a aba selecionada
         };
-
-        // Declare Todos os Campos do Formulário Aqui
-        const [formData, setFormData] = React.useState({
-            token_csrf: token_csrf,
-            json: "1",
-
-            id: null,
-            codigo: null,
-            nome: null,
-            responsavel: null,
-            email_contato: null,
-            inicio_vigencia_bom: null,
-            ativo: null,
-            data_criacao: null,
-        });
 
         // Função handleFocus - Foco no objeto
         const handleFocus = (event) => {
@@ -142,7 +181,7 @@
             console.log('name handleChange: ', name);
             console.log('value handleChange: ', value);
 
-            if (name === "ativo") {
+            if (name === "active") {
                 setFormData((prev) => ({
                     ...prev,
                     [name]: parseInt(value)
@@ -234,7 +273,9 @@
                             <div className="row">
                                 <div className="col-12 col-sm-3">
                                     <AppID
-                                        formData={formData} setFormData={setFormData} parametros={parametros}
+                                        formData={formData} 
+                                        setFormData={setFormData} 
+                                        parametros={parametros}
                                     />
                                 </div>
                                 <div className="col-12 col-sm-9">
@@ -263,42 +304,67 @@
                                 setFormData={setFormData}
                                 parametros={parametros}
                                 submitAllForms={submitAllForms}
-                                />
-                                </div>
-                                <div className="col-12 col-sm-6">
-                                <AppEmailContato
+                            />
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <AppEmailContato
                                 formData={formData}
                                 setFormData={setFormData}
                                 parametros={parametros}
+                                submitAllForms={submitAllForms}
                             />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-12 col-sm-6">
-                            <AppInicioVigenciaBom 
-                            formData={formData} 
-                            setFormData={setFormData} 
-                            parametros={parametros} 
-                            submitAllForms={submitAllForms}
+                            <AppInicioVigenciaBom
+                                formData={formData}
+                                setFormData={setFormData}
+                                parametros={parametros}
+                                submitAllForms={submitAllForms}
                             />
                         </div>
                         <div className="col-12 col-sm-6">
-                            <AppAtivo 
-                            formData={formData} 
-                            setFormData={setFormData} 
-                            parametros={parametros} 
-                            submitAllForms={submitAllForms}
+                            <AppAtivo
+                                formData={formData}
+                                setFormData={setFormData}
+                                parametros={parametros}
+                                submitAllForms={submitAllForms}
                             />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-12 col-sm-6">
-                            <AppDataCriacao formData={formData} setFormData={setFormData} parametros={parametros} />
+                            <AppDataCriacao
+                                formData={formData}
+                                setFormData={setFormData}
+                                parametros={parametros}
+                                submitAllForms={submitAllForms}
+                            />
                         </div>
-                        <div className="col-12 col-sm-6">
+                        <div className="col-12 col-sm-3">
                             <label htmlFor="data_criacao" className="form-label"></label>
                             <div>
-                                <button className="btn btn-outline-dark w-100 p-2" type="submit">Enviar</button>
+                                <button
+                                    className="btn btn-outline-dark w-100 p-2"
+                                    type="submit"
+                                    disabled={formData.id === null ? true : false}
+                                >
+                                    Enviar
+                                </button>
+                            </div>
+                        </div>
+                        <div className="col-12 col-sm-3">
+                            <label htmlFor="data_criacao" className="form-label"></label>
+                            <div>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-danger w-100 p-2"
+                                    onClick={() => dbDelete(formData.id)}
+                                    disabled={formData.id === null ? true : false}
+                                >
+                                    Cancelar
+                                </button>
                             </div>
                         </div>
                     </div>

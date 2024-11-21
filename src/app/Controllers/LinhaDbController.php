@@ -277,7 +277,7 @@ class LinhaDbController extends BaseController
     {
         $limit = 10;
         try {
-            # exit('src\app\Controllers\AdolescenteDbController.php');
+            # exit('src\app\Controllers\ObjetoDbController.php');
             if (isset($processRequest['id'])) {
                 $dbResponse = $this
                     ->ModelLinha

@@ -159,6 +159,13 @@ $routes->group('bw', function ($routes) {
             $routes->post('atualizar', 'EmpresaApiController::create_update');
             $routes->post('atualizar/(:any)', 'EmpresaApiController::create_update/$1');
             $routes->post('atualizar/(:any)', 'EmpresaApiController::create_update/$1');
+            # www/bw/empresa/api/excluir/(:any)
+            $routes->get('excluir', 'EmpresaApiController::dbDelete');
+            $routes->get('excluir/(:segment)', 'EmpresaApiController::dbDelete/$1');
+            $routes->get('excluir/(:any)', 'EmpresaApiController::dbDelete/$1');
+            $routes->post('excluir', 'EmpresaApiController::dbDelete');
+            $routes->post('excluir/(:any)', 'EmpresaApiController::dbDelete/$1');
+            $routes->post('excluir/(:any)', 'EmpresaApiController::dbDelete/$1');
         });
         # www/bw/empresa/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {

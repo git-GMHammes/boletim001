@@ -277,17 +277,8 @@ class EmpresaDbController extends BaseController
     {
         $limit = 10;
         try {
-            # exit('src\app\Controllers\AdolescenteDbController.php');
-            if (isset($processRequest['id'])) {
-                $dbResponse = $this
-                    ->ModelEmpresa
-                    ->where('id', $processRequest['id'])
-                    ->where('deleted_at !=', NULL)
-                    ->orderBy('id', 'DESC')
-                    ->dBread()
-                    ->paginate(1, 'paginator', $page);
-                #
-            } elseif ($parameter !== NULL) {
+            # exit('src\app\Controllers\ObjetoDbController.php');
+            if ($parameter !== NULL) {
                 $dbResponse = $this
                     ->ModelEmpresa
                     ->where('id', $parameter)

@@ -79,7 +79,7 @@ class UsuarioEndpointController extends ResourceController
                 'result' => $processRequest,
                 'loadView' => $loadView,
                 'metadata' => [
-                    'page_title' => 'CADASTRAR ADOLESCENTE',
+                    'page_title' => 'CADASTRAR Objeto',
                     'getURI' => $this->uri->getSegments(),
                     // Você pode adicionar campos comentados anteriormente se forem relevantes
                     // 'method' => '__METHOD__',
@@ -101,7 +101,7 @@ class UsuarioEndpointController extends ResourceController
                     'content_type' => 'application/x-www-form-urlencoded'
                 ],
                 'metadata' => [
-                    'page_title' => 'ERRO - CRIAR ADOLESCENTE',
+                    'page_title' => 'ERRO - CRIAR Objeto',
                     'getURI' => $this->uri->getSegments(),
                 ]
             ];

@@ -5,6 +5,8 @@
         const debugMyPrint = parametros.DEBUG_MY_PRINT || false;
         const origemForm = parametros.origemForm || '';
 
+        // console.log('formData :: ', formData);
+
         // APIs
         const api_post_cadastrar_atualizar = parametros.api_post_cadastrar_atualizar || '';
 
@@ -133,7 +135,7 @@
                         onBlur={handleBlur}
                         style={formControlStyle}
                         className="form-control"
-                        required
+                        disabled={formData.id === null ? true : false}
                     />
                 </div>
                 {showEmptyMessage && (

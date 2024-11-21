@@ -10,12 +10,12 @@ $parametros_backend = array(
 );
 ?>
 
-<div class="app_limpar_adolescente" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
+<div class="app_limpar_Objeto" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
 
 <script type="text/babel">
-    const AppLimparAdolescente = () => {
+    const AppLimparObjeto = () => {
         // Variáveis recebidas do Backend
-        const parametros = JSON.parse(document.querySelector('.app_limpar_adolescente').getAttribute('data-result'));
+        const parametros = JSON.parse(document.querySelector('.app_limpar_Objeto').getAttribute('data-result'));
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -30,7 +30,7 @@ $parametros_backend = array(
             </div>
         );
     };
-    ReactDOM.render(<AppLimparAdolescente />, document.querySelector('.app_limpar_adolescente'));
+    ReactDOM.render(<AppLimparObjeto />, document.querySelector('.app_limpar_Objeto'));
 </script>
 <?php
 $parametros_backend = array();

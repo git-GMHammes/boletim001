@@ -103,7 +103,7 @@
                         onBlur={handleBlur}
                         style={formControlStyle}
                         className="form-control"
-                        required
+                        disabled={formData.id === null ? true : false}
                     />
                 </div>
                 {formData.Responsavel_Nome && !isValidNome(formData.Responsavel_Nome) && (

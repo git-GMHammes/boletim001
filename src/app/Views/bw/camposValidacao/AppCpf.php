@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppCpf = ({ formData = {}, setFormData = () => { }, parametros = {} }) => {
+    const AppCpf = ({ formData = {}, setFormData = () => {}, parametros = {} }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const debugMyPrint = parametros.DEBUG_MY_PRINT || '';

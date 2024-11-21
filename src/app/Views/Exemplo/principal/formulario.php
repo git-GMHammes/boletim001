@@ -10,12 +10,12 @@ $parametros_backend = array(
 );
 ?>
 
-<div class="app_form_adolescente" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
+<div class="app_form_Objeto" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
 
 <script type="text/babel">
-    const AppFormAdolescente = () => {
+    const AppFormObjeto = () => {
         // Variáveis recebidas do Backend
-        const parametros = JSON.parse(document.querySelector('.app_form_adolescente').getAttribute('data-result'));
+        const parametros = JSON.parse(document.querySelector('.app_form_Objeto').getAttribute('data-result'));
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -30,7 +30,7 @@ $parametros_backend = array(
             </div>
         );
     };
-    ReactDOM.render(<AppFormAdolescente />, document.querySelector('.app_form_adolescente'));
+    ReactDOM.render(<AppFormObjeto />, document.querySelector('.app_form_Objeto'));
 </script>
 <?php
 $parametros_backend = array();

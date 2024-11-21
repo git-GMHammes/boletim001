@@ -60,7 +60,7 @@ class AuthModels extends Model
 
     public function dBdelete($parameter, $key)
     {
-        // myPrint($parameter, $key, 'src\app\Models\AdolescentesModels.php');
+        // myPrint($parameter, $key, 'src\app\Models\ObjetosModels.php');
         $ModelBaseCrud = new BaseCrudModel;
         $this->dBdelete = $ModelBaseCrud->dBdelete($this->table, $this->primaryKey, $parameter, $key);
         return $this;

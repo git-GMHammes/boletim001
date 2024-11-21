@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppDataCriacao = ({ formData = {}, setFormData = () => { }, parametros = {} }) => {
+    const AppDataCriacao = ({ formData = {}, setFormData = () => { }, parametros = {}, submitAllForms }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -15,8 +15,8 @@
             return data.toISOString().split('T')[0];
         };
 
-        const dataMinima = calcularDataLimite(-70); // 70 anos antes da data atual
-        const dataMaxima = calcularDataLimite(0);   // Hoje
+        const dataMinima = calcularDataLimite(-70);
+        const dataMaxima = calcularDataLimite(0);
 
         // Estado para mensagens e validação
         const [showEmptyMessage, setShowEmptyMessage] = React.useState(false);
@@ -46,7 +46,7 @@
         };
 
         // Função handleBlur para validar o campo de data
-        const handleBlur = (event) => {
+        const handleBlur = async (event) => {
             const { name, value } = event.target;
 
             // Verifica se o campo está vazio
@@ -89,6 +89,7 @@
                 }));
                 console.log('Data fora do intervalo permitido: depois do limite máximo');
             } else {
+                await submitAllForms(`filtro-${origemForm}`);
                 console.log('Data dentro do intervalo permitido');
             }
         };
@@ -135,7 +136,7 @@
                         onBlur={handleBlur}
                         style={formControlStyle}
                         className="form-control"
-                        required
+                        disabled={formData.id === null ? true : false}
                     />
                 </div>
                 {showEmptyMessage && (

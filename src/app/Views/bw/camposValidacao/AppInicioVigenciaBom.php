@@ -136,7 +136,7 @@
                         onBlur={handleBlur}
                         style={formControlStyle}
                         className="form-control"
-                        required
+                        disabled={formData.id === null ? true : false}
                     />
                 </div>
                 {showEmptyMessage && (

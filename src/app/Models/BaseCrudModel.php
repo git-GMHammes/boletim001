@@ -74,7 +74,7 @@ class BaseCrudModel extends Model
         $this->allowedFields = array_keys($dbCreate);
         try {
             $this->dbInsert = $this->insert($dbCreate);
-            // myPrint($this, 'src\app\Models\AdolescentesModels.php');
+            // myPrint($this, 'src\app\Models\ObjetosModels.php');
             $this->affectedRows = $this->db->affectedRows();
             if ($this->affectedRows > 0) {
                 $this->message->message(['Cadastrado realizado com Sucesso'], 'success', $dbCreate, 5);
@@ -109,7 +109,7 @@ class BaseCrudModel extends Model
             } else {
                 $this->dbRead = $this->select($this->allowedFields);
             }
-            // myPrint($this->dbRead->findAll(), 'src\app\Models\AdolescentesModels.php');
+            // myPrint($this->dbRead->findAll(), 'src\app\Models\ObjetosModels.php');
             $this->affectedRows = $this->db->affectedRows();
         } catch (\Throwable $th) {
             if (DEBUG_MY_PRINT) {
@@ -150,7 +150,7 @@ class BaseCrudModel extends Model
             if ($this->affectedRows > 0) {
                 $this->message->message(['Cadastro Atualizado com Sucesso.'], 'success', $dbUpdate = array(), 5);
             } else {
-                $this->message->message(['Erro ao Atualizar o Adolescente'], 'danger', $dbUpdate = array(), 5);
+                $this->message->message(['Erro ao Atualizar o Objeto'], 'danger', $dbUpdate = array(), 5);
             }
         } catch (\Throwable $th) {
             if (DEBUG_MY_PRINT) {
