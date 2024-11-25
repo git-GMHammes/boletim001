@@ -15,7 +15,7 @@
 
         // Validação de E-mail: permite apenas e-mails com "@" e "." e no formato especificado
         const isValidEmail = (email) => {
-            const regexEmail = /^[\w.-]+@([\w-]+\.)+(com|org|net|digital)$/; // Inclui domínio .digital
+            const regexEmail = /^[\w.-]+@([\w-]+\.)+(com|com.br|org|net|digital)$/; // Inclui domínio .digital
             return regexEmail.test(email);
         };
 

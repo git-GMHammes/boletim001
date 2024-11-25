@@ -59,31 +59,16 @@ $parametros_backend = array(
     return (
       <div>
         <div className="row">
-          <div className="col-12 col-sm-3" style={navyBlueDark}>
-            &nbsp;
-          </div>
-          <div className="col-12 col-sm-3" style={navyBlueDark}>
-            &nbsp;
-          </div>
-          <div className="col-12 col-sm-3" style={navyBlueDark}>
-            &nbsp;
-          </div>
-          <div className="col-12 col-sm-3" style={navyBlueDark}>
-            &nbsp;
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12 col-sm-3" style={navyBlueDark}>
-            &nbsp;
-          </div>
-          <div className="col-12 col-sm-3" style={navyBlueDegradeAberto}>
+          <div className="col-12 col-sm-4" style={navyBlueDark}>
             <div className="d-flex justify-content-center align-items-center p-2">
-              <img src="<?= base_url(); ?>assets/bomweb/images/logo_relatorio.gif" alt="src/assets/bomweb/images/logo_relatorio.gif" />
-              &emsp;
-              <img src="<?= base_url(); ?>assets/bomweb/images/detro.jpg" alt="assets/bomweb/images/detro.jpg" />
+              <img
+                className="img-fluid"
+                src="<?= base_url(); ?>assets/bomweb/images/logos/governo_t.png"
+                alt="src/public/assets/bomweb/images/logos/governo_t.png"
+              />
             </div>
           </div>
-          <div className="col-12 col-sm-3" style={navyBlueDark}>
+          <div className="col-12 col-sm-4" style={navyBlueDark}>
             <div className="d-flex justify-content-around align-items-center flex-wrap m-5">
               <div style={circleWithRadialGradient}>
                 <i className="bi bi-instagram"></i>
@@ -102,9 +87,13 @@ $parametros_backend = array(
               </div>
             </div>
           </div>
-          <div className="col-12 col-sm-3 d-flex justify-content-center align-items-center" style={navyBlueDegradeFechado}>
+          <div className="col-12 col-sm-4 d-flex justify-content-center align-items-center" style={navyBlueDark}>
             <div className="p-2">
-              <img src="<?= base_url(); ?>assets/bomweb/images/governo.jpg" alt="assets/bomweb/images/governo.jpg" />
+            <img
+                className="img-fluid"
+                src="<?= base_url(); ?>assets/bomweb/images/logos/LogoProderj.png"
+                alt="src/public/assets/bomweb/images/logos/LogoProderj.png"
+              />
             </div>
           </div>
         </div>

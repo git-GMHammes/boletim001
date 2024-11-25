@@ -1,8 +1,6 @@
 <script type="text/babel">
     const AppForm = ({ parametros = {} }) => {
 
-        const parametros = parametros || {};
-
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -444,7 +442,7 @@
                                 </label>
                                 <div className="card mb-4">
                                     <div className="card-body">
-                                        <br/>
+                                        <br />
                                     </div>
                                 </div>
                             </div>
