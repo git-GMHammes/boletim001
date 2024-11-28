@@ -222,237 +222,59 @@
                         />
                     </div>
                 </form>
+                <AppID
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppLinhaAtiva
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppEmpresa
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppCodigo
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppNlinhas
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppNomeLinha
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppPontoInicial
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppPontoFinal
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppVia
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <AppTipoLigacao
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
 
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms(`filtro-${origemForm}`, formData);
-                }}>
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="active"
-                                    style={formLabelStyle}
-                                    className="form-label">Ativo<strong style={requiredField}>*</strong></label>
-                                <select data-api={`filtro-${origemForm}`} id="active" name="active" value={formData.active || ''} onChange={handleChange} style={formControlStyle} className="form-select" aria-label="Default select 1" required>
-                                    <option value="">Seleção Nula</option>
-                                    <option value={`0`}>Ativa</option>
-                                    <option value={`1`}>Cancelada</option>
-                                    <option value={`2`}>Paralisada</option>
-                                    <option value={`3`}>Subjudice</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="empresa_id"
-                                    style={formLabelStyle}
-                                    className="form-label">Empresa<strong style={requiredField}>*</strong></label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="empresa_id"
-                                    name="empresa_id"
-                                    value={formData.empresa_id || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms(`filtro-${origemForm}`, formData);
-                }}>
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="codigo"
-                                    style={formLabelStyle}
-                                    className="form-label">Código<strong style={requiredField}>*</strong></label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="codigo"
-                                    name="codigo"
-                                    value={formData.codigo || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="numeroLinha"
-                                    style={formLabelStyle}
-                                    className="form-label">Número da Linha<strong style={requiredField}>*</strong>
-                                </label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="numeroLinha"
-                                    name="numeroLinha"
-                                    value={formData.numeroLinha || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms(`filtro-${origemForm}`, formData);
-                }}>
-                    <div class="row">
-                        <div class="col-12 col-sm-12">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="linha_id"
-                                    style={formLabelStyle}
-                                    className="form-label">Nome da Linha<strong style={requiredField}>*</strong>
-                                </label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="linha_id"
-                                    name="linha_id"
-                                    value={formData.linha_id || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms(`filtro-${origemForm}`, formData);
-                }}>
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="ponto_inicial"
-                                    style={formLabelStyle}
-                                    className="form-label">Ponto Inicial<strong style={requiredField}>*</strong>
-                                </label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="ponto_inicial"
-                                    name="ponto_inicial"
-                                    value={formData.ponto_inicial || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="ponto_final"
-                                    style={formLabelStyle}
-                                    className="form-label">Ponto Final<strong style={requiredField}>*</strong>
-                                </label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="ponto_final"
-                                    name="ponto_final"
-                                    value={formData.ponto_final || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms(`filtro-${origemForm}`, formData);
-                }}>
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="via"
-                                    style={formLabelStyle}
-                                    className="form-label">Via<strong style={requiredField}>*</strong>
-                                </label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="via"
-                                    name="via"
-                                    value={formData.via || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="tipoLigacao"
-                                    style={formLabelStyle}
-                                    className="form-label">Tipo de Ligação<strong style={requiredField}>*</strong>
-                                </label>
-                                <input
-                                    data-api={`filtro-${origemForm}`}
-                                    type="text"
-                                    id="tipoLigacao"
-                                    name="tipoLigacao"
-                                    value={formData.tipoLigacao || ''}
-                                    onChange={handleChange}
-                                    style={formControlStyle}
-                                    className="form-control" required
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms(`filtro-${origemForm}`, formData);
-                }}>
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <div style={formGroupStyle}>
-                                <label
-                                    htmlFor="tipoLigacao"
-                                    style={formLabelStyle}
-                                    className="form-label">Tipo de Linhas<strong style={requiredField}>*</strong>
-                                </label>
-                                <div className="card mb-4">
-                                    <div className="card-body">
-                                        <br />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-
-                        </div>
-                    </div>
-                </form>
-
+                
+                
                 <form className="was-validated" onSubmit={(e) => {
                     e.preventDefault();
                     submitAllForms(`filtro-${origemForm}`, formData);
