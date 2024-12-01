@@ -16,6 +16,16 @@ $routes->group('analise', function ($routes) {
     $routes->group('modelo', function ($routes) {
         # www/analise/modelo/api/(:any)
         $routes->group('api', function ($routes) {
+            # www/analise/modelo/api/fakeemporesa/(:any)
+            $routes->get('fakeemporesa', 'AnaliseApiController::dbFakeEmpresa');
+            $routes->get('fakeemporesa/(:segment)', 'AnaliseApiController::dbFakeEmpresa/$1');
+            $routes->get('fakeemporesa/(:any)', 'AnaliseApiController::dbFakeEmpresa/$1');
+            $routes->post('fakeemporesa', 'AnaliseApiController::dbFakeEmpresa');
+            $routes->post('fakeemporesa/(:any)', 'AnaliseApiController::dbFakeEmpresa/$1');
+            $routes->post('fakeemporesa/(:any)', 'AnaliseApiController::dbFakeEmpresa/$1');
+        });
+        # www/analise/modelo/api/(:any)
+        $routes->group('api', function ($routes) {
             # www/analise/modelo/api/diasmes/(:any)
             $routes->get('diasmes', 'CalendarioApiController::getDiasMes');
             $routes->get('diasmes/(:segment)', 'CalendarioApiController::getDiasMes/$1');
@@ -26,6 +36,12 @@ $routes->group('analise', function ($routes) {
         });
         # www/analise/modelo/endpoint/(:any)
         $routes->group('endpoint', function ($routes) {
+            # www/analise/modelo/endpoint/testeSelectFind/(:any)
+            $routes->get('testeSelectFind', 'AnaliseEndpointController::testeSelectFind');
+            $routes->get('testeSelectFind/(:segment)', 'AnaliseEndpointController::testeSelectFind/$1');
+            $routes->get('testeSelectFind/(:any)', 'AnaliseEndpointController::testeSelectFind/$1');
+            $routes->post('testeSelectFind', 'AnaliseEndpointController::testeSelectFind');
+            $routes->post('testeSelectFind/(:any)', 'AnaliseEndpointController::testeSelectFind/$1');
             # www/analise/modelo/endpoint/AppMap/(:any)
             $routes->get('AppMap', 'AnaliseEndpointController::AppMap');
             $routes->get('AppMap/(:segment)', 'AnaliseEndpointController::AppMap/$1');
