@@ -1,5 +1,6 @@
 <script type="text/babel">
     const AppMessage = ({ parametros = {} }) => {
+        
         const [showAlert, setShowAlert] = React.useState(parametros.show ?? false);
         const [alertType, setAlertType] = React.useState(parametros.type ?? '');
         const [alertMessage, setAlertMessage] = React.useState(parametros.message ?? '');

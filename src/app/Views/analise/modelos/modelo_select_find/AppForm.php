@@ -1,22 +1,15 @@
 <script type="text/babel">
     const AppForm = ({ parametros = {}, formData: externalFormData, setFormData: externalSetFormData }) => {
+
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
-        const getURI = parametros.getURI;
-        const request_scheme = parametros.request_scheme || '';
-        const debugMyPrint = parametros.DEBUG_MY_PRINT || '';
-        const server_name = parametros.server_name || '';
-        const server_port = parametros.server_port || '';
         const token_csrf = parametros.token_csrf || '';
-        const origemForm = parametros.origemForm || '';
-        const base_url = parametros.base_url || []];
+        const base_url = parametros.base_url || [];
 
         // Lista de APIs
         const api_empresa_exibir = parametros.api_empresa_exibir || '';
         const api_empresa_filtrar = parametros.api_empresa_filtrar || '';
 
-        // Definindo o estado para controlar a aba ativa
-        // const [tabNav, setTabNav] = React.useState('form');
-        const [showAlert, setShowAlert] = React.useState(false);
+        // Definindo o estado para controlar a aba ativa        const [showAlert, setShowAlert] = React.useState(false);
         const [alertType, setAlertType] = React.useState('');
         const [alertMessage, setAlertMessage] = React.useState('');
 
@@ -31,8 +24,9 @@
         const [internalFormData, internalSetFormData] = React.useState({
             token_csrf: token_csrf || '',
             json: "1",
+
             select_empresa: null,
-            select_mult_empresa: null,
+            select_mult_empresa: [],
         });
 
         const submitAllForms = async (apiIdentifier) => {
@@ -129,9 +123,16 @@
             console.log('name handleChange: ', name);
             console.log('value handleChange: ', value);
 
+            // Atualiza o estado interno do formulário
+            internalSetFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+
+            // Oculta a mensagem de erro, se houver
             setMessage((prev) => ({
                 ...prev,
-                show: false
+                show: false,
             }));
         };
 
@@ -156,30 +157,21 @@
         };
 
         return (
-            <div>
-                <div>
-                    {/* internalFormData */}
-                    {/* internalSetFormData */}
-                    {/* fetchFilter */}
-                    {/* fetchEmpresa */}
-                    <AppEmpresaSelect
-                        internalFormData={internalFormData}
-                        internalSetFormData={internalSetFormData}
-                        parametros={parametros}
-                        fetchFilter={fetchFilter}
-                        fetchEmpresa={fetchEmpresa}
-                    />
+            <div className="container">
+                <div className="w-100">
+
                     <AppEmpresaSelectMult
-                        internalFormData={internalFormData}
-                        internalSetFormData={internalSetFormData}
+                        internalFormData={formData}
+                        internalSetFormData={setFormData}
                         parametros={parametros}
                         fetchFilter={fetchFilter}
                         fetchEmpresa={fetchEmpresa}
                     />
+
+                    {/* Exibe o componente de alerta */}
+                    <AppMessage parametros={message} />
                 </div>
 
-                {/* Exibe o componente de alerta */}
-                <AppMessage parametros={message} />
             </div>
         );
     };

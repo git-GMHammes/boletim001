@@ -1,13 +1,6 @@
 <script type="text/babel">
     const AppEmpresaSelect = ({ formData = {}, setFormData = () => { }, parametros = {}, submitAllForms }) => {
 
-        // Prepara as Variáveis do REACT recebidas pelo BACKEND
-        const debugMyPrint = parametros.DEBUG_MY_PRINT || false;
-        const origemForm = parametros.origemForm || '';
-
-        // APIs
-        const api_post_cadastrar_atualizar = parametros.api_post_cadastrar_atualizar || '';
-
         // Estado para mensagens e validação
         const [showAlert, setShowAlert] = React.useState(false);
         const [alertType, setAlertType] = React.useState('');
@@ -57,23 +50,20 @@
             }));
         };
 
-        const redirectTo = (url) => {
-            const uri = base_url + url;
-            setTimeout(() => {
-                window.location.href = uri;
-            }, 4000);
-        };
-
         return (
             <div>
-                {/* Atenção as Consts abaixo*/}
-                {/*
-                onFocus={handleFocus}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                */}
-
-                Select Empresa
+                <select
+                    className="form-select form-select-sm"
+                    onFocus={handleFocus}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={formData.select_empresa || ''}
+                >
+                    <option selected>Open this select menu</option>
+                    <option value={1}>One</option>
+                    <option value={2}>Two</option>
+                    <option value={3}>Three</option>
+                </select>
 
                 {showEmptyMessage && (
                     <span style={{ color: 'red', fontSize: '12px' }}>

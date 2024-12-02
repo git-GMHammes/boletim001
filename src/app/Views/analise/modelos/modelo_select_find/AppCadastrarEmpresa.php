@@ -32,8 +32,6 @@ $parametros_backend = array(
         const token_csrf = parametros.token_csrf;
 
         // Lista de APIs
-        // const api_empresa_cadastrar = parametros.api_empresa_cadastrar;
-        // const api_empresa_atualizar = parametros.api_empresa_atualizar;
         const api_empresa_listar = parametros.api_empresa_listar;
         const api_empresa_filtrar = parametros.api_empresa_filtrar;
 
