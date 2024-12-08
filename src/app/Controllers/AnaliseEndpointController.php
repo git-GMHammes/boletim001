@@ -17,6 +17,7 @@ class AnaliseEndpointController extends ResourceController
     private $app_message = 'analise/AppMessage';
     private $app_head = 'analise/AppHead';
     private $app_menu = 'analise/AppMenu';
+    private $app_json = 'bw/AppJson';
     private $message = 'analise/message';
     private $ModelResponse;
     private $tokenCsrf;
@@ -61,10 +62,11 @@ class AnaliseEndpointController extends ResourceController
             $this->app_menu,
             $this->message,
             $this->app_message,
+            $this->app_json,
             $this->app_loading,
-            'analise/modelos/modelo_select_find/AppForm',
             'analise/modelos/modelo_select_find/campo/AppEmpresaSelect',
-            'analise/modelos/modelo_select_find/campo/AppEmpresaSelectMult',
+            'analise/modelos/modelo_select_find/campo/AppEmpresaCheckMult',
+            'analise/modelos/modelo_select_find/AppForm',
             'analise/modelos/modelo_select_find/AppCadastrarEmpresa',
             $this->app_footer,
         );

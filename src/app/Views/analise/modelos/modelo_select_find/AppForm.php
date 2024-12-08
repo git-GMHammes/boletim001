@@ -4,10 +4,7 @@
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const token_csrf = parametros.token_csrf || '';
         const base_url = parametros.base_url || [];
-
-        // Lista de APIs
-        const api_empresa_exibir = parametros.api_empresa_exibir || '';
-        const api_empresa_filtrar = parametros.api_empresa_filtrar || '';
+        const debugMyPrint = parametros.DEBUG_MY_PRINT || false;
 
         // Definindo o estado para controlar a aba ativa        const [showAlert, setShowAlert] = React.useState(false);
         const [alertType, setAlertType] = React.useState('');
@@ -24,79 +21,13 @@
         const [internalFormData, internalSetFormData] = React.useState({
             token_csrf: token_csrf || '',
             json: "1",
+            busca_empresa: null,
 
             select_empresa: null,
-            select_mult_empresa: [],
         });
 
         const submitAllForms = async (apiIdentifier) => {
             return apiIdentifier;
-        };
-
-        // Função fetch com try, catch, finally
-        const fetchFilter = async (
-            custonBaseURL = base_url,
-            custonApiGetEmpresa = api_empresa_filtrar,
-            customPage = getVar_page
-        ) => {
-            let setPost = internalFormData;
-            try {
-                const response = await fetch(custonBaseURL + custonApiGetEmpresa + customPage);
-
-                response1 = await fetch(custonBaseURL + custonApiGetEmpresa + customPage, {
-                    method: 'POST',
-                    body: JSON.stringify(setPost),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (response.ok) {
-                    console.log("dataApi :: ", dataApi);
-                } else {
-                    console.error("Erro ao buscar dados :: ", response.status);
-                }
-
-                // Adaptando a resposta JSON para setar apenas o dbResponse
-                const dataApi = await response.json();
-                if (dataApi.result && dataApi.result.dbResponse) {
-                    setEmpresas(dataApi.result.dbResponse);
-                    console.log("Filtrar dados :: ", response.status);
-                }
-
-            } catch (error) {
-                console.error("Erro na requisição: ", error);
-            } finally {
-                console.log("Requisição concluída.");
-            }
-        };
-
-        // Função fetch com try, catch, finally
-        const fetchEmpresa = async (
-            custonBaseURL = base_url,
-            custonApiGetEmpresa = api_empresa_exibir,
-            customPage = getVar_page
-        ) => {
-            console.log('URL: ', custonBaseURL + custonApiGetEmpresa + customPage);
-            try {
-                const response = await fetch(custonBaseURL + custonApiGetEmpresa + customPage);
-                // console.log('response: ', response);
-
-                if (response.ok) {
-                    const dataApi = await response.json();
-                    // console.log('dataApi :: ', dataApi);
-
-                    // Adaptando a resposta JSON para setar apenas o dbResponse
-                    setEmpresas(dataApi.result.dbResponse);
-                    setPaginacaoLista(dataApi.result.linksArray);
-                } else {
-                    console.error("Erro ao buscar dados: ", response.status);
-                }
-            } catch (error) {
-                console.error("Erro na requisição: ", error);
-            } finally {
-                console.log("Requisição concluída.");
-            }
         };
 
         // Use o formData passado externamente, ou o estado interno como fallback
@@ -160,12 +91,10 @@
             <div className="container">
                 <div className="w-100">
 
-                    <AppEmpresaSelectMult
+                    <AppEmpresaChecktMult
                         internalFormData={formData}
                         internalSetFormData={setFormData}
                         parametros={parametros}
-                        fetchFilter={fetchFilter}
-                        fetchEmpresa={fetchEmpresa}
                     />
 
                     {/* Exibe o componente de alerta */}

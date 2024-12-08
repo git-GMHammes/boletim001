@@ -1,7 +1,7 @@
 <?php
 $token_csrf = (session()->get('token_csrf')) ? (session()->get('token_csrf')) : ('erro');
 $parametros_backend = array(
-    'DEBUG_MY_PRINT' => false,
+    'DEBUG_MY_PRINT' => true,
     'token_csrf' => $token_csrf,
     'request_scheme' => $_SERVER['REQUEST_SCHEME'],
     'server_name' => $_SERVER['SERVER_NAME'],
@@ -25,21 +25,19 @@ $parametros_backend = array(
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const getURI = parametros.getURI;
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
+        const base_url = parametros.base_url;
         const request_scheme = parametros.request_scheme;
         const server_name = parametros.server_name;
         const server_port = parametros.server_port;
-        const base_url = parametros.base_url;
         const token_csrf = parametros.token_csrf;
-
-        // Lista de APIs
-        const api_empresa_listar = parametros.api_empresa_listar;
-        const api_empresa_filtrar = parametros.api_empresa_filtrar;
 
         return (
             <div>
                 <div className="mt-1">
                     <div className="d-flex justify-content-center align-items-center min-vh-100">
-                        <AppForm parametros={parametros} />
+                        <AppForm 
+                        parametros={parametros} 
+                        />
                     </div>
                 </div>
             </div>

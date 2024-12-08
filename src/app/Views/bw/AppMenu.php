@@ -337,7 +337,7 @@ $parametros_backend = array(
                                 <span>Modelos</span>
                             </button>
                             <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                                <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/AppNavTab`} target="_blank">AppNavTab</a></li>
+                                <li><a className="dropdown-item" href={`${base_url}analise/modelo/endpoint/testeSelectFind`} target="_blank">AppSelectMult</a></li>
                             </ul>
                         </div>
                     </div>

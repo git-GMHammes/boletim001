@@ -63,17 +63,16 @@ class EmpresaDbController extends BaseController
     # $this->DbController->dbFields($fileds = array();
     public function dbFieldsFilter($processRequestFields = array())
     {
-        # myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
+        // myPrint($processRequestFields, 'src\app\Controllers\SystemUploadDbController.php', true);
         $dbCreate = array();
         $autoColumn = $this->ModelEmpresa->getColumnsFromTable();
         // myPrint($autoColumn, '', true);
         if (isset($autoColumn['COLUMN'])) {
             foreach ($autoColumn['COLUMN'] as $key_autoColumn => $value_autoColumn) {
-                # myPrint($value_autoColumn, '', true);
                 (isset($processRequestFields[$value_autoColumn])) ? ($dbCreate[$value_autoColumn] = $processRequestFields[$value_autoColumn]) : (NULL);
             }
         }
-
+        $dbCreate['nome'] = isset($processRequestFields['busca_empresa']) ? ($processRequestFields['busca_empresa']) : (null);
         // myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php');
         return ($dbCreate);
     }
@@ -162,10 +161,6 @@ class EmpresaDbController extends BaseController
     public function dbFilter($parameter = NULL, $page = 1, $limit = 10)
     {
         $parameter = $this->dbFieldsFilter($parameter);
-        $getURI = $this->uri->getSegments();
-        if (in_array('filtrar', $getURI)) {
-            $limit = 200;
-        }
         #
         try {
             $query = $this

@@ -1,10 +1,15 @@
 <script type="text/babel">
-    const AppEmpresaSelectMult = ({ internalFormData = {}, internalSetFormData = {}, parametros = {}, fetchFilter = () => { }, fetchEmpresa = () => { }}) => {
+    const AppEmpresaSelectMult = (
+        {
+            internalFormData = {},
+            internalSetFormData = {},
+            parametros = {}
+        }) => {
 
         // Estado para mensagens e validação
-        const [showAlert, setShowAlert] = React.useState(false);
-        const [alertType, setAlertType] = React.useState('');
-        const [alertMessage, setAlertMessage] = React.useState('');
+        // const [showAlert, setShowAlert] = React.useState(false);
+        // const [alertType, setAlertType] = React.useState('');
+        // const [alertMessage, setAlertMessage] = React.useState('');
         const [showEmptyMessage, setShowEmptyMessage] = React.useState(false);
         const [message, setMessage] = React.useState({
             show: false,
@@ -47,6 +52,72 @@
         const handleBlur = (event) => {
             const { name } = event.target;
             console.log(`Campo ${name} perdeu o foco.`);
+        };
+
+        // Função fetch com try, catch, finally
+        const fetchFilter = async (
+            custonBaseURL = base_url,
+            custonApiGetEmpresa = api_empresa_filtrar,
+            customPage = getVar_page
+        ) => {
+            let setPost = internalFormData;
+            try {
+                const response = await fetch(custonBaseURL + custonApiGetEmpresa + customPage);
+
+                response1 = await fetch(custonBaseURL + custonApiGetEmpresa + customPage, {
+                    method: 'POST',
+                    body: JSON.stringify(setPost),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    console.log("dataApi :: ", dataApi);
+                } else {
+                    console.error("Erro ao buscar dados :: ", response.status);
+                }
+
+                // Adaptando a resposta JSON para setar apenas o dbResponse
+                const dataApi = await response.json();
+                if (dataApi.result && dataApi.result.dbResponse) {
+                    setEmpresas(dataApi.result.dbResponse);
+                    console.log("Filtrar dados :: ", response.status);
+                }
+
+            } catch (error) {
+                console.error("Erro na requisição: ", error);
+            } finally {
+                console.log("Requisição concluída.");
+            }
+        };
+
+        // Função fetch com try, catch, finally
+        const fetchEmpresa = async (
+            custonBaseURL = base_url,
+            custonApiGetEmpresa = api_empresa_exibir,
+            customPage = getVar_page
+        ) => {
+            console.log('URL: ', custonBaseURL + custonApiGetEmpresa + customPage);
+            try {
+                const response = await fetch(custonBaseURL + custonApiGetEmpresa + customPage);
+                // console.log('response: ', response);
+
+                if (response.ok) {
+                    const dataApi = await response.json();
+                    // console.log('dataApi :: ', dataApi);
+
+                    // Adaptando a resposta JSON para setar apenas o dbResponse
+                    setEmpresas(dataApi.result.dbResponse);
+                    setPaginacaoLista(dataApi.result.linksArray);
+                } else {
+                    console.error("Erro ao buscar dados: ", response.status);
+                }
+            } catch (error) {
+                console.error("Erro na requisição: ", error);
+            } finally {
+                console.log("Requisição concluída.");
+            }
         };
 
         return (

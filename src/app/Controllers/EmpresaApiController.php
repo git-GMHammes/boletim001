@@ -205,8 +205,10 @@ class EmpresaApiController extends ResourceController
         # Parâmentros para receber um POST
         $request = service('request');
         $getMethod = $request->getMethod();
-        $getGet = $this->request->getGet('page');
-        $page = (isset($getGet) && !empty($getGet)) ? ($getGet) : (1);
+        $pageGet = $this->request->getGet('page');
+        $page = (isset($pageGet) && !empty($pageGet)) ? ($pageGet) : (1);
+        $limitGet = $this->request->getGet('limit');
+        $limit = (isset($limitGet) && !empty($limitGet)) ? ($limitGet) : (10);
         $processRequest = (array) $request->getVar();
         $processRequest = array_filter($processRequest);
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
@@ -215,7 +217,7 @@ class EmpresaApiController extends ResourceController
         try {
             #
             // return $this->response->setJSON($processRequest, 200);
-            $requestDb = $this->DbController->dbFilter($processRequest, $page);
+            $requestDb = $this->DbController->dbFilter($processRequest, $page, $limit);
             // myPrint($requestDb, 'C:\Users\Habilidade.Com\AppData\Roaming\Code\User\snippets\php.json', true);
             #
             $apiRespond = [
