@@ -19,6 +19,9 @@
         const api_empresa_filtrar = parametros.api_empresa_filtrar;
 
         const [empresas, setEmpresas] = React.useState('');
+        const [compoID, setCampoID] = React.useState('');
+        const [campoLabel, setCampoLabel] = React.useState('');
+
 
         const [paginacaoLista, setPaginacaoLista] = React.useState('');
 
@@ -33,57 +36,79 @@
             message: null
         });
 
-        // Função para simular o comportamento de "Ctrl" ao focar
-        const handleFocus = (event) => {
-            const { name, value } = event.target;
-
-            console.log('name handleFocus: ', name);
-            console.log('value handleFocus: ', value);
-
-            internalSetFormData((prev) => ({
-                ...prev,
-                [name]: value
-            }));
+        // Função para atualizar `internalFormData` com sincronia absoluta
+        const syncInternalFormData = (field, value) => {
+            internalSetFormData((prev) => {
+                const updatedFormData = { ...prev, [field]: value };
+                console.log("internalFormData sincronizado:", updatedFormData);
+                return updatedFormData;
+            });
         };
 
+        // Função para simular o comportamento de "Ctrl" ao focar
+        const handleFocus = (event) => {
+            const { name } = event.target;
+
+            console.log('name handleFocus: ', name);
+
+            // Limpa o campo `busca_empresa` ao focar
+            if (name === 'busca_empresa') {
+                internalSetFormData((prev) => ({
+                    ...prev,
+                    [name]: '', // Limpa o valor do campo
+                }));
+            }
+
+            fetchFilter();
+        };
+
+
         const handleChange = (event) => {
-            const { name, value } = event.target;
+            const { id, name, value, checked, dataset } = event.target;
+            const label = dataset?.label || ''; // Apenas checkboxes terão o atributo data-label
 
             console.log('name handleChange: ', name);
             console.log('value handleChange: ', value);
 
-            // Atualiza o estado com os valores selecionados
-            internalSetFormData((prev) => {
-                const updatedFormData = {
+            if (name === 'busca_empresa') {
+                // Atualiza apenas o campo de texto
+                internalSetFormData((prev) => ({
                     ...prev,
-                    [name]: value
-                };
+                    [name]: value,
+                }));
+            } else {
+                console.log(`Checkbox ${name} (${id}) está ${checked ? 'marcado' : 'desmarcado'}`);
 
-                // Verifica se o campo alterado é 'busca_empresa'
-                if (name === "busca_empresa") {
-                    // Chama o fetchFilter com os dados atualizados
-                    fetchFilter();
+                if (checked) {
+                    // Adiciona o ID e o Label aos arrays
+                    setCampoID((prev) => [...prev, value]);
+                    setCampoLabel((prev) => [...prev, label]);
+                } else {
+                    // Remove o ID e o Label correspondentes dos arrays
+                    setCampoID((prev) => prev.filter((item) => item !== value));
+                    setCampoLabel((prev) => prev.filter((item) => item !== label));
                 }
-            });
+            }
 
-            // Atualiza o estado com os valores selecionados
-            internalSetFormData((prev) => ({
-                ...prev,
-                [name]: value
-            }));
+            // Atualiza o estado sincronizado
+            syncInternalFormData(name, value);
         };
 
         // Função handleBlur - Perde o foco
         const handleBlur = (event) => {
-            const { name, value } = event.target;
+            const { name } = event.target;
 
             console.log('name handleBlur: ', name);
-            console.log('value handleBlur: ', value);
 
-            internalSetFormData((prev) => ({
-                ...prev,
-                [name]: value
-            }));
+            // Preenche o campo `busca_empresa` com os labels selecionados
+            if (name === 'busca_empresa') {
+                const empresasSelecionadas = campoLabel.join(', '); // Concatena os labels com ", "
+                internalSetFormData((prev) => ({
+                    ...prev,
+                    [name]: empresasSelecionadas, // Define o texto das empresas selecionadas
+                }));
+                console.log('Empresas selecionadas:', empresasSelecionadas);
+            }
         };
 
         // React.useEffect
@@ -107,6 +132,15 @@
             loadData();
         }, []);
 
+        // Debounce para evitar chamadas excessivas à API
+        const debounce = (func, delay) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => func(...args), delay);
+            };
+        };
+
         // Função fetch com try, catch, finally
         const fetchFilter = async (
             custonBaseURL = base_url || '',
@@ -124,6 +158,7 @@
             // Constrói a URL final
             const url = `${custonBaseURL}${custonApiGetEmpresa}${customPage}&limit=1000`;
             console.log('URL:', url);
+            console.log('internalFormData ::', internalFormData);
 
             try {
                 const response = await fetch(url, {
@@ -138,39 +173,40 @@
                     throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
 
-                // Adaptando a resposta JSON para setar apenas o dbResponse
+                // Faz o parse da resposta JSON
                 const dataApi = await response.json();
                 console.log("dataApi :: ", dataApi);
 
                 // Verifica e processa a resposta
-                if (
-                    dataApi.result
-                    && dataApi.result.dbResponse
-                    && dataApi.result.dbResponse.length > 0
-                    && Array.isArray(dataApi.result.dbResponse)
-                ) {
+                if (dataApi.result && dataApi.result.dbResponse && dataApi.result.dbResponse.length > 0) {
+                    console.log("dataApi.result :: 0");
                     setEmpresas(dataApi.result.dbResponse);
                     setDbResponse(dataApi.result.dbResponse);
                 } else {
-                    console.error("Resposta inválida da dataApi:", dataApi);
+                    console.log("dataApi.result :: Não tem dbResponse");
                 }
 
-                if (
-                    dataApi.result
-                    && dataApi.result.linksArray
-                    && dataApi.result.linksArray.length > 0
-                    && Array.isArray(dataApi.result.linksArray)
-                ) {
-                    setDbResponse(dataApi.result.linksArray);
-                    setPaginacaoLista(dataApi.result.linksArray || []);
+                if (dataApi.result && dataApi.result.linksArray && dataApi.result.linksArray.length > 0) {
+                    console.log("dataApi.result :: 0");
+                    setPaginacaoLista(dataApi.result.linksArray);
+                } else {
+                    console.log("dataApi.result :: Não tem dbResponse");
                 }
-
             } catch (error) {
                 console.error("Erro na requisição: ", error);
             } finally {
                 console.log("Requisição concluída.");
             }
         };
+
+        // Observa mudanças no campo "busca_empresa" e dispara a busca com debounce
+        React.useEffect(() => {
+            if (internalFormData.busca_empresa && internalFormData.busca_empresa.trim().length > 0) {
+                debounceFetchFilter();
+            } else {
+                fetchFilter();
+            }
+        }, [internalFormData.busca_empresa]);
 
         // Função fetch com try, catch, finally
         const fetchEmpresa = async (
@@ -190,46 +226,44 @@
             console.log('URL:', url);
 
             try {
-                // Realiza a requisição
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
                 }
 
-                // Faz o parse do JSON
                 const dataApi = await response.json();
-                // console.log('Resposta da dataApi:', dataApi);
 
                 // Verifica e processa a resposta
-                if (
-                    dataApi.result
-                    && dataApi.result.dbResponse
-                    && dataApi.result.dbResponse.length > 0
-                    && Array.isArray(dataApi.result.dbResponse)
-                ) {
-                    console.log('Empresa :', dataApi.result.dbResponse);
-                    setEmpresas(dataApi.result.dbResponse);
-                    setDbResponse(dataApi.result.dbResponse);
+                if (dataApi.result) {
+                    if (Array.isArray(dataApi.result.dbResponse)) {
+                        if (dataApi.result.dbResponse.length > 0) {
+                            console.log('Dados da Empresa:', dataApi.result.dbResponse);
+                            setEmpresas(dataApi.result.dbResponse);
+                            setDbResponse(dataApi.result.dbResponse);
+                        } else {
+                            console.warn("Resposta válida, mas sem dados encontrados:", dataApi);
+                            setEmpresas([]);
+                            setDbResponse([]);
+                        }
+                    } else {
+                        console.error("dbResponse não é um array válido:", dataApi.result.dbResponse);
+                    }
+
+                    if (Array.isArray(dataApi.result.linksArray)) {
+                        setPaginacaoLista(dataApi.result.linksArray || []);
+                    }
                 } else {
-                    console.error("Resposta inválida da dataApi:", dataApi);
+                    console.error("Estrutura de resposta da API inválida:", dataApi);
                 }
-
-                if (
-                    dataApi.result
-                    && dataApi.result.linksArray
-                    && dataApi.result.linksArray.length > 0
-                    && Array.isArray(dataApi.result.linksArray)
-                ) {
-                    // setDbResponse(dataApi.result.linksArray);
-                    setPaginacaoLista(dataApi.result.linksArray || []);
-                }
-
             } catch (error) {
                 console.error("Erro na requisição: ", error);
             } finally {
                 console.log("Requisição concluída.");
             }
         };
+
+        // Debounced fetchFilter
+        const debounceFetchFilter = debounce(fetchFilter, 500);
 
         return (
             <div>
@@ -281,7 +315,12 @@
                                                         type="checkbox"
                                                         value={item.id}
                                                         id={`checkbox_${item.id}`}
-                                                        defaultChecked={item.active === '1'}
+                                                        name={`checkbox_${item.id}`}
+                                                        data-label={item.nome}
+                                                        onFocus={handleFocus}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        defaultChecked={false}
                                                     />
                                                     <label
                                                         className="form-check-label"

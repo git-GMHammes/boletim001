@@ -161,11 +161,17 @@ class EmpresaDbController extends BaseController
     public function dbFilter($parameter = NULL, $page = 1, $limit = 10)
     {
         $parameter = $this->dbFieldsFilter($parameter);
+        $parameter = array_filter($parameter);
+        #
+        if ($parameter === array()) {
+            return array();
+        }
         #
         try {
             $query = $this
                 ->ModelEmpresa
                 ->where('deleted_at', NULL);
+
             foreach ($parameter as $key => $value) {
                 $query = $query->like($key, $value);
                 // myPrint($key, $value, true);

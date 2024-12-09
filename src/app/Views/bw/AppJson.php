@@ -7,8 +7,7 @@
   ) => {
 
     const debugMyPrint = parametros.DEBUG_MY_PRINT || false;
-    console.log('src/app/Views/bw/AppJson.php', debugMyPrint)
-
+    
     return (
       <div>
         {debugMyPrint && (
