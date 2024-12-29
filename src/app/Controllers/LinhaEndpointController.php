@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\TokenCsrfController;
+use App\Controllers\SystemBaseController;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
@@ -14,9 +15,12 @@ class LinhaEndpointController extends ResourceController
     private $template = 'bw/templates/main';
     private $message = 'bw/message';
     private $app_message = 'bw/AppMessage';
-    private $footer = 'bw/AppFooter';
-    private $head = 'bw/AppHead';
-    private $menu = 'bw/AppMenu';
+    private $app_footer = 'bw/AppFooter';
+    private $app_head = 'bw/AppHead';
+    private $app_menu = 'bw/AppMenu';
+    private $app_json = 'bw/AppJson';
+    private $app_loading = 'bw/AppLoading';
+    private $viewValidacao;
     private $tokenCsrf;
     private $ModelResponse;
     private $uri;
@@ -27,6 +31,7 @@ class LinhaEndpointController extends ResourceController
     {
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->tokenCsrf = new TokenCsrfController();
+        $this->viewValidacao = new SystemBaseController();
         $this->token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '123';
     }
 
@@ -56,30 +61,23 @@ class LinhaEndpointController extends ResourceController
         $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
         // $processRequest = eagarScagaire($processRequest);
         #
-        $loadView = array(
-            $this->head,
-            $this->menu,
-            $this->message,
+        $loadView1 = array(
+            $this->app_head,
+            $this->app_menu,
+            $this->app_json,
             $this->app_message,
-            'bw/AppMessage',
-            'bw/camposValidacao/AppID',
-            'bw/camposValidacao/AppAtivo',
-            'bw/camposValidacao/AppLinhaAtiva',
-            'bw/camposValidacao/AppEmpresa',
-            'bw/camposValidacao/AppCodigo',
-            'bw/camposValidacao/AppNlinhas',
-            'bw/camposValidacao/AppNlinhas',
-            'bw/camposValidacao/AppNomeLinha',
-            'bw/camposValidacao/AppPontoInicial',
-            'bw/camposValidacao/AppPontoFinal',
-            'bw/camposValidacao/AppVia',
-            'bw/camposValidacao/AppTipoLigacao',
+            $this->app_loading,
+        );
+        $loadView2 = $this->viewValidacao->camposValidacao();
+        $loadView3 = array(
             'bw/Linha/AppForm',
             'bw/Linha/AppLimpar',
             'bw/Linha/AppList',
             'bw/Linha/AppPrincipal',
-            $this->footer,
+            $this->app_footer,
         );
+        $loadView = array_merge($loadView1, $loadView2, $loadView3);
+        #
         $this->tokenCsrf->token_csrf();
         try {
             # URI da API                                                                                                          

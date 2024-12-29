@@ -227,7 +227,7 @@
                     setFormData={setFormData}
                     parametros={parametros}
                 />
-                <AppLinhaAtiva
+                <AppLinhaStatus
                     formData={formData}
                     setFormData={setFormData}
                     parametros={parametros}

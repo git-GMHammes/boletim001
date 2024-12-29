@@ -46,7 +46,7 @@ class SystemBaseController extends Controller
             $text = str_replace("First", "Primeiro", $text);
             $text = str_replace("Next", "Próximo", $text);
             $text = str_replace("Last", "Último", $text);
-            
+
             $links[] = [
                 'href' => '?page=' . $page,
                 'text' => $text
@@ -62,6 +62,28 @@ class SystemBaseController extends Controller
     # $loadView2 = $this->viewValidacao->camposValidacao();
     public function camposValidacao()
     {
-        
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'fia/ptpa' . DIRECTORY_SEPARATOR . 'camposValidacao';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'fia/ptpa' . DIRECTORY_SEPARATOR . 'camposValidacao';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+
+        // Remove a extensão .php dos arquivos e adiciona o caminho
+        $files = array_map(function ($file) {
+            return 'fia/ptpa/camposValidacao/' . pathinfo($file, PATHINFO_FILENAME);
+        }, $files);
+
+        return $files;
     }
 }

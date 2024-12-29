@@ -1,5 +1,5 @@
 <script type="text/babel">
-  const AppLinhaAtiva = ({ formData = {}, setFormData = () => { }, parametros = {} }) => {
+  const AppLinhaStatus = ({ formData = {}, setFormData = () => { }, parametros = {} }) => {
 
     // Prepara as Variáveis do REACT recebidas pelo BACKEND
     const debugMyPrint = parametros.DEBUG_MY_PRINT || '';
@@ -88,7 +88,7 @@
           <label
             htmlFor="active"
             style={formLabelStyle}
-            className="form-label">Ativo<strong style={requiredField}>*</strong></label>
+            className="form-label">Status da Linha<strong style={requiredField}>*</strong></label>
           <select data-api={`filtro-${origemForm}`} id="active" name="active" value={formData.active || ''} onChange={handleChange} style={formControlStyle} className="form-select" aria-label="Default select 1" required>
             <option value="">Seleção Nula</option>
             <option value={`0`}>Ativa</option>
