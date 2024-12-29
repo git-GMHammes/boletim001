@@ -237,7 +237,7 @@
                     setFormData={setFormData}
                     parametros={parametros}
                 />
-                <AppCodigo
+                <AppCodigoLinha
                     formData={formData}
                     setFormData={setFormData}
                     parametros={parametros}
@@ -272,8 +272,6 @@
                     setFormData={setFormData}
                     parametros={parametros}
                 />
-
-                
                 
                 <form className="was-validated" onSubmit={(e) => {
                     e.preventDefault();

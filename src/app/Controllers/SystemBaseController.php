@@ -63,7 +63,7 @@ class SystemBaseController extends Controller
     public function camposValidacao()
     {
         // Caminho da pasta que deseja listar
-        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'fia/ptpa' . DIRECTORY_SEPARATOR . 'camposValidacao';
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposValidacao';
 
         if (is_dir($folderPath)) {
             $files = array_diff(scandir($folderPath), ['.', '..']);
@@ -71,7 +71,7 @@ class SystemBaseController extends Controller
             $files = [];
         }
         // Caminho da pasta que deseja listar
-        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'fia/ptpa' . DIRECTORY_SEPARATOR . 'camposValidacao';
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposValidacao';
 
         if (is_dir($folderPath)) {
             $files = array_diff(scandir($folderPath), ['.', '..']);
@@ -81,7 +81,7 @@ class SystemBaseController extends Controller
 
         // Remove a extensão .php dos arquivos e adiciona o caminho
         $files = array_map(function ($file) {
-            return 'fia/ptpa/camposValidacao/' . pathinfo($file, PATHINFO_FILENAME);
+            return 'bw/camposValidacao/' . pathinfo($file, PATHINFO_FILENAME);
         }, $files);
 
         return $files;

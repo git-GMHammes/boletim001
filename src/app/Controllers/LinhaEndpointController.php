@@ -77,6 +77,7 @@ class LinhaEndpointController extends ResourceController
             $this->app_footer,
         );
         $loadView = array_merge($loadView1, $loadView2, $loadView3);
+        // myPrint($loadView, 'src\app\Controllers\LinhaEndpointController.php');
         #
         $this->tokenCsrf->token_csrf();
         try {

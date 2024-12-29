@@ -88,7 +88,7 @@
           <label
             htmlFor="active"
             style={formLabelStyle}
-            className="form-label">Empresa<strong style={requiredField}>*</strong></label>
+            className="form-label">Nome da Linha (Empresa)<strong style={requiredField}>*</strong></label>
           <select data-api={`filtro-${origemForm}`} id="active" name="active" value={formData.active || ''} onChange={handleChange} style={formControlStyle} className="form-select" aria-label="Default select 1" required>
             <option value="">Seleção Nula</option>
           </select>
