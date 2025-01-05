@@ -86,4 +86,35 @@ class SystemBaseController extends Controller
 
         return $files;
     }
+
+    # use App\Controllers\SystemBaseController;
+    # private $viewCamposPadroes;
+    # $this->viewCamposPadroes = new SystemBaseController();
+    # $loadView3 = $this->viewCamposPadroes->camposValidacao();
+    public function camposPadroes()
+    {
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposPadroes';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposPadroes';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+
+        // Remove a extensão .php dos arquivos e adiciona o caminho
+        $files = array_map(function ($file) {
+            return 'bw/camposPadroes/' . pathinfo($file, PATHINFO_FILENAME);
+        }, $files);
+
+        return $files;
+    }
 }

@@ -37,6 +37,7 @@
         const [formData, setFormData] = React.useState({
             filterEmpresa: null,
             // ...
+            cpf: null,
             token_csrf: token_csrf,
             id: null,
             empresa_id: null,
@@ -222,6 +223,24 @@
                         />
                     </div>
                 </form>
+                <AppText
+                    parametros={parametros}
+                    formData={formData}
+                    setFormData={setFormData}
+                    fieldAttributes={{
+                        label: 'Processo',
+                        name: 'processo',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 20, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // [A-Za-z ]{3,50}
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: true,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: 'Processo', // CPF, Telefone, CEP, Processo Judicial.
+                    }}
+                />
                 <AppID
                     formData={formData}
                     setFormData={setFormData}
@@ -272,7 +291,41 @@
                     setFormData={setFormData}
                     parametros={parametros}
                 />
-                
+                <AppTiposLinhas
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <App1PisoIABKm
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <App1PisoIIABKm
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <App1PisoExtensaoAB
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <App2PisoIBAKm
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <App2PisoIIBAKm
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
+                <App2ExtensaoBA
+                    formData={formData}
+                    setFormData={setFormData}
+                    parametros={parametros}
+                />
                 <form className="was-validated" onSubmit={(e) => {
                     e.preventDefault();
                     submitAllForms(`filtro-${origemForm}`, formData);

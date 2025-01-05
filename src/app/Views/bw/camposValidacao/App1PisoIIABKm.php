@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppCodigo = ({ formData = {}, setFormData = () => {}, parametros = {}, submitAllForms }) => {
+    const App1PisoIIABKm = ({ formData = {}, setFormData = () => {}, parametros = {}, submitAllForms }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const debugMyPrint = parametros.DEBUG_MY_PRINT;
@@ -28,8 +28,8 @@
         const handleFocus = (event) => {
             const { name, value } = event.target;
 
-            console.log('name handleFocus (src/app/Views/bw/camposValidacao/AppCodigo.php): ', name);
-            console.log('value handleFocus (src/app/Views/bw/camposValidacao/AppCodigo.php): ', value);
+            console.log('name handleFocus (src/app/Views/bw/camposValidacao/App1PisoIIABKm.php): ', name);
+            console.log('value handleFocus (src/app/Views/bw/camposValidacao/App1PisoIIABKm.php): ', value);
 
             setMessage((prev) => ({
                 ...prev,
@@ -40,8 +40,8 @@
         // Função handleChange simplificada
         const handleChange = (event) => {
             const { name, value } = event.target;
-            console.log('name handleChange (src/app/Views/bw/camposValidacao/AppNome.php): ', name);
-            console.log('value handleChange (src/app/Views/bw/camposValidacao/AppNome.php): ', value);
+            console.log('name handleChange (src/app/Views/bw/camposValidacao/App1PisoIIABKm.php): ', name);
+            console.log('value handleChange (src/app/Views/bw/camposValidacao/App1PisoIIABKm.php): ', value);
             
 
             // Remove caracteres inválidos e aplica máscara de milhas
@@ -56,8 +56,8 @@
         // Função handleBlur para limpar o campo Código se for inválido
         const handleBlur = async (event) => {
             const { name, value } = event.target;
-            console.log('name handleBlur (src/app/Views/bw/camposValidacao/AppNome.php): ', name);
-            console.log('value handleBlur (src/app/Views/bw/camposValidacao/AppNome.php): ', value);
+            console.log('name handleBlur (src/app/Views/bw/camposValidacao/App1PisoIIABKm.php): ', name);
+            console.log('value handleBlur (src/app/Views/bw/camposValidacao/App1PisoIIABKm.php): ', value);
 
             // Verifica se é o campo Código e faz a validação
             if (name === 'codigo') {
@@ -119,7 +119,7 @@
         return (
             <div>
                 <div style={formGroupStyle}>
-                    <label htmlFor="codigo" style={formLabelStyle} className="form-label">#Código<strong style={requiredField}>*</strong></label>
+                    <label htmlFor="codigo" style={formLabelStyle} className="form-label">#Piso II A-B (Km)<strong style={requiredField}>*</strong></label>
                     <input
                         data-api={`filtro-${origemForm}`}
                         type="text"

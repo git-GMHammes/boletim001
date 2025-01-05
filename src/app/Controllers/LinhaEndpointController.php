@@ -6,12 +6,13 @@ use App\Controllers\TokenCsrfController;
 use App\Controllers\SystemBaseController;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
+
 use Exception;
 
 class LinhaEndpointController extends ResourceController
 {
     use ResponseTrait;
-
+    
     private $template = 'bw/templates/main';
     private $message = 'bw/message';
     private $app_message = 'bw/AppMessage';
@@ -21,16 +22,18 @@ class LinhaEndpointController extends ResourceController
     private $app_json = 'bw/AppJson';
     private $app_loading = 'bw/AppLoading';
     private $viewValidacao;
+    private $viewCamposPadroes;
     private $tokenCsrf;
     private $ModelResponse;
     private $uri;
     private $token;
-
+    
     //
     public function __construct()
     {
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->tokenCsrf = new TokenCsrfController();
+        $this->viewCamposPadroes = new SystemBaseController();
         $this->viewValidacao = new SystemBaseController();
         $this->token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '123';
     }
@@ -69,15 +72,16 @@ class LinhaEndpointController extends ResourceController
             $this->app_loading,
         );
         $loadView2 = $this->viewValidacao->camposValidacao();
-        $loadView3 = array(
+        $loadView3 = $this->viewCamposPadroes->camposPadroes();
+        $loadView4 = array(
             'bw/Linha/AppForm',
             'bw/Linha/AppLimpar',
             'bw/Linha/AppList',
             'bw/Linha/AppPrincipal',
             $this->app_footer,
         );
-        $loadView = array_merge($loadView1, $loadView2, $loadView3);
-        // myPrint($loadView, 'src\app\Controllers\LinhaEndpointController.php');
+        $loadView = array_merge($loadView1, $loadView2, $loadView3, $loadView4);
+        //  myPrint($loadView, 'src\app\Controllers\LinhaEndpointController.php');
         #
         $this->tokenCsrf->token_csrf();
         try {

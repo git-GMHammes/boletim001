@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppCpf = ({ formData = {}, setFormData = () => {}, parametros = {} }) => {
+    const AppCpf = ({ formData = {}, setFormData = () => { }, parametros = {} }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const debugMyPrint = parametros.DEBUG_MY_PRINT || '';
@@ -193,7 +193,14 @@
         return (
             <div>
                 <div style={formGroupStyle}>
-                    <label htmlFor="CPF" style={formLabelStyle} className="form-label">CPF<strong style={requiredField}>*</strong></label>
+                    <label
+                        htmlFor="CPF"
+                        style={formLabelStyle}
+                        className="form-label"
+                    >
+                        CPF
+                        <strong style={requiredField}>*</strong>
+                    </label>
                     <input
                         data-api={`filtro-${origemForm}`}
                         type="text"

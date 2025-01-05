@@ -56,7 +56,8 @@
       }));
 
     };
-
+    
+    // Style
     const formGroupStyle = {
       position: 'relative',
       marginTop: '20px',
@@ -89,7 +90,17 @@
             htmlFor="active"
             style={formLabelStyle}
             className="form-label">Status da Linha<strong style={requiredField}>*</strong></label>
-          <select data-api={`filtro-${origemForm}`} id="active" name="active" value={formData.active || ''} onChange={handleChange} style={formControlStyle} className="form-select" aria-label="Default select 1" required>
+          <select
+            data-api={`filtro-${origemForm}`}
+            id="active"
+            name="active"
+            value={formData.active || ''}
+            onChange={handleChange}
+            style={formControlStyle}
+            className="form-select"
+            aria-label="Default select 1"
+            required
+          >
             <option value="">Seleção Nula</option>
             <option value={`0`}>Ativa</option>
             <option value={`1`}>Cancelada</option>
