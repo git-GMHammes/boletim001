@@ -36,13 +36,13 @@
         // Declare Todos os Campos do Formulário Aqui
         const [formData, setFormData] = React.useState({
             filterEmpresa: null,
-            // ...
-            cpf: null,
             token_csrf: token_csrf,
+            // ...
             id: null,
+            active: null,
             empresa_id: null,
             linha_id: null,
-            active: null,
+            numeroLinha: null,
             codigo: null,
             data_criacao: null,
             data_inicio: null,
@@ -53,7 +53,6 @@
             duracaoViagemPicoBA: null,
             hierarquizacao: null,
             idLinhaVigenciaAntiga: null,
-            numeroLinha: null,
             observacao: null,
             picoFimManhaAB: null,
             picoFimManhaBA: null,
@@ -223,28 +222,45 @@
                         />
                     </div>
                 </form>
+
+                {/* -- Separa Modelos -- */}
+                <AppSelect
+                    parametros={parametros}
+                    formData={formData}
+                    setFormData={setFormData}
+                    fieldAttributes={{
+                        label: 'ID',
+                        name: 'id',
+                        objetoArrayKey: [
+                            { key: '1', value: 'Opção 1' },
+                            { key: '2', value: 'Opção 2' },
+                            { key: '3', value: 'Opção 3' },
+                            { key: '4', value: 'Opção 4' }
+                        ],
+                        api_get: 'api/get',
+                        api_post: 'api/post',
+                        api_filter: 'api/filter',
+                    }}
+                />
+                {/* -- Separa Modelos -- */}
+
                 <AppText
                     parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
-                        label: 'Processo',
-                        name: 'processo',
-                        attributePlaceholder: '', // placeholder
+                        label: 'ID',
+                        name: 'id',
+                        attributePlaceholder: 'AAA123', // placeholder
                         attributeMinlength: 2, // minlength
-                        attributeMaxlength: 20, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // [A-Za-z ]{3,50}
+                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: 'Inteiro', // Inteiro, Caracter, Senha
                         attributeAutocomplete: '', // on, off
                         attributeRequired: true,
-                        attributeReadOnly: false,
+                        attributeReadOnly: true,
                         attributeDisabled: false,
-                        attributeMask: 'Processo', // CPF, Telefone, CEP, Processo Judicial.
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
                     }}
-                />
-                <AppID
-                    formData={formData}
-                    setFormData={setFormData}
-                    parametros={parametros}
                 />
                 <AppLinhaStatus
                     formData={formData}
@@ -256,76 +272,286 @@
                     setFormData={setFormData}
                     parametros={parametros}
                 />
-                <AppCodigoLinha
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Código da Linha',
+                        name: 'linha_id',
+                        attributePlaceholder: 'AAA123', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: true,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <AppNlinhas
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Número da Linha',
+                        name: 'numeroLinha',
+                        attributePlaceholder: 'AAA123', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <AppNomeLinha
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Nome da Linha',
+                        name: 'id',
+                        attributePlaceholder: 'Nome da Linha', // placeholder
+                        attributeMinlength: 3, // minlength
+                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: true,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <AppPontoInicial
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Ponto Inicial',
+                        name: 'pontoInicial',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: true,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <AppPontoFinal
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Ponto Final',
+                        name: 'pontoFinal',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: true,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <AppVia
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Via',
+                        name: 'via',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <AppTipoLigacao
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Tipo da Ligação',
+                        name: 'tipoLigacao',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: true,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
                 <AppTiposLinhas
                     formData={formData}
                     setFormData={setFormData}
                     parametros={parametros}
                 />
-                <App1PisoIABKm
+
+                {/* Piso I A-B (Km) */}
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Piso I A-B (Km)',
+                        name: 'piso1AB',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <App1PisoIIABKm
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Piso II A-B (Km)',
+                        name: 'piso2AB',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <App1PisoExtensaoAB
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: ' Extensão A-B',
+                        name: 'extensaoAB',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: true,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <App2PisoIBAKm
+
+                {/* Piso I B-A (Km) */}
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Piso I B-A (Km)',
+                        name: 'piso1BA',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <App2PisoIIBAKm
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: 'Piso II B-A (Km)',
+                        name: 'piso2BA',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: false,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
-                <App2ExtensaoBA
+                <AppText
+                    parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
-                    parametros={parametros}
+                    fieldAttributes={{
+                        label: ' Extensão B-A',
+                        name: 'extensaoAB',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: true,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
                 />
+                <AppText
+                    parametros={parametros}
+                    formData={formData}
+                    setFormData={setFormData}
+                    fieldAttributes={{
+                        label: 'Hierarquização',
+                        name: 'hierarquizacao',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: false,
+                        attributeReadOnly: true,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
+                />
+                <AppText
+                    parametros={parametros}
+                    formData={formData}
+                    setFormData={setFormData}
+                    fieldAttributes={{
+                        label: 'Data Vigência:',
+                        name: 'dataInicio',
+                        attributePlaceholder: '', // placeholder
+                        attributeMinlength: 2, // minlength
+                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                        attributePattern: '', // Inteiro, Caracter, Senha
+                        attributeAutocomplete: '', // on, off
+                        attributeRequired: true,
+                        attributeReadOnly: true,
+                        attributeDisabled: false,
+                        attributeMask: '', // CPF, Telefone, CEP, Processo.
+                    }}
+                />
+
                 <form className="was-validated" onSubmit={(e) => {
                     e.preventDefault();
                     submitAllForms(`filtro-${origemForm}`, formData);

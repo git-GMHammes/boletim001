@@ -25,6 +25,7 @@
         const opencep = 'https://opencep.com/v1/';
         const [msgError, setMsgError] = React.useState(false);
         const [error, setError] = React.useState('');
+        const [valid, setValid] = React.useState(true);
         const cleanInput = (value) => value.replace(/\D/g, '');
 
         // Máscara CPF
@@ -100,7 +101,6 @@
             }
         };
 
-
         // Máscara Processo
         const applyMaskProcesso = (processo) => cleanInput(processo)
             .replace(/^(\d{7})(\d{2})(\d{4})(\d{1})(\d{2})(\d{4})$/, '$1-$2.$3.$4.$5.$6');
@@ -111,6 +111,35 @@
             console.log('handleFocus: ', name, value);
             setFormData((prev) => ({ ...prev, [name]: value }));
         };
+        // Remove caractere especial e número
+        const removeLastSpecialCharAndNumber = (value) => {
+            const specialCharAndNumberRegex = /[^a-zA-Z ]$/; // Exclui tudo que não é letra ou espaço
+
+            // Se o último caractere for especial ou número, exibe erro
+            if (specialCharAndNumberRegex.test(value.slice(-1))) {
+                setMsgError(`O Campo ${label} aceita apenas letras`);
+                return value.slice(0, -1); // Remove o caractere inválido
+            }
+
+            // Se o valor for apenas letras, limpa a mensagem de erro
+            setMsgError(false);
+            return value;
+        };
+
+        // Remove caractere especial e letra
+        const removeLastSpecialCharAndLetter = (value) => {
+            const specialCharAndLetterRegex = /[^0-9 ]$/; // Exclui tudo que não é número ou espaço
+
+            // Se o último caractere for especial ou letra, exibe erro
+            if (specialCharAndLetterRegex.test(value.slice(-1))) {
+                setMsgError(`O Campo ${label} aceita apenas números`);
+                return value.slice(0, -1); // Remove o caractere inválido
+            }
+
+            // Se o valor for apenas números, limpa a mensagem de erro
+            setMsgError(false);
+            return value;
+        };
 
         // handleChange
         const handleChange = (event) => {
@@ -120,33 +149,89 @@
                 setFormData((prev) => ({ ...prev, [name]: '' }));
                 setMsgError(false);
                 return;
-            }
+            };
+
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+
+            console.log("valid :: ", valid);
 
             let maskedValue = value;
+
+            switch (attributePattern) {
+                case 'Inteiro':
+                    maskedValue = removeLastSpecialCharAndLetter(value)
+                    setFormData((prev) => ({
+                        ...prev,
+                        [name]: maskedValue,
+                    }));
+                    console.log('Inteiro:', value);
+                    break;
+
+                case 'Caracter':
+                    maskedValue = removeLastSpecialCharAndNumber(value)
+                    setFormData((prev) => ({
+                        ...prev,
+                        [name]: maskedValue,
+                    }));
+                    console.log('Caracter:', value);
+                    break;
+
+                case 'Senha':
+                    setFormData((prev) => ({
+                        ...prev,
+                        [name]: value,
+                    }));
+                    console.log('Senha:', value);
+                    break;
+
+                default:
+                    break;
+            };
 
             switch (attributeMask) {
                 case 'Telefone':
                     maskedValue = applyMaskTelefone(value);
+                    setFormData((prev) => ({
+                        ...prev,
+                        [name]: maskedValue,
+                    }));
+                    console.log('Telefone:', value);
                     break;
+
                 case 'CPF':
                     maskedValue = applyMaskCPF(value);
+                    setFormData((prev) => ({
+                        ...prev,
+                        [name]: maskedValue,
+                    }));
+                    console.log('CPF:', value);
                     break;
+
                 case 'CEP':
                     maskedValue = applyMaskCEP(value);
+                    setFormData((prev) => ({
+                        ...prev,
+                        [name]: maskedValue,
+                    }));
+                    console.log('CEP:', value);
                     break;
+
                 case 'Processo':
                     maskedValue = applyMaskProcesso(value);
+                    setFormData((prev) => ({
+                        ...prev,
+                        [name]: maskedValue,
+                    }));
+                    console.log('Processo:', value);
                     break;
+
                 default:
                     break;
             }
 
-            setFormData((prev) => ({
-                ...prev,
-                [name]: maskedValue,
-            }));
-
-            setMsgError(true);
         };
 
         const handleBlur = async (event) => {
@@ -190,13 +275,15 @@
                 default:
                     break;
             }
-            console.log('isValid ::', isValid);
+
+            console.log('isValid(194) ::', isValid);
+
             if (isValid) {
-                console.log(`Campo ${attributeMask} inválido!`);
+                console.log(`Campo(if) ${attributeMask}`);
                 setMsgError(false);
             } else {
-                console.log(`Campo ${attributeMask} valido!`);
-                setMsgError(true);
+                console.log(`Campo(else) ${attributeMask}`);
+                setMsgError(`Por favor, informe um ${attributeMask} válido.`);
             }
         };
 
@@ -221,6 +308,10 @@
             color: '#FF0000',
         };
 
+        const fontErro = {
+            fontSize: '0.7em',
+        };
+
         const formControlStyle = {
             fontSize: '1rem',
             borderColor: '#fff',
@@ -228,11 +319,7 @@
 
         return (
             <div>
-                {(msgError) ? (
-                    <div>TRUE</div>
-                ) : (
-                    <div>FALSE</div>
-                )}
+
                 <div style={formGroupStyle}>
                     <label
                         htmlFor={name}
@@ -251,9 +338,9 @@
                         id={name}
                         name={name}
                         value={formData[name] || ''}
+                        placeHolder = {attributePlaceholder}
                         minLength={attributeMinlength}
                         maxLength={attributeMaxlength}
-                        pattern={attributePattern}
                         autocomplete={attributeAutocomplete}
                         required={attributeRequired}
                         readOnly={attributeReadOnly}
@@ -266,12 +353,12 @@
                     <datalist id={`${name}-options`}>
                         <option value=""></option>
                     </datalist>
-                    {msgError && (
-                        <div className="invalid-feedback">
-                            Por favor, informe um {attributeMask} válido.
-                        </div>
-                    )}
                 </div>
+                {(msgError) && (
+                    <div className="fw-light text-danger" style={fontErro}>
+                        {msgError}
+                    </div>
+                )}
             </div>
         );
     };
