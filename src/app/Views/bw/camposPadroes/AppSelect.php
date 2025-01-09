@@ -8,33 +8,38 @@
         }
     ) => {
         // Variáveis recebidas do Backend
+        const checkWordInArray = (array, word) => array.includes(word) ? true : false;
         const objetoArrayKey = fieldAttributes.objetoArrayKey || [];
-        const [objetoGet, setObjetoGet] = React.useState([]);
-        const [objetoPost, setObjetoPost] = React.useState([]);
-        const [objetoFilter, setObjetoFilter] = React.useState([]);
         const [objetoMapKey, setObjetoMapKey] = React.useState([]);
+        const [isLoading, setIsLoading] = React.useState(true);
+        const [setFilter, setSetFilter] = React.useState({
+            filtroSelect: null,
+        });
+        const [selectedLabel, setSelectedLabel] = React.useState('Selecione uma opção');
+        const debounceTimeout = React.useRef(null);
 
         // Field Attributes
+        const attributeOrigemForm = fieldAttributes.origemForm || '';
+        const base_url = parametros.base_url || '';
         const label = fieldAttributes.label || 'AppTextLabel';
         const name = fieldAttributes.name || 'AppTextName';
+
+        const attributeFieldKey = fieldAttributes.attributeFieldKey || [];
+        const attributeFieldName = fieldAttributes.attributeFieldName || [];
         const attributeRequired = fieldAttributes.attributeRequired || false;
-        const attributeReadOnly = fieldAttributes.attributeReadOnly || false;
         const attributeDisabled = fieldAttributes.attributeDisabled || false;
 
         // Attributes of APIs
         const api_get = fieldAttributes.api_get || 'api/get';
         const api_post = fieldAttributes.api_post || 'api/post';
         const api_filter = fieldAttributes.api_filter || 'api/filter';
+        const getVar_page = '?page=1&limit=90000';
 
         const [message, setMessage] = React.useState({
             show: false,
             type: null,
             message: null
         });
-
-        console.log('api_get', api_get);
-        console.log('api_post', api_post);
-        console.log('api_filter', api_filter);
 
         // Função handleFocus para receber foco
         const handleFocus = (event) => {
@@ -49,12 +54,6 @@
                 ...prev,
                 [name]: value
             }));
-
-            // Verifica se a mudança de campo
-            if (name === 'variavel_001') {
-                console.log('variavel_001');
-                // submitAllForms('filtro-api');
-            }
         };
 
         // Função handleChange simplificada
@@ -69,12 +68,19 @@
                 [name]: value
             }));
 
-            // Verifica se a mudança é no campo 'variavel_001'
-            if (name === 'variavel_001') {
-                console.log('variavel_001');
-                // submitAllForms('filtro-api');
-            }
             setMessage({ show: false, type: null, message: null });
+
+            if (name === 'filtroSelect') {
+                setSetFilter((prev) => ({
+                    ...prev,
+                    [name]: value
+                }));
+
+                clearTimeout(debounceTimeout.current);
+                debounceTimeout.current = setTimeout(() => {
+                    fetchFilter();
+                }, 500);
+            }
         };
 
         // Função que executa após a retirada do foco
@@ -89,18 +95,135 @@
                 [name]: value
             }));
 
-            // Verifica se a mudança é no campo 'variavel_001'
-            if (name === 'variavel_001') {
-                console.log('variavel_001');
-                // submitAllForms('filtro-api');
-            }
             setMessage({ show: false, type: null, message: null });
-        }
+        };
 
         // Simula carregamento de dados
         React.useEffect(() => {
-            setObjetoMapKey(objetoArrayKey);
+            if (
+                api_get === 'api/get' &&
+                api_post === 'api/post' &&
+                api_filter === 'api/filter'
+            ) {
+                setObjetoMapKey(objetoArrayKey);
+            }
+
         }, [objetoArrayKey]);
+
+        // POST Padrão 
+        const fetchPost = async (custonBaseURL = base_url, custonApiPostObjeto = api_post, customPage = getVar_page) => {
+            // console.log('fetchPost - getVar_page: ', getVar_page);
+            const url = custonBaseURL + custonApiPostObjeto + customPage;
+            // console.log('fetchPost - url: ', url);
+            const SetData = { setFormData };
+            // console.log('fetchPost - SetData: ', SetData);
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(SetData),
+                });
+                // Verificação de erros HTTP
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+                const data = await response.json();
+                // console.log('fetchPost - data: ', data);
+                if (data.result && data.result.dbResponse && data.result.dbResponse.length > 0) {
+                    const dbResponse = data.result.dbResponse;
+                    // 
+                    const mappedResponse = dbResponse.map((item) => ({
+                        [attributeFieldKey[1]]: item[attributeFieldKey[0]], // Mapeia a chave
+                        [attributeFieldName[1]]: item[attributeFieldName[0]], // Mapeia o valor
+                    }));
+                    // console.log('fetchFilter - mappedResponse: ', mappedResponse);
+                    setObjetoMapKey(mappedResponse);
+                    //
+                } else {
+                    setMessage({
+                        show: true,
+                        type: 'light',
+                        message: 'Não foram encontradas unidades cadastradas'
+                    });
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error('Erro ao enviar dados:', error);
+                // Aqui você pode adicionar lógica adicional para exibir o erro para o usuário
+                return null;
+            }
+        };
+
+        // Filtro Padrão
+        const fetchFilter = async (custonBaseURL = base_url, custonApiPostObjeto = api_filter, customPage = getVar_page) => {
+            const url = custonBaseURL + custonApiPostObjeto + customPage;
+            // console.log("formSelect :: ", formSelect);
+            const setData = setFilter;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(setData),
+                });
+                // console.log("response :: ", response);
+                const data = await response.json();
+                // console.log("data :: ", data);
+                if (data.result && data.result.dbResponse && data.result.dbResponse.length > 0) {
+                    const dbResponse = data.result.dbResponse;
+                    // console.log('fetchFilter - dbResponse: ', dbResponse);
+                    // 
+                    const mappedResponse = dbResponse.map((item) => ({
+                        [attributeFieldKey[1]]: item[attributeFieldKey[0]], // Mapeia a chave
+                        [attributeFieldName[1]]: item[attributeFieldName[0]], // Mapeia o valor
+                    }));
+                    // console.log('fetchFilter - mappedResponse: ', mappedResponse);
+                    setObjetoMapKey(mappedResponse);
+                    //
+                } else {
+                    setMessage({
+                        show: true,
+                        type: 'light',
+                        message: 'Não foram encontradas unidades cadastradas'
+                    });
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error('Erro ao enviar dados:', error);
+                // Aqui você pode adicionar lógica adicional para exibir o erro para o usuário
+                return null;
+            }
+        };
+
+        // React.useEffect
+        React.useEffect(() => {
+            // console.log('React.useEffect - Carregar Dados Iniciais');
+
+            // Função para carregar todos os dados necessários
+            const loadData = async () => {
+                // console.log('loadData iniciando...');
+
+                try {
+                    await fetchPost();
+                } catch (error) {
+                    console.error('Erro ao carregar dados:', error);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+            // console.log(formData);
+            loadData();
+        }, []);
+
+        const calcularSlice = (larguraTela) => {
+            if (larguraTela < 413 && larguraTela > 361) return 25;
+            if (larguraTela < 361) return 18;
+            return 100;
+        };
 
         // Style 
         const formGroupStyle = {
@@ -134,9 +257,6 @@
 
         return (
             <div>
-                <div>
-                    AppSelect
-                </div>
                 <div style={formGroupStyle}>
                     <label
                         htmlFor="dynamicSelect"
@@ -145,26 +265,65 @@
                     >
                         {label}
                     </label>
-                    <select
-                        className="form-select"
-                        style={formControlStyle}
-                        id={name}
-                        name={name}
-                        value={formData[name] || ''}
-                        required={attributeRequired}
-                        readOnly={attributeReadOnly}
-                        disabled={attributeDisabled}
-                        onFocus={handleFocus}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                    >
-                        <option value="" disabled selected>Selecione uma opção</option>
-                        {objetoMapKey.map((item) => (
-                            <option key={item.key} value={item.key}>
-                                {item.value}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="btn-group w-100">
+                        <button
+                            className="btn btn-sm dropdown-toggle text-start"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            {selectedLabel}
+                        </button>
+                        <div className="dropdown-menu w-100">
+                            <div className="m-1 p-1 border border rounded">
+                                <input
+                                    type="text"
+                                    data-api={`filtro-buscarselect`}
+                                    className="form-control form-control-sm"
+                                    style={formControlStyle}
+                                    id={`filtroSelect`}
+                                    name={`filtroSelect`}
+                                    onFocus={handleFocus}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    required={false}
+                                />
+                            </div>
+                            <div className="m-1 p-2 w-auto border rounded">
+                                <select
+                                    data-api={`filtro-${attributeOrigemForm}`}
+                                    className="form-select form-select-sm"
+                                    style={formControlStyle}
+                                    id={name}
+                                    name={name}
+                                    value={formData[name] || ''}
+                                    size={10}
+                                    required={attributeRequired}
+                                    disabled={attributeDisabled}
+                                    onFocus={handleFocus}
+                                    onChange={(event) => {
+                                        handleChange(event);
+                                        const selectedOption = objetoMapKey.find(item => item.key === event.target.value);
+                                        setSelectedLabel(selectedOption ? `${selectedOption.value.slice(0, calcularSlice(window.innerWidth))}` : 'Selecione uma opção');
+                                    }}
+                                    onBlur={handleBlur}
+                                >
+                                    <option value="" disabled>
+                                        Selecione uma opção
+                                    </option>
+                                    {objetoMapKey.map((item, index) => (
+                                        <option key={item.key || index}
+                                            value={item.key}
+                                            title={item.value}
+                                        >
+                                            {item.value}
+                                            {/*item.value.length > 30 ? `${item.value.slice(0, 30)}...` : item.value*/}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

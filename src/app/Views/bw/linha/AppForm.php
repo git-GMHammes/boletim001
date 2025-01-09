@@ -14,6 +14,7 @@
         // Lista de APIs
         const api_empresa_cadastrar = parametros.api_empresa_cadastrar;
         const api_empresa_atualizar = parametros.api_empresa_atualizar;
+        const api_empresa_filtrar = parametros.api_empresa_filtrar;
 
         // Definindo o estado para controlar a aba ativa
         const [tabNav, setTabNav] = React.useState('form');
@@ -225,21 +226,49 @@
 
                 {/* -- Separa Modelos -- */}
                 <AppSelect
+                    attributeOrigemForm={origemForm}
                     parametros={parametros}
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
-                        label: 'ID',
-                        name: 'id',
+                        label: 'AppSelect',
+                        name: 'AppSelect',
+                        attributeRequired: false,
+                        attributeDisabled: false,
+                        attributeFieldKey: ['id', 'key'], // Chave do campo
+                        attributeFieldName: ['nome', 'value'], // Nome do campo
                         objetoArrayKey: [
                             { key: '1', value: 'Opção 1' },
                             { key: '2', value: 'Opção 2' },
                             { key: '3', value: 'Opção 3' },
                             { key: '4', value: 'Opção 4' }
                         ],
-                        api_get: 'api/get',
-                        api_post: 'api/post',
-                        api_filter: 'api/filter',
+                        api_get: `${api_empresa_filtrar}`,
+                        api_post: `${api_empresa_filtrar}`,
+                        api_filter: `${api_empresa_filtrar}`,
+                    }}
+                />
+                <AppSelectBtnCheck
+                    attributeOrigemForm={origemForm}
+                    parametros={parametros}
+                    formData={formData}
+                    setFormData={setFormData}
+                    fieldAttributes={{
+                        label: 'AppSelectBtnCheck',
+                        name: 'AppSelectBtnCheck',
+                        attributeRequired: false,
+                        attributeDisabled: false,
+                        attributeFieldKey: ['id', 'key'], // Chave do campo
+                        attributeFieldName: ['responsavel', 'value'], // Nome do campo
+                        objetoArrayKey: [
+                            { key: '1', value: 'Opção 1' },
+                            { key: '2', value: 'Opção 2' },
+                            { key: '3', value: 'Opção 3' },
+                            { key: '4', value: 'Opção 4' }
+                        ],
+                        api_get: `${api_empresa_filtrar}`,
+                        api_post: `${api_empresa_filtrar}`,
+                        api_filter: `${api_empresa_filtrar}`,
                     }}
                 />
                 {/* -- Separa Modelos -- */}

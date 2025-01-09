@@ -72,7 +72,8 @@ class EmpresaDbController extends BaseController
                 (isset($processRequestFields[$value_autoColumn])) ? ($dbCreate[$value_autoColumn] = $processRequestFields[$value_autoColumn]) : (NULL);
             }
         }
-        $dbCreate['nome'] = isset($processRequestFields['busca_empresa']) ? ($processRequestFields['busca_empresa']) : (null);
+        isset($processRequestFields['filtroSelect']) ? ($dbCreate['nome'] = $processRequestFields['filtroSelect']) : (null);
+        isset($processRequestFields['busca_empresa']) ? ($dbCreate['nome'] = $processRequestFields['busca_empresa']) : (null);
         // myPrint($dbCreate, 'src\app\Controllers\ExempleDbController.php');
         return ($dbCreate);
     }
@@ -162,10 +163,6 @@ class EmpresaDbController extends BaseController
     {
         $parameter = $this->dbFieldsFilter($parameter);
         $parameter = array_filter($parameter);
-        #
-        if ($parameter === array()) {
-            return array();
-        }
         #
         try {
             $query = $this
