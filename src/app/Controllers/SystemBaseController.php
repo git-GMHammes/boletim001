@@ -88,9 +88,9 @@ class SystemBaseController extends Controller
     }
 
     # use App\Controllers\SystemBaseController;
-    # private $viewCamposPadroes;
-    # $this->viewCamposPadroes = new SystemBaseController();
-    # $loadView3 = $this->viewCamposPadroes->camposValidacao();
+    # private $viewPadroes;
+    # $this->viewPadroes = new SystemBaseController();
+    # $loadView3 = $this->viewPadroes->camposValidacao();
     public function camposPadroes()
     {
         // Caminho da pasta que deseja listar
@@ -113,6 +113,38 @@ class SystemBaseController extends Controller
         // Remove a extensão .php dos arquivos e adiciona o caminho
         $files = array_map(function ($file) {
             return 'bw/camposPadroes/' . pathinfo($file, PATHINFO_FILENAME);
+        }, $files);
+
+        return $files;
+    }
+
+    # use App\Controllers\SystemBaseController;
+    # private $viewCamposFormatacao;
+    # $this->viewCamposFormatacao = new SystemBaseController();
+    # $loadView3 = $this->viewCamposFormatacao->camposFormatacao();
+    public function camposFormatacao()
+    {
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposFormatacao';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+
+        // Caminho da pasta que deseja listar
+        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposFormatacao';
+
+        if (is_dir($folderPath)) {
+            $files = array_diff(scandir($folderPath), ['.', '..']);
+        } else {
+            $files = [];
+        }
+
+        // Remove a extensão .php dos arquivos e adiciona o caminho
+        $files = array_map(function ($file) {
+            return 'bw/camposFormatacao/' . pathinfo($file, PATHINFO_FILENAME);
         }, $files);
 
         return $files;

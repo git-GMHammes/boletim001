@@ -11,13 +11,13 @@ class EmpresaEndpointController extends ResourceController
 {
     use ResponseTrait;
 
-    private $template = 'bw/templates/main';
     private $message = 'bw/message';
+    private $app_json = 'bw/AppJson';
+    private $template = 'bw/templates/main';
     private $app_message = 'bw/AppMessage';
     private $app_message_card = 'bw/AppMessageCard';
     private $app_loading = 'bw/AppLoading';
-    private $app_json = 'bw/AppJson';
-    private $footer = 'bw/AppFooter';
+    private $app_footer = 'bw/AppFooter';
     private $app_head = 'bw/AppHead';
     private $app_menu = 'bw/AppMenu';
     private $viewValidacao;
@@ -63,48 +63,29 @@ class EmpresaEndpointController extends ResourceController
         $processRequest = (array) $request->getVar();
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
         $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
-        // $processRequest = eagarScagaire($processRequest);
-        #
-        // Caminho da pasta que deseja listar
-        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposValidacao';
-
-        if (is_dir($folderPath)) {
-            $files = array_diff(scandir($folderPath), ['.', '..']);
-        } else {
-            $files = [];
-        }
-        // Caminho da pasta que deseja listar
-        $folderPath = APPPATH . 'Views' . DIRECTORY_SEPARATOR . 'bw' . DIRECTORY_SEPARATOR . 'camposValidacao';
-
-        if (is_dir($folderPath)) {
-            $files = array_diff(scandir($folderPath), ['.', '..']);
-        } else {
-            $files = [];
-        }
-
-        // Remove a extensão .php dos arquivos e adiciona o caminho
-        $files = array_map(function ($file) {
-            return 'bw/camposValidacao/' . pathinfo($file, PATHINFO_FILENAME);
-        }, $files);
-
         // Estrutura de views a serem carregadas
         $loadView1 = array(
             $this->app_head,
             $this->app_menu,
             $this->message,
+            $this->app_message_card,
             $this->app_message,
+            $this->app_loading,
+            $this->app_json,
         );
-        $loadView2 = $files;
-        $loadView3 = array(
+        #
+        $loadView2 = $this->viewValidacao->camposValidacao();
+        $loadView3 = $this->viewPadroes->camposPadroes();
+        $loadView4 = $this->viewFormatacao->camposFormatacao();
+        #
+        $loadView5 = array(
             'bw/empresa/AppList',
-            'bw/empresa/AppLimpar',
             'bw/empresa/AppForm',
+            'bw/empresa/AppLimpar',
             'bw/empresa/AppPrincipal',
-            $this->footer,
+            $this->app_footer,
         );
-        $loadView = array_merge($loadView1, $loadView2, $loadView3);
-
-        // Imprime o array final para depuração
+        $loadView = array_merge($loadView1, $loadView2, $loadView3, $loadView4, $loadView5);
         // myPrint($loadView, 'src\app\Controllers\EmpresaEndpointController.php');
 
         $this->tokenCsrf->token_csrf();

@@ -11,6 +11,7 @@
 
         const label = fieldAttributes.label || 'AppTextLabel';
         const name = fieldAttributes.name || 'AppTextName';
+        const errorMessage = fieldAttributes.errorMessage || '';
         const attributePlaceholder = fieldAttributes.attributePlaceholder || '';
         const attributeMinlength = fieldAttributes.attributeMinlength || 1;
         const attributeMaxlength = fieldAttributes.attributeMaxlength || 2;
@@ -114,10 +115,10 @@
         // Remove caractere especial e número
         const removeLastSpecialCharAndNumber = (value) => {
             const specialCharAndNumberRegex = /[^a-zA-Z ]$/; // Exclui tudo que não é letra ou espaço
-
+            let message = errorMessage === '' ? `O Campo ${label} aceita apenas letras` : errorMessage;
             // Se o último caractere for especial ou número, exibe erro
             if (specialCharAndNumberRegex.test(value.slice(-1))) {
-                setMsgError(`O Campo ${label} aceita apenas letras`);
+                setMsgError(message);
                 return value.slice(0, -1); // Remove o caractere inválido
             }
 
@@ -129,10 +130,10 @@
         // Remove caractere especial e letra
         const removeLastSpecialCharAndLetter = (value) => {
             const specialCharAndLetterRegex = /[^0-9 ]$/; // Exclui tudo que não é número ou espaço
-
+            let message = errorMessage === '' ? `O Campo ${label} aceita apenas números` : errorMessage;
             // Se o último caractere for especial ou letra, exibe erro
             if (specialCharAndLetterRegex.test(value.slice(-1))) {
-                setMsgError(`O Campo ${label} aceita apenas números`);
+                setMsgError(message);
                 return value.slice(0, -1); // Remove o caractere inválido
             }
 
@@ -236,6 +237,7 @@
 
         const handleBlur = async (event) => {
             const { name, value } = event.target;
+            let message = errorMessage === '' ? `Por favor, informe um ${attributeMask} válido.` : errorMessage;
             let isValid = true;
 
             switch (attributeMask) {
@@ -283,7 +285,7 @@
                 setMsgError(false);
             } else {
                 console.log(`Campo(else) ${attributeMask}`);
-                setMsgError(`Por favor, informe um ${attributeMask} válido.`);
+                setMsgError(message);
             }
         };
 
@@ -338,7 +340,7 @@
                         id={name}
                         name={name}
                         value={formData[name] || ''}
-                        placeHolder = {attributePlaceholder}
+                        placeHolder={attributePlaceholder}
                         minLength={attributeMinlength}
                         maxLength={attributeMaxlength}
                         autocomplete={attributeAutocomplete}

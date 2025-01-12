@@ -1,5 +1,5 @@
 <script type="text/babel">
-    const AppCodigoLinha = ({ formData = {}, setFormData = () => {}, parametros = {}, submitAllForms }) => {
+    const AppCodigo = ({ formData = {}, setFormData = () => {}, parametros = {}, submitAllForms }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
         const debugMyPrint = parametros.DEBUG_MY_PRINT;

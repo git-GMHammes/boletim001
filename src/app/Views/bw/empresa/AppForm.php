@@ -272,19 +272,35 @@
                         <div className="col-12 col-sm-6">
                             <div className="row">
                                 <div className="col-12 col-sm-3">
-                                    <AppID
-                                        formData={formData} 
-                                        setFormData={setFormData} 
-                                        parametros={parametros}
-                                    />
+                                    {typeof AppID !== "undefined" ? (
+                                        <div>
+                                            <AppID
+                                                formData={formData}
+                                                setFormData={setFormData}
+                                                parametros={parametros}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <p className="text-danger">AppID não alcançado.</p>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="col-12 col-sm-9">
-                                    <AppCodigo
-                                        formData={formData}
-                                        setFormData={setFormData}
-                                        parametros={parametros}
-                                        submitAllForms={submitAllForms}
-                                    />
+                                    {typeof AppCodigo !== "undefined" ? (
+                                        <div>
+                                            <AppCodigo
+                                                formData={formData}
+                                                setFormData={setFormData}
+                                                parametros={parametros}
+                                                submitAllForms={submitAllForms}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <p className="text-danger">AppCodigo não lacançado.</p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -223,74 +223,34 @@
                         />
                     </div>
                 </form>
-
-                {/* -- Separa Modelos -- */}
-                <AppSelect
-                    attributeOrigemForm={origemForm}
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        label: 'AppSelect',
-                        name: 'AppSelect',
-                        attributeRequired: false,
-                        attributeDisabled: false,
-                        attributeFieldKey: ['id', 'key'], // Chave do campo
-                        attributeFieldName: ['nome', 'value'], // Nome do campo
-                        objetoArrayKey: [
-                            { key: '1', value: 'Opção 1' },
-                            { key: '2', value: 'Opção 2' },
-                            { key: '3', value: 'Opção 3' },
-                            { key: '4', value: 'Opção 4' }
-                        ],
-                        api_get: `${api_empresa_filtrar}`,
-                        api_post: `${api_empresa_filtrar}`,
-                        api_filter: `${api_empresa_filtrar}`,
-                    }}
-                />
-                <AppSelectBtnCheck
-                    attributeOrigemForm={origemForm}
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        label: 'AppSelectBtnCheck',
-                        name: 'AppSelectBtnCheck',
-                        attributeRequired: false,
-                        attributeDisabled: false,
-                        attributeFieldKey: ['id', 'key'], // Chave do campo
-                        attributeFieldName: ['responsavel', 'value'], // Nome do campo
-                        objetoArrayKey: [
-                            { key: '1', value: 'Opção 1' },
-                            { key: '2', value: 'Opção 2' },
-                            { key: '3', value: 'Opção 3' },
-                            { key: '4', value: 'Opção 4' }
-                        ],
-                        api_get: `${api_empresa_filtrar}`,
-                        api_post: `${api_empresa_filtrar}`,
-                        api_filter: `${api_empresa_filtrar}`,
-                    }}
-                />
-                {/* -- Separa Modelos -- */}
-
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        label: 'ID',
-                        name: 'id',
-                        attributePlaceholder: 'AAA123', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: 'Inteiro', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: true,
-                        attributeReadOnly: true,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
+                {typeof AppText !== "undefined" ? (
+                    <div>
+                        <AppText
+                            parametros={parametros}
+                            formData={formData}
+                            setFormData={setFormData}
+                            fieldAttributes={{
+                                attributeOrigemForm: `${origemForm}`,
+                                label: 'ID',
+                                name: 'id',
+                                errorMessage: '', // Mensagem de Erro personalizada
+                                attributePlaceholder: 'AAA123', // placeholder
+                                attributeMinlength: 2, // minlength
+                                attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                attributePattern: 'Inteiro', // Inteiro, Caracter, Senha
+                                attributeAutocomplete: '', // on, off
+                                attributeRequired: true,
+                                attributeReadOnly: true,
+                                attributeDisabled: false,
+                                attributeMask: '', // CPF, Telefone, CEP, Processo.
+                            }}
+                        />
+                    </div>
+                ) : (
+                  <div>
+                    <p className="text-danger">AppText não lacançado.</p>
+                </div>
+                )}
                 <AppLinhaStatus
                     formData={formData}
                     setFormData={setFormData}
@@ -306,8 +266,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Código da Linha',
                         name: 'linha_id',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: 'AAA123', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -324,8 +286,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Número da Linha',
                         name: 'numeroLinha',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: 'AAA123', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -342,8 +306,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Nome da Linha',
                         name: 'id',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: 'Nome da Linha', // placeholder
                         attributeMinlength: 3, // minlength
                         attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -360,8 +326,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Ponto Inicial',
                         name: 'pontoInicial',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -378,8 +346,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Ponto Final',
                         name: 'pontoFinal',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -396,8 +366,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Via',
                         name: 'via',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -414,8 +386,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Tipo da Ligação',
                         name: 'tipoLigacao',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -439,8 +413,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Piso I A-B (Km)',
                         name: 'piso1AB',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -457,8 +433,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Piso II A-B (Km)',
                         name: 'piso2AB',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -475,8 +453,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: ' Extensão A-B',
                         name: 'extensaoAB',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -495,8 +475,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Piso I B-A (Km)',
                         name: 'piso1BA',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -513,8 +495,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Piso II B-A (Km)',
                         name: 'piso2BA',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -531,8 +515,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: ' Extensão B-A',
                         name: 'extensaoAB',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -551,6 +537,7 @@
                     fieldAttributes={{
                         label: 'Hierarquização',
                         name: 'hierarquizacao',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
@@ -567,8 +554,10 @@
                     formData={formData}
                     setFormData={setFormData}
                     fieldAttributes={{
+                        attributeOrigemForm: `${origemForm}`,
                         label: 'Data Vigência:',
                         name: 'dataInicio',
+                        errorMessage: '', // Mensagem de Erro personalizada
                         attributePlaceholder: '', // placeholder
                         attributeMinlength: 2, // minlength
                         attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
