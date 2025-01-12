@@ -345,8 +345,8 @@
                         maxLength={attributeMaxlength}
                         autocomplete={attributeAutocomplete}
                         required={attributeRequired}
-                        readOnly={attributeReadOnly}
                         disabled={attributeDisabled}
+                        readOnly={attributeReadOnly}
                         list={`${name}-options`}
                         onFocus={handleFocus}
                         onChange={handleChange}

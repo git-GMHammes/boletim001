@@ -17,12 +17,13 @@
         });
         const [selectedLabel, setSelectedLabel] = React.useState('Selecione uma opção');
         const debounceTimeout = React.useRef(null);
+        const [selectedIds, setSelectedIds] = React.useState([]);
 
         // Field Attributes
         const attributeOrigemForm = fieldAttributes.origemForm || '';
         const base_url = parametros.base_url || '';
-        const label = fieldAttributes.label || 'AppTextLabel';
-        const name = fieldAttributes.name || 'AppTextName';
+        const labelField = fieldAttributes.label || 'AppTextLabel';
+        const nameField = fieldAttributes.name || 'AppTextName';
 
         const attributeFieldKey = fieldAttributes.attributeFieldKey || [];
         const attributeFieldName = fieldAttributes.attributeFieldName || [];
@@ -41,12 +42,20 @@
             message: null
         });
 
+        React.useEffect(() => {
+            setFormData((prev) => ({
+                ...prev,
+                [nameField]: selectedIds.join(', '), // Concatena os IDs selecionados
+            }));
+            // console.log('opcoes_select atualizado:', selectedIds.join(', ')); // Para depuração
+        }, [selectedIds]);
+
         // Função handleFocus para receber foco
         const handleFocus = (event) => {
             const { name, value } = event.target;
 
-            console.log('handleFocus: ', name);
-            console.log('handleFocus: ', value);
+            // console.log('handleFocus: ', name);
+            // console.log('handleFocus: ', value);
 
             setMessage({ show: false, type: null, message: null });
 
@@ -58,44 +67,80 @@
 
         // Função handleChange simplificada
         const handleChange = (event) => {
-            const { name, value } = event.target;
+            console.log("handleChange...");
 
-            console.log('handleChange: ', name);
-            console.log('handleChange: ', value);
+            const { name, value, checked } = event.target;
 
-            setFormData((prev) => ({
-                ...prev,
-                [name]: value
-            }));
+            // Lógica para os checkboxes
+            if (name !== 'filtroSelect') {
+                setSelectedIds((prevSelectedIds) => {
+                    const updatedSelectedIds = checked
+                        ? [...prevSelectedIds, value]
+                        : prevSelectedIds.filter((selectedId) => selectedId !== value);
 
-            setMessage({ show: false, type: null, message: null });
+                    return updatedSelectedIds;
+                });
+                return;
+            }
 
+            // Lógica para o campo filtroSelect
             if (name === 'filtroSelect') {
+                console.log('handleChange - filtroSelect:', value);
+
+                // Se o comprimento do valor for 1 ou menos, redefine o estado
+                if (value.length <= 1) {
+                    // console.log('value.length <= 1, redefinindo...');
+                    setObjetoMapKey(objetoArrayKey);
+                    setSetFilter((prev) => ({
+                        ...prev,
+                        filtroSelect: null,
+                    }));
+                    // Cancela qualquer debounce ativo
+                    if (debounceTimeout.current) {
+                        clearTimeout(debounceTimeout.current);
+                    }
+                    fetchPost();
+                    return;
+                }
+
+                // Atualiza o estado setFilter
                 setSetFilter((prev) => ({
                     ...prev,
-                    [name]: value
+                    filtroSelect: value,
                 }));
 
-                clearTimeout(debounceTimeout.current);
+                setFormData((prev) => ({
+                    ...prev,
+                    [name]: value,
+                }));
+
+                // Adiciona debounce para chamar fetchFilter
+                if (debounceTimeout.current) {
+                    clearTimeout(debounceTimeout.current);
+                }
                 debounceTimeout.current = setTimeout(() => {
+                    // console.log('Chamando fetchFilter com:', value);
                     fetchFilter();
-                }, 500);
+                }, 300);
             }
         };
 
         // Função que executa após a retirada do foco
         const handleBlur = (event) => {
-            const { name, value } = event.target;
+            const { name } = event.target;
 
-            console.log('name handleBlur: ', name);
-            console.log('value handleBlur: ', value);
-
-            setFormData((prev) => ({
-                ...prev,
-                [name]: value
-            }));
+            // console.log('name handleBlur: ', name);
 
             setMessage({ show: false, type: null, message: null });
+
+            setFormData((prev) => {
+                const updatedFormData = {
+                    ...prev,
+                    [name]: selectedIds.join(', '),
+                };
+                console.log('formData atualizado no handleBlur:', updatedFormData);
+                return updatedFormData;
+            });
         };
 
         // Simula carregamento de dados
@@ -112,6 +157,11 @@
 
         // POST Padrão 
         const fetchPost = async (custonBaseURL = base_url, custonApiPostObjeto = api_post, customPage = getVar_page) => {
+            if (custonApiPostObjeto === 'api/post') {
+                return false;
+            } else {
+                setObjetoMapKey([{ key: '', value: 'carregando...' }]);
+            }
             // console.log('fetchPost - getVar_page: ', getVar_page);
             const url = custonBaseURL + custonApiPostObjeto + customPage;
             // console.log('fetchPost - url: ', url);
@@ -132,6 +182,7 @@
                 const data = await response.json();
                 // console.log('fetchPost - data: ', data);
                 if (data.result && data.result.dbResponse && data.result.dbResponse.length > 0) {
+                    // console.log('fetchPost - data.result.dbResponse: ', data.result.dbResponse);
                     const dbResponse = data.result.dbResponse;
                     // 
                     const mappedResponse = dbResponse.map((item) => ({
@@ -145,9 +196,10 @@
                     setMessage({
                         show: true,
                         type: 'light',
-                        message: 'Não foram encontradas unidades cadastradas'
+                        message: `Não foram encontrados(as) ${labelField} cadastrados(as)`
                     });
                     setIsLoading(false);
+                    setObjetoMapKey([]);
                 }
             } catch (error) {
                 console.error('Erro ao enviar dados:', error);
@@ -159,8 +211,10 @@
         // Filtro Padrão
         const fetchFilter = async (custonBaseURL = base_url, custonApiPostObjeto = api_filter, customPage = getVar_page) => {
             const url = custonBaseURL + custonApiPostObjeto + customPage;
-            // console.log("formSelect :: ", formSelect);
+            // console.log('fetchFilter - url: ', url);
+
             const setData = setFilter;
+            // console.log("setData :: ", setData);
 
             try {
                 const response = await fetch(url, {
@@ -188,9 +242,10 @@
                     setMessage({
                         show: true,
                         type: 'light',
-                        message: 'Não foram encontradas unidades cadastradas'
+                        message: `Não foram encontrados(as) ${labelField} cadastrados(as)`
                     });
                     setIsLoading(false);
+                    setObjetoMapKey([]);
                 }
             } catch (error) {
                 console.error('Erro ao enviar dados:', error);
@@ -263,73 +318,85 @@
                         style={formLabelStyle}
                         className="form-label"
                     >
-                        {label}
+                        {labelField}
+                        {(attributeRequired) && (
+                            <strong style={requiredField}>*</strong>
+                        )}
                     </label>
                     <div className="btn-group w-100">
                         <button
-                            className="btn btn-sm dropdown-toggle text-start"
+                            className="btn btn-sm dropdown text-start"
                             type="button"
                             data-bs-toggle="dropdown"
-                            data-bs-auto-close="false"
+                            data-bs-auto-close="outside"
                             aria-expanded="false"
                         >
-                            {selectedLabel}
-                        </button>
-                        <div className="dropdown-menu w-100">
-                            <div className="m-1 p-1 border border rounded">
-                                <input
-                                    type="text"
-                                    data-api={`filtro-buscarselect`}
-                                    className="form-control form-control-sm"
-                                    style={formControlStyle}
-                                    id={`filtroSelect`}
-                                    name={`filtroSelect`}
-                                    onFocus={handleFocus}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    required={false}
-                                />
-                            </div>
-                            <div className="m-1 p-2 w-auto border rounded">
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        className="btn-check"
-                                        id="btn-check-outlined"
-                                        autoComplete="off"
-                                    />
-                                    <label
-                                        className="btn btn-outline-secondary text-start w-100"
-                                        htmlFor="btn-check-outlined"
-                                    >
-                                        AppSelectBtnCheck
-                                    </label>
-                                    <br />
+                            <div className="d-flex bd-highlight">
+                                <div className="p-1 flex-grow-1 bd-highlight">
+                                    {selectedLabel}
                                 </div>
+                                <div className="p-1 bd-highlight">
+                                    {(attributeRequired) && (
+                                        <i className="bi bi-exclamation-circle text-danger"></i>
+                                    )}
+                                </div>
+                                <div className="p-1 bd-highlight">
+                                    <i className="bi bi-caret-down-fill ps-1" />
+                                </div>
+                            </div>
+                        </button>
+                        <ul className="dropdown-menu w-100">
+                            {(
+                                !api_get === 'api/get' &&
+                                !api_post === 'api/post' &&
+                                !api_filter === 'api/filter'
+                            ) && (
+                                    <div className="m-1 p-1 border border rounded">
+                                        <input
+                                            type="text"
+                                            data-api={`filtro-buscarselect`}
+                                            className="form-control form-control-sm"
+                                            style={formControlStyle}
+                                            id={`filtroSelect`}
+                                            name={`filtroSelect`}
+                                            onFocus={handleFocus}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            required={false}
+                                        />
+                                    </div>
+                                )}
+                            <div className="m-1 p-2 w-auto border rounded">
                                 {objetoMapKey.map((item, index) => (
-                                    <div key={item.key || index}>
+                                    <li key={item.key} className="toggle-container">
                                         <input
                                             type="checkbox"
                                             className="btn-check"
-                                            id={`${item.value}${index}`}
-                                            name={name}
-                                            autoComplete="off"
+                                            id={`${nameField}-${item.key}`}
+                                            name={nameField}
                                             value={item.key}
+                                            autoComplete="off"
+                                            checked={selectedIds.includes(item.key)}
+                                            onFocus={handleFocus}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            required={attributeRequired}
+                                            disabled={attributeDisabled}
                                         />
                                         <label
-                                            className="btn btn-outline-secondary text-start w-100"
-                                            htmlFor="btn-check-outlined"
+                                            className={`btn btn-outline btn-sm text-start w-100 ${selectedIds.includes(item.key) ? "active" : ""}`}
+                                            htmlFor={`${nameField}-${item.key}`}
+                                            aria-pressed={selectedIds.includes(item.key)}
                                         >
-                                            AppSelectBtnCheck
-                                            {item.value}
+                                            {item[attributeFieldName[1]] || "Nome Indisponível"}
                                         </label>
-                                    </div>
+                                    </li>
                                 ))}
                             </div>
-                        </div>
+                        </ul>
                     </div>
                 </div>
-            </div >
+            </div>
         );
     };
 </script>

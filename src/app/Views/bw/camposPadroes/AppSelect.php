@@ -28,6 +28,7 @@
         const attributeFieldName = fieldAttributes.attributeFieldName || [];
         const attributeRequired = fieldAttributes.attributeRequired || false;
         const attributeDisabled = fieldAttributes.attributeDisabled || false;
+        console.log('attributeRequired: ', name, attributeRequired);
 
         // Attributes of APIs
         const api_get = fieldAttributes.api_get || 'api/get';
@@ -112,6 +113,14 @@
 
         // POST Padrão 
         const fetchPost = async (custonBaseURL = base_url, custonApiPostObjeto = api_post, customPage = getVar_page) => {
+            if (
+                api_get === 'api/get' &&
+                api_post === 'api/post' &&
+                api_filter === 'api/filter'
+            ) {
+                return false;
+            }
+            console.log('fetchPost... ');
             // console.log('fetchPost - getVar_page: ', getVar_page);
             const url = custonBaseURL + custonApiPostObjeto + customPage;
             // console.log('fetchPost - url: ', url);
@@ -132,6 +141,7 @@
                 const data = await response.json();
                 // console.log('fetchPost - data: ', data);
                 if (data.result && data.result.dbResponse && data.result.dbResponse.length > 0) {
+                    // console.log('fetchPost - data.result.dbResponse: ', data.result.dbResponse);
                     const dbResponse = data.result.dbResponse;
                     // 
                     const mappedResponse = dbResponse.map((item) => ({
@@ -158,10 +168,10 @@
 
         // Filtro Padrão
         const fetchFilter = async (custonBaseURL = base_url, custonApiPostObjeto = api_filter, customPage = getVar_page) => {
+            // console.log('fetchFilter... ');
             const url = custonBaseURL + custonApiPostObjeto + customPage;
-            // console.log("formSelect :: ", formSelect);
+            // console.log("url :: ", url);
             const setData = setFilter;
-
             try {
                 const response = await fetch(url, {
                     method: 'POST',
@@ -264,31 +274,53 @@
                         className="form-label"
                     >
                         {label}
+                        {(attributeRequired) && (
+                            <strong style={requiredField}>*</strong>
+                        )}
                     </label>
                     <div className="btn-group w-100">
                         <button
-                            className="btn btn-sm dropdown-toggle text-start"
+                            className="btn btn-sm dropdown text-start"
                             type="button"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                         >
-                            {selectedLabel}
+                            <div className="d-flex bd-highlight">
+                                <div className="p-1 flex-grow-1 bd-highlight">
+                                    {selectedLabel}
+                                </div>
+                                <div className="p-1 bd-highlight">
+                                    {(attributeRequired) && (
+                                        <i className="bi bi-exclamation-circle text-danger"></i>
+                                    )}
+                                </div>
+                                <div className="p-1 bd-highlight">
+                                    <i className="bi bi-caret-down-fill ps-1" />
+                                </div>
+                            </div>
                         </button>
                         <div className="dropdown-menu w-100">
-                            <div className="m-1 p-1 border border rounded">
-                                <input
-                                    type="text"
-                                    data-api={`filtro-buscarselect`}
-                                    className="form-control form-control-sm"
-                                    style={formControlStyle}
-                                    id={`filtroSelect`}
-                                    name={`filtroSelect`}
-                                    onFocus={handleFocus}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    required={false}
-                                />
-                            </div>
+                            {(
+                                !api_get === 'api/get' &&
+                                !api_post === 'api/post' &&
+                                !api_filter === 'api/filter'
+                            ) && (
+                                    <div className="m-1 p-1 border border rounded">
+                                        <input
+                                            type="text"
+                                            data-api={`filtro-buscarselect`}
+                                            className="form-control form-control-sm"
+                                            style={formControlStyle}
+                                            id={`filtroSelect`}
+                                            name={`filtroSelect`}
+                                            onFocus={handleFocus}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            required={attributeRequired}
+                                            disabled={attributeDisabled}
+                                        />
+                                    </div>
+                                )}
                             <div className="m-1 p-2 w-auto border rounded">
                                 <select
                                     data-api={`filtro-${attributeOrigemForm}`}

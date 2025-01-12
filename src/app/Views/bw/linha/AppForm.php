@@ -141,7 +141,7 @@
                 }
             }
 
-            if (apiIdentifier == 'filter-empresa') {
+            if (apiIdentifier == `filtro-${origemForm}`) {
                 console.log('filter-empresa - OK');
                 // Envia uma requisição POST para a API com os dados coletados
                 fetch(`${base_url}${api_post_filter_responsaveis}`, {
@@ -206,7 +206,7 @@
                 }}>
                     <div>
                         <input
-                            data-api="form-empresa"
+                            data-api={`filtro-${origemForm}`}
                             type="hidden"
                             className="form-control"
                             id="token_csrf"
@@ -214,7 +214,7 @@
                             value={token_csrf}
                         />
                         <input
-                            data-api="form-empresa"
+                            data-api={`filtro-${origemForm}`}
                             type="hidden"
                             className="form-control"
                             id="id"
@@ -223,371 +223,562 @@
                         />
                     </div>
                 </form>
-                {typeof AppText !== "undefined" ? (
-                    <div>
-                        <AppText
-                            parametros={parametros}
-                            formData={formData}
-                            setFormData={setFormData}
-                            fieldAttributes={{
-                                attributeOrigemForm: `${origemForm}`,
-                                label: 'ID',
-                                name: 'id',
-                                errorMessage: '', // Mensagem de Erro personalizada
-                                attributePlaceholder: 'AAA123', // placeholder
-                                attributeMinlength: 2, // minlength
-                                attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                                attributePattern: 'Inteiro', // Inteiro, Caracter, Senha
-                                attributeAutocomplete: '', // on, off
-                                attributeRequired: true,
-                                attributeReadOnly: true,
-                                attributeDisabled: false,
-                                attributeMask: '', // CPF, Telefone, CEP, Processo.
-                            }}
-                        />
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        {typeof AppText !== "undefined" ? (
+                            <div>
+                                <form className="was-validated" onSubmit={(e) => {
+                                    e.preventDefault();
+                                    submitAllForms(`filtro-${origemForm}`);
+                                }}>
+                                    <AppText
+                                        parametros={parametros}
+                                        formData={formData}
+                                        setFormData={setFormData}
+                                        fieldAttributes={{
+                                            attributeOrigemForm: `${origemForm}`,
+                                            label: 'ID',
+                                            name: 'id',
+                                            errorMessage: '', // Mensagem de Erro personalizada
+                                            attributePlaceholder: 'AAA123', // placeholder
+                                            attributeMinlength: 2, // minlength
+                                            attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                            attributePattern: 'Inteiro', // Inteiro, Caracter, Senha
+                                            attributeAutocomplete: '', // on, off
+                                            attributeRequired: true,
+                                            attributeReadOnly: false,
+                                            attributeDisabled: false,
+                                            attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                        }}
+                                    />
+                                </form>
+                            </div>
+                        ) : (
+                            <div>
+                                <p className="text-danger">AppText não lacançado.</p>
+                            </div>
+                        )}
                     </div>
-                ) : (
-                  <div>
-                    <p className="text-danger">AppText não lacançado.</p>
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppSelect
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Status da Linha1',
+                                    name: 'active',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributeRequired: false,
+                                    attributeDisabled: false,
+                                    attributeFieldKey: ['id', 'key'], // Chave do campo
+                                    attributeFieldName: ['bank_column_api', 'value'], // Nome do campo
+                                    objetoArrayKey: [
+                                        { key: '0', value: 'Ativa' },
+                                        { key: '1', value: 'Cancelada' },
+                                        { key: '2', value: 'Paralisada' },
+                                        { key: '3', value: 'Subjudice' }
+                                    ],
+                                    api_get: `api/get`,
+                                    api_post: `api/post`,
+                                    api_filter: `api/filter`,
+                                }} />
+                        </form>
+                    </div>
                 </div>
-                )}
-                <AppLinhaStatus
-                    formData={formData}
-                    setFormData={setFormData}
-                    parametros={parametros}
-                />
-                <AppEmpresa
-                    formData={formData}
-                    setFormData={setFormData}
-                    parametros={parametros}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Código da Linha',
-                        name: 'linha_id',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: 'AAA123', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: true,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Número da Linha',
-                        name: 'numeroLinha',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: 'AAA123', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Nome da Linha',
-                        name: 'id',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: 'Nome da Linha', // placeholder
-                        attributeMinlength: 3, // minlength
-                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: true,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Ponto Inicial',
-                        name: 'pontoInicial',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: true,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Ponto Final',
-                        name: 'pontoFinal',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: true,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Via',
-                        name: 'via',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Tipo da Ligação',
-                        name: 'tipoLigacao',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: true,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppTiposLinhas
-                    formData={formData}
-                    setFormData={setFormData}
-                    parametros={parametros}
-                />
-
-                {/* Piso I A-B (Km) */}
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Piso I A-B (Km)',
-                        name: 'piso1AB',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Piso II A-B (Km)',
-                        name: 'piso2AB',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: ' Extensão A-B',
-                        name: 'extensaoAB',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: true,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-
-                {/* Piso I B-A (Km) */}
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Piso I B-A (Km)',
-                        name: 'piso1BA',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Piso II B-A (Km)',
-                        name: 'piso2BA',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: false,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: ' Extensão B-A',
-                        name: 'extensaoAB',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: true,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        label: 'Hierarquização',
-                        name: 'hierarquizacao',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: false,
-                        attributeReadOnly: true,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-                <AppText
-                    parametros={parametros}
-                    formData={formData}
-                    setFormData={setFormData}
-                    fieldAttributes={{
-                        attributeOrigemForm: `${origemForm}`,
-                        label: 'Data Vigência:',
-                        name: 'dataInicio',
-                        errorMessage: '', // Mensagem de Erro personalizada
-                        attributePlaceholder: '', // placeholder
-                        attributeMinlength: 2, // minlength
-                        attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
-                        attributePattern: '', // Inteiro, Caracter, Senha
-                        attributeAutocomplete: '', // on, off
-                        attributeRequired: true,
-                        attributeReadOnly: true,
-                        attributeDisabled: false,
-                        attributeMask: '', // CPF, Telefone, CEP, Processo.
-                    }}
-                />
-
-                <form className="was-validated" onSubmit={(e) => {
-                    e.preventDefault();
-                    submitAllForms(`filtro-${origemForm}`, formData);
-                }}>
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-
-                        </div>
-                        <div class="col-12 col-sm-6">
-
-                        </div>
+                <div className="row">
+                    <div className="col-12 col-sm-12">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppSelect
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Empresa',
+                                    name: 'buscaEmp',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributeFieldKey: ['id', 'key'], // Chave do campo
+                                    attributeFieldName: ['nome', 'value'], // Nome do campo
+                                    attributeRequired: true,
+                                    attributeDisabled: false,
+                                    objetoArrayKey: [
+                                        { key: '1', value: 'Opção 1' },
+                                        { key: '2', value: 'Opção 2' },
+                                        { key: '3', value: 'Opção 3' },
+                                        { key: '4', value: 'Opção 4' }
+                                    ],
+                                    api_get: `${api_empresa_filtrar}`,
+                                    api_post: `${api_empresa_filtrar}`,
+                                    api_filter: `${api_empresa_filtrar}`,
+                                }} />
+                        </form>
                     </div>
-                </form>
-
-                {/* Exibe o componente de alerta */}
-                < AppMessage parametros={message} />
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Código da Linha',
+                                    name: 'linha_id',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: 'AAA123', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Número da Linha',
+                                    name: 'numeroLinha',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: 'AAA123', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Nome da Linha',
+                                    name: 'id',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: 'Nome da Linha', // placeholder
+                                    attributeMinlength: 3, // minlength
+                                    attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Ponto Inicial',
+                                    name: 'pontoInicial',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }}
+                            />
+                        </form>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Ponto Final',
+                                    name: 'pontoFinal',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }}
+                            />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Via',
+                                    name: 'via',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Tipo da Ligação',
+                                    name: 'tipoLigacao',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 100, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }}
+                            />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppSelectBtnCheck
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Tipos de Linha',
+                                    name: 'tipoLinhas',
+                                    attributeFieldKey: ['id', 'key'], // Chave do campo
+                                    attributeFieldName: ['bank_column_api', 'value'], // Nome do campo
+                                    attributeRequired: true,
+                                    attributeDisabled: false,
+                                    objetoArrayKey: [
+                                        { key: 'Linha Rodoviária', value: 'Linha Rodoviária' },
+                                        { key: 'Linha Rodoviária com Ar', value: 'Linha Rodoviária com Ar' },
+                                        { key: 'Linha Urbana', value: 'Linha Urbana' },
+                                        { key: 'Linha Urbana com Ar', value: 'Linha Urbana com Ar' },
+                                        { key: 'Linha de Serviços Especiais', value: 'Linha de Serviços Especiais' },
+                                        { key: 'Linha de Serviço Especial Leito', value: 'Linha de Serviço Especial Leito' }
+                                    ],
+                                    api_get: `api/get`,
+                                    api_post: `api/post`,
+                                    api_filter: `api/filter`,
+                                }} />
+                        </form>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-4">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Piso I A-B (Km)',
+                                    name: 'piso1AB',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-4">
+                        {/* Piso I A-B (Km) */}
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Piso II A-B (Km)',
+                                    name: 'piso2AB',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-4">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: ' Extensão A-B',
+                                    name: 'extensaoAB',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: true,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-4">
+                        {/* Piso I B-A (Km) */}
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Piso I B-A (Km)',
+                                    name: 'piso1BA',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-4">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Piso II B-A (Km)',
+                                    name: 'piso2BA',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 50, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-4">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: ' Extensão B-A',
+                                    name: 'extensaoAB',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: true,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    label: 'Hierarquização',
+                                    name: 'hierarquizacao',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }}
+                            />
+                        </form>
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <form className="was-validated" onSubmit={(e) => {
+                            e.preventDefault();
+                            submitAllForms(`filtro-${origemForm}`);
+                        }}>
+                            <AppText
+                                parametros={parametros}
+                                formData={formData}
+                                setFormData={setFormData}
+                                fieldAttributes={{
+                                    attributeOrigemForm: `${origemForm}`,
+                                    label: 'Data Vigência:',
+                                    name: 'dataInicio',
+                                    errorMessage: '', // Mensagem de Erro personalizada
+                                    attributePlaceholder: '', // placeholder
+                                    attributeMinlength: 2, // minlength
+                                    attributeMaxlength: 10, // maxlength - Telefone: 14, CPF: 14, CEP: 9, Processo Judicial: 20
+                                    attributePattern: '', // Inteiro, Caracter, Senha
+                                    attributeAutocomplete: '', // on, off
+                                    attributeRequired: true,
+                                    attributeReadOnly: false,
+                                    attributeDisabled: false,
+                                    attributeMask: '', // CPF, Telefone, CEP, Processo.
+                                }} />
+                        </form>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-sm-6 m-0 p-0">
+                            <div className="container d-flex justify-content-start m-0 pt-3">
+                                <form className="was-validated" onSubmit={(e) => {
+                                    e.preventDefault();
+                                    submitAllForms(`filtro-${origemForm}`);
+                                }}>
+                                    <input className="btn btn-outline-primary btn-sm" type="submit" defaultValue="Submit" />
+                                </form>
+                            </div>
+                        </div>
+                        <div className="col-12 col-sm-6">
+                        </div>
+                        {/* Exibe o componente de alerta */}
+                        < AppMessage parametros={message} />
+                    </div >
+                </div >
             </div >
         );
     };
-
 </script>
