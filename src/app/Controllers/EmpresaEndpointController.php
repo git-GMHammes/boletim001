@@ -14,9 +14,15 @@ class EmpresaEndpointController extends ResourceController
     private $template = 'bw/templates/main';
     private $message = 'bw/message';
     private $app_message = 'bw/AppMessage';
+    private $app_message_card = 'bw/AppMessageCard';
+    private $app_loading = 'bw/AppLoading';
+    private $app_json = 'bw/AppJson';
     private $footer = 'bw/AppFooter';
-    private $head = 'bw/AppHead';
-    private $menu = 'bw/AppMenu';
+    private $app_head = 'bw/AppHead';
+    private $app_menu = 'bw/AppMenu';
+    private $viewValidacao;
+    private $viewPadroes;
+    private $viewFormatacao;
     private $tokenCsrf;
     private $ModelResponse;
     private $uri;
@@ -27,6 +33,9 @@ class EmpresaEndpointController extends ResourceController
     {
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->tokenCsrf = new TokenCsrfController();
+        $this->viewValidacao = new SystemBaseController();
+        $this->viewPadroes = new SystemBaseController();
+        $this->viewFormatacao = new SystemBaseController();
         $this->token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '123';
     }
 
@@ -80,8 +89,8 @@ class EmpresaEndpointController extends ResourceController
 
         // Estrutura de views a serem carregadas
         $loadView1 = array(
-            $this->head,
-            $this->menu,
+            $this->app_head,
+            $this->app_menu,
             $this->message,
             $this->app_message,
         );
