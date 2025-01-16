@@ -53,7 +53,7 @@ class LinhaApiController extends ResourceController
         $getVar_page = $request->getVar('page');
         $processRequest = (array) $request->getVar();
         #
-        // myPrint($processRequest, 'src\app\Controllers\LinhaApiController.phpn');
+        myPrint($processRequest, 'src\app\Controllers\LinhaApiController.phpn');
         #
         $token_csrf = (isset($processRequest['token_csrf']) ? $processRequest['token_csrf'] : NULL);
         $json = isset($processRequest['json']) && $processRequest['json'] == 1 ? 1 : 0;
@@ -156,6 +156,7 @@ class LinhaApiController extends ResourceController
             #
             $id = isset($processRequest['id']) ? ($processRequest['id']) : ($parameter);
             $requestDb = $this->DbController->dbRead($id, $page);
+            // myPrint($requestDb, 'src\app\Controllers\LinhaApiController.php');
             #
             $apiRespond = [
                 'status' => 'success',

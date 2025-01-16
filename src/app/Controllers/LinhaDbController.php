@@ -5,8 +5,8 @@ namespace App\Controllers;
 # use App\Models\UploadModel;
 use App\Controllers\SystemBaseController;
 use App\Controllers\SystemMessageController;
-use App\Models\EmporesaModels;
-# use App\Models\VEmporesaModelsModels;
+use App\Models\LinhaVigenciaModels;
+# use App\Models\VLinhaVigenciaModels;
 use Exception;
 
 class LinhaDbController extends BaseController
@@ -23,9 +23,9 @@ class LinhaDbController extends BaseController
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->pagination = new SystemBaseController();
         $this->message = new SystemMessageController();
-        $this->ModelLinha = new EmporesaModels();
+        $this->ModelLinha = new LinhaVigenciaModels();
         # $this->ModelUpload = new UploadModel();
-        # $this->ModelLinha = new VEmporesaModelsModels();
+        # $this->ModelLinha = new VLinhaVigenciaModels();
     }
 
     # route POST /www/sigla/rota

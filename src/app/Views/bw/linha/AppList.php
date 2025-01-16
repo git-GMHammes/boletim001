@@ -2,14 +2,14 @@
     const AppList = ({ parametros = {} }) => {
 
         // Prepara as Variáveis do REACT recebidas pelo BACKEND
-        const getURI = parametros.getURI;
-        const debugMyPrint = parametros.DEBUG_MY_PRINT;
-        const base_url = parametros.base_url;
-        const api_empresa_exibir = parametros.api_empresa_exibir;
-        const api_empresa_filtrar = parametros.api_empresa_filtrar;
+        const getURI = parametros.getURI || [];
+        const debugMyPrint = parametros.DEBUG_MY_PRINT || false;
+        const base_url = parametros.base_url || '';
+        const api_linha_exibir = parametros.api_linha_exibir || '';
+        const api_linha_filtrar = parametros.api_linha_filtrar || '';
 
-        // Estado para armazenar empresas da API
-        const [empresas, setEmpresas] = React.useState([]);
+        // Estado para armazenar linhas da API
+        const [linhas, setLinhas] = React.useState([]);
 
         // Declare Todos os Campos do Formulário Aqui
         const [formData, setFormData] = React.useState({
@@ -43,14 +43,14 @@
         const submitAllForms = async (apiIdentifier) => {
             console.log('submitAllForms...');
             const data = formData;
-            let getEmpresa = '';
+            let getLinha = '';
             let dbResponse = [];
             let response1 = '';
             console.log('Dados a serem enviados:', data);
 
-            if (apiIdentifier === 'filtra-empresa') {
+            if (apiIdentifier === 'filtra-linha') {
                 // Convertendo os dados do setPost em JSON
-                response1 = await fetch(base_url + api_empresa_filtrar, {
+                response1 = await fetch(base_url + api_linha_filtrar, {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: {
@@ -62,17 +62,17 @@
                     throw new Error(`Erro na requisição: ${response1.statusText}`);
                 }
 
-                getEmpresa = await response1.json();
+                getLinha = await response1.json();
 
                 // Processa os dados recebidos da resposta
-                if (getEmpresa.result && getEmpresa.result.dbResponse && getEmpresa.result.dbResponse[0]) {
+                if (getLinha.result && getLinha.result.dbResponse && getLinha.result.dbResponse[0]) {
                     console.log('dbResponse: ', dbResponse);
-                    dbResponse = getEmpresa.result.dbResponse;
-                    setEmpresas(dbResponse);
+                    dbResponse = getLinha.result.dbResponse;
+                    setLinhas(dbResponse);
                     setMessage({
                         show: true,
                         type: 'success',
-                        message: 'Empresa filtrada com sucesso!'
+                        message: 'Linha filtrada com sucesso!'
                     });
                     return dbResponse;
                 } else {
@@ -87,15 +87,15 @@
         };
 
         // Função fetch com try, catch, finally
-        const fetchEmpresa = async () => {
-            console.log('URL: ', base_url + api_empresa_exibir);
+        const fetchLinha = async () => {
+            console.log('URL: ', base_url + api_linha_exibir);
             try {
-                const response = await fetch(base_url + api_empresa_exibir);
+                const response = await fetch(base_url + api_linha_exibir);
                 console.log('response: ', response);
                 if (response.ok) {
                     const data = await response.json();
                     // Adaptando a resposta JSON para setar apenas o dbResponse
-                    setEmpresas(data.result.dbResponse);
+                    setLinhas(data.result.dbResponse);
                 } else {
                     console.error("Erro ao buscar dados: ", response.status);
                 }
@@ -109,7 +109,7 @@
         // useEffect para acionar a função fetch ao carregar o componente
         React.useEffect(() => {
             const carregarDados = async () => {
-                await fetchEmpresa();
+                await fetchLinha();
                 // Aqui pode-se chamar qualquer outra função auxiliar no futuro
             };
             carregarDados();
@@ -123,10 +123,10 @@
                             <th scope="col">
                                 <form className="was-validated mb-3" onSubmit={(e) => {
                                     e.preventDefault();
-                                    submitAllForms('filtra-empresa', formData);
+                                    submitAllForms('filtra-linha', formData);
                                 }}>
                                     <input
-                                        data-api="filtra-empresa"
+                                        data-api="filtra-linha"
                                         type="text"
                                         className="form-control"
                                         id="nome"
@@ -142,10 +142,10 @@
                             <th scope="col">
                                 <form className="was-validated mb-3" onSubmit={(e) => {
                                     e.preventDefault();
-                                    submitAllForms('filtra-empresa', formData);
+                                    submitAllForms('filtra-linha', formData);
                                 }}>
                                     <input
-                                        data-api="filtra-empresa"
+                                        data-api="filtra-linha"
                                         type="text"
                                         className="form-control"
                                         id="responsavel"
@@ -161,10 +161,10 @@
                             <th scope="col">
                                 <form className="was-validated mb-3" onSubmit={(e) => {
                                     e.preventDefault();
-                                    submitAllForms('filtra-empresa', formData);
+                                    submitAllForms('filtra-linha', formData);
                                 }}>
                                     <input
-                                        data-api="filtra-empresa"
+                                        data-api="filtra-linha"
                                         type="email"
                                         className="form-control"
                                         id="email_contato"
@@ -184,7 +184,7 @@
                             <th scope="col">
                                 <form className="was-validated mb-3" onSubmit={(e) => {
                                     e.preventDefault();
-                                    submitAllForms('filtra-empresa', formData);
+                                    submitAllForms('filtra-linha', formData);
                                 }}>
                                     <button className="btn btn-outline-secondary btn-sm" type="submit">Enviar</button>
                                 </form>
@@ -194,11 +194,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {empresas.length > 0 ? empresas.map((empresa, index) => (
+                        {linhas.length > 0 ? linhas.map((linha, index) => (
                             <tr key={index}>
-                                <td>{empresa.nome}</td>
-                                <td>{empresa.responsavel}</td>
-                                <td>{empresa.email_contato}</td>
+                                <td>{linha.nome}</td>
+                                <td>{linha.responsavel}</td>
+                                <td>{linha.email_contato}</td>
                                 <td>
                                     <button type="button" className="btn btn-outline-primary btn-sm">
                                         <i className="bi bi-pencil-square"></i>

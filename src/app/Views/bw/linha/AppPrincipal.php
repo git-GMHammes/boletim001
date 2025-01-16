@@ -10,11 +10,12 @@ $parametros_backend = array(
     'base_url' => base_url(),
     'api_empresa_cadastrar' => 'bw/empresa/api/cadastrar',
     'api_empresa_atualizar' => 'bw/empresa/api/atualizar',
-    'api_empresa_listar' => 'bw/empresa/api/atualizar',
-    'api_empresa_exibir' => 'bw/empresa/api/exibir',
     'api_empresa_filtrar' => 'bw/empresa/api/filtrar',
+    'api_empresa_exibir' => 'bw/empresa/api/exibir',
+    'api_linha_filtrar' => 'bw/linha/api/filtrar',
+    'api_linha_exibir' => 'bw/linha/api/exibir',
 );
-// myPrint($parametros_backend, 'src\app\Views\bw\empresa\AppPrincipal.php', true);
+// myPrint($parametros_backend, 'src\app\Views\bw\linha\AppPrincipal.php', true);
 ?>
 
 <div class="app_Principal" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
@@ -34,9 +35,9 @@ $parametros_backend = array(
         const token_csrf = parametros.token_csrf;
 
         // Lista de APIs
-        const api_empresa_cadastrar = parametros.api_empresa_cadastrar;
-        const api_empresa_atualizar = parametros.api_empresa_atualizar;
-        const api_empresa_exibir = parametros.api_empresa_exibir;
+        const api_linha_cadastrar = parametros.api_linha_cadastrar;
+        const api_linha_atualizar = parametros.api_linha_atualizar;
+        const api_linha_exibir = parametros.api_linha_exibir;
 
         // Definindo o estado para controlar a aba ativa
         const [tabNav, setTabNav] = React.useState('form');

@@ -33,9 +33,10 @@ class LinhaEndpointController extends ResourceController
     public function __construct()
     {
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
+        $this->viewCamposPadroes = new SystemBaseController();
         $this->viewFormatacao = new SystemBaseController();
         $this->viewValidacao = new SystemBaseController();
-        $this->viewCamposPadroes = new SystemBaseController();
+        $this->tokenCsrf = new TokenCsrfController();
         $this->token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '123';
     }
 

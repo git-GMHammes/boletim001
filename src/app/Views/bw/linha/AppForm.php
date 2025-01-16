@@ -762,13 +762,21 @@
                         </form>
                     </div>
                     <div className="row">
+                        <div className="col-12 col-sm-6 m-1 p-0">
+                            <button className="btn btn-outline-secondary btn-sm m-2" type="submit">Nova Seleção</button>
+                            <button className="btn btn-outline-secondary btn-sm m-2" type="submit">Delete Seleção</button>
+                        </div>
                         <div className="col-12 col-sm-6 m-0 p-0">
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-sm-6 m-1 p-0">
                             <div className="container d-flex justify-content-start m-0 pt-3">
                                 <form className="was-validated" onSubmit={(e) => {
                                     e.preventDefault();
                                     submitAllForms(`filtro-${origemForm}`);
                                 }}>
-                                    <input className="btn btn-outline-primary btn-sm" type="submit" defaultValue="Submit" />
+                                    <button className="btn btn-outline-secondary btn-sm" type="submit">Salvar</button>
                                 </form>
                             </div>
                         </div>
@@ -776,9 +784,9 @@
                         </div>
                         {/* Exibe o componente de alerta */}
                         < AppMessage parametros={message} />
-                    </div >
-                </div >
-            </div >
+                    </div>
+                </div>
+            </div>
         );
     };
 </script>
