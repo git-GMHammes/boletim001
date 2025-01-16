@@ -12,29 +12,30 @@ use Exception;
 class LinhaEndpointController extends ResourceController
 {
     use ResponseTrait;
-    
-    private $template = 'bw/templates/main';
-    private $message = 'bw/message';
+
+    private $app_message_card = 'bw/AppMessageCard';    
+    private $app_loading = 'bw/AppLoading';
     private $app_message = 'bw/AppMessage';
     private $app_footer = 'bw/AppFooter';
     private $app_head = 'bw/AppHead';
     private $app_menu = 'bw/AppMenu';
     private $app_json = 'bw/AppJson';
-    private $app_loading = 'bw/AppLoading';
-    private $viewValidacao;
+    private $message = 'bw/message';
+    private $template = 'bw/templates/main';
     private $viewCamposPadroes;
-    private $tokenCsrf;
+    private $viewValidacao;
     private $ModelResponse;
-    private $uri;
+    private $tokenCsrf;
     private $token;
+    private $uri;
     
     //
     public function __construct()
     {
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
-        $this->tokenCsrf = new TokenCsrfController();
-        $this->viewCamposPadroes = new SystemBaseController();
+        $this->viewFormatacao = new SystemBaseController();
         $this->viewValidacao = new SystemBaseController();
+        $this->viewPadroes = new SystemBaseController();
         $this->token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '123';
     }
 
@@ -65,11 +66,13 @@ class LinhaEndpointController extends ResourceController
         // $processRequest = eagarScagaire($processRequest);
         #
         $loadView1 = array(
+            $this->app_message_card,
+            $this->app_message,
+            $this->app_loading,
             $this->app_head,
             $this->app_menu,
             $this->app_json,
-            $this->app_message,
-            $this->app_loading,
+            $this->message,
         );
         $loadView2 = $this->viewValidacao->camposValidacao();
         $loadView3 = $this->viewCamposPadroes->camposPadroes();

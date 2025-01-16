@@ -10,32 +10,32 @@ use Exception;
 class EmpresaEndpointController extends ResourceController
 {
     use ResponseTrait;
-
-    private $message = 'bw/message';
-    private $app_json = 'bw/AppJson';
-    private $template = 'bw/templates/main';
-    private $app_message = 'bw/AppMessage';
+    
     private $app_message_card = 'bw/AppMessageCard';
+    private $app_message = 'bw/AppMessage';
     private $app_loading = 'bw/AppLoading';
     private $app_footer = 'bw/AppFooter';
+    private $app_json = 'bw/AppJson';
     private $app_head = 'bw/AppHead';
     private $app_menu = 'bw/AppMenu';
-    private $viewValidacao;
-    private $viewPadroes;
+    private $message = 'bw/message';
+    private $template = 'bw/templates/main';
+    private $viewCamposPadroes;
     private $viewFormatacao;
-    private $tokenCsrf;
+    private $viewValidacao;
     private $ModelResponse;
-    private $uri;
+    private $tokenCsrf;
     private $token;
+    private $uri;
 
     //
     public function __construct()
     {
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
-        $this->tokenCsrf = new TokenCsrfController();
-        $this->viewValidacao = new SystemBaseController();
-        $this->viewPadroes = new SystemBaseController();
         $this->viewFormatacao = new SystemBaseController();
+        $this->viewValidacao = new SystemBaseController();
+        $this->viewCamposPadroes = new SystemBaseController();
+        $this->tokenCsrf = new TokenCsrfController();
         $this->token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '123';
     }
 
@@ -65,17 +65,17 @@ class EmpresaEndpointController extends ResourceController
         $id = (isset($processRequest['id'])) ? ('/' . $processRequest['id']) : ('/' . $parameter);
         // Estrutura de views a serem carregadas
         $loadView1 = array(
-            $this->app_head,
-            $this->app_menu,
-            $this->message,
             $this->app_message_card,
             $this->app_message,
             $this->app_loading,
+            $this->app_head,
+            $this->app_menu,
             $this->app_json,
+            $this->message,
         );
         #
         $loadView2 = $this->viewValidacao->camposValidacao();
-        $loadView3 = $this->viewPadroes->camposPadroes();
+        $loadView3 = $this->viewCamposPadroes->camposPadroes();
         $loadView4 = $this->viewFormatacao->camposFormatacao();
         #
         $loadView5 = array(
