@@ -35,7 +35,7 @@ class LinhaEndpointController extends ResourceController
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->viewFormatacao = new SystemBaseController();
         $this->viewValidacao = new SystemBaseController();
-        $this->viewPadroes = new SystemBaseController();
+        $this->viewCamposPadroes = new SystemBaseController();
         $this->token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '123';
     }
 
