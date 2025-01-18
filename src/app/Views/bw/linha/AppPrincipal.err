@@ -1,0 +1,117 @@
+<?php
+$token_csrf = (session()->get('token_csrf')) ? (session()->get('token_csrf')) : ('erro');
+$parametros_backend = array(
+    'DEBUG_MY_PRINT' => false,
+    'token_csrf' => $token_csrf,
+    'request_scheme' => $_SERVER['REQUEST_SCHEME'],
+    'server_name' => $_SERVER['SERVER_NAME'],
+    'server_port' => $_SERVER['SERVER_PORT'],
+    'getURI' => isset($metadata['getURI']) ? ($metadata['getURI']) : (array()),
+    'base_url' => base_url(),
+    // 'api_empresa_filtrar' => 'bw/empresa/api/filtrar',
+    // 'api_empresa_exibir' => 'bw/empresa/api/exibir',
+    'api_linha_atualizar' => 'bw/linha/api/atualizar',
+    'api_linha_cadastrar' => 'bw/linha/api/cadastrar',
+    'api_linha_filtrar' => 'bw/linha/api/filtrar',
+    'api_linha_exibir' => 'bw/linha/api/exibir',
+);
+// myPrint($parametros_backend, 'src\app\Views\bw\linha\AppPrincipal.php', true);
+?>
+
+<div class="app_Principal" data-result='<?php echo json_encode($parametros_backend); ?>'></div>
+
+<script type="text/babel">
+    const AppPrincipal = () => {
+        // 1. Tratamento seguro dos parâmetros iniciais
+        const [parametros, setParametros] = React.useState(null);
+        const [error, setError] = React.useState(null);
+
+        React.useEffect(() => {
+            try {
+                const params = JSON.parse(document.querySelector('.app_Principal').getAttribute('data-result'));
+                params.origemForm = 'linha';
+                setParametros(params);
+            } catch (err) {
+                setError('Erro ao carregar parâmetros');
+                console.error(err);
+            }
+        }, []);
+
+        // 2. Mostrar erro se falhar a carga inicial
+        if (error) {
+            return (
+                <div className="alert alert-danger m-3" role="alert">
+                    {error}
+                </div>
+            );
+        }
+
+        // 3. Loading state enquanto carrega
+        if (!parametros) {
+            return (
+                <div className="d-flex justify-content-center p-3">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Carregando...</span>
+                    </div>
+                </div>
+            );
+        }
+
+        // 4. Configuração das tabs em um objeto
+        const tabs = {
+            form: { label: 'Formulario', component: AppForm },
+            list: { label: 'Listar', component: AppList },
+            lix: { label: 'Lixeira', component: AppLimpar },
+            help: { label: 'Ajuda', component: renderHelp }
+        };
+
+        const [tabNav, setTabNav] = React.useState('form');
+
+        // 5. Handler mais seguro para cliques
+        const handleTabClick = (e, tab) => {
+            e.preventDefault();
+            setTabNav(tab);
+        };
+
+        return (
+            <div className="mt-1">
+                <div>
+                    <div id="top" className="d-flex justify-content-center align-items-center min-vh-100">
+                        <div className="container">
+                            {/* 6. Navegação com aria-labels */}
+                            <ul className="nav nav-tabs border border-top-0 border-start-0 border-end-0 rounded-top" role="tablist">
+                                {Object.entries(tabs).map(([key, value]) => (
+                                    <li className="nav-item" key={key} role="presentation">
+                                        <a
+                                            className={`nav-link ${tabNav === key ? 'active' : ''}`}
+                                            href="#top"
+                                            onClick={(e) => handleTabClick(e, key)}
+                                            role="tab"
+                                            aria-selected={tabNav === key}
+                                        >
+                                            {value.label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* 7. Renderização mais limpa do conteúdo */}
+                            <div className="border border-top-0 rounded-bottom p-3">
+                                {tabs[tabNav].component === renderHelp ?
+                                    renderHelp() :
+                                    React.createElement(tabs[tabNav].component, { parametros })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div >
+        );
+    };
+    const rootElement = document.querySelector('.app_Principal');
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<AppPrincipal />);
+
+</script>
+<?php
+$parametros_backend = array();
+?>

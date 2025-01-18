@@ -157,6 +157,8 @@
 
         // POST Padrão 
         const fetchPost = async (custonBaseURL = base_url, custonApiPostObjeto = api_post, customPage = getVar_page) => {
+            console.log("POST Padrão  :: ... continua");
+            return false;
             if (custonApiPostObjeto === 'api/post') {
                 return false;
             } else {
@@ -210,6 +212,8 @@
 
         // Filtro Padrão
         const fetchFilter = async (custonBaseURL = base_url, custonApiPostObjeto = api_filter, customPage = getVar_page) => {
+            console.log("Filtro Padrão  :: ... continua");
+            return false;
             const url = custonBaseURL + custonApiPostObjeto + customPage;
             // console.log('fetchFilter - url: ', url);
 
