@@ -5,6 +5,7 @@
             formData = {},
             setFormData = () => { },
             fieldAttributes = {},
+            submitAllForms
         }
     ) => {
         // Variáveis recebidas do Backend
@@ -12,6 +13,7 @@
         const objetoArrayKey = fieldAttributes.objetoArrayKey || [];
         const [objetoMapKey, setObjetoMapKey] = React.useState([]);
         const [isLoading, setIsLoading] = React.useState(true);
+        const origemForm = parametros.origemForm || '';
         const [setFilter, setSetFilter] = React.useState({
             filtroSelect: null,
         });
@@ -28,7 +30,7 @@
         const attributeFieldName = fieldAttributes.attributeFieldName || [];
         const attributeRequired = fieldAttributes.attributeRequired || false;
         const attributeDisabled = fieldAttributes.attributeDisabled || false;
-        console.log('attributeRequired: ', name, attributeRequired);
+        // console.log('attributeRequired: ', name, attributeRequired);
 
         // Attributes of APIs
         const api_get = fieldAttributes.api_get || 'api/get';
@@ -85,7 +87,7 @@
         };
 
         // Função que executa após a retirada do foco
-        const handleBlur = (event) => {
+        const handleBlur = async (event) => {
             const { name, value } = event.target;
 
             console.log('name handleBlur: ', name);
@@ -95,6 +97,8 @@
                 ...prev,
                 [name]: value
             }));
+
+            await submitAllForms(`filtro-${origemForm}`);
 
             setMessage({ show: false, type: null, message: null });
         };

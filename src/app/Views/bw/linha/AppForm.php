@@ -103,8 +103,7 @@
             let getEmpresa = '';
             let dbResponse = [];
             let response1 = '';
-            console.log('Dados a serem enviados:', data);
-
+            // console.log('Dados a serem enviados:', data);
             if (apiIdentifier === `filtro-${origemForm}`) {
                 // Convertendo os dados do setPost em JSON
                 response1 = await fetch(base_url + api_empresa_cadastrar, {
@@ -247,9 +246,10 @@
                                             attributeAutocomplete: '', // on, off
                                             attributeRequired: true,
                                             attributeReadOnly: false,
-                                            attributeDisabled: false,
+                                            attributeDisabled: true,
                                             attributeMask: '', // CPF, Telefone, CEP, Processo.
                                         }}
+                                        submitAllForms={submitAllForms}
                                     />
                                 </form>
                             </div>
@@ -278,15 +278,17 @@
                                     attributeFieldKey: ['id', 'key'], // Chave do campo
                                     attributeFieldName: ['bank_column_api', 'value'], // Nome do campo
                                     objetoArrayKey: [
-                                        { key: '0', value: 'Ativa' },
-                                        { key: '1', value: 'Cancelada' },
-                                        { key: '2', value: 'Paralisada' },
-                                        { key: '3', value: 'Subjudice' }
+                                        { key: '1', value: 'Ativa' },
+                                        { key: '2', value: 'Cancelada' },
+                                        { key: '3', value: 'Paralisada' },
+                                        { key: '4', value: 'Subjudice' }
                                     ],
                                     api_get: `api/get`,
                                     api_post: `api/post`,
                                     api_filter: `api/filter`,
-                                }} />
+                                }} 
+                                submitAllForms={submitAllForms}
+                                />
                         </form>
                     </div>
                 </div>
